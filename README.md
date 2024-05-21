@@ -9,13 +9,10 @@ sudo apt install libvulkan-dev
 sudo apt install libglfw3-dev
 sudo apt install libglm-dev
 sudo apt-get install libxi-dev
+sudo apt install libxxf86vm-dev libxi-dev
 ```
 ## Compile & Execute
-To compile just run `compile.sh` to create a `main` executable:
+To compile and execute just run `run.sh`:
 ```bash
-bash compile.sh
-```
-this will create a `main` file that can be executed with:
-```bash
-./main
+bash run.sh
 ```
