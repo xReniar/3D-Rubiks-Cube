@@ -5,4 +5,4 @@ g++ -std=c++17 -O2 \
     src/cube/Side.cpp \
     src/cube/Cube.cpp \
     src/solver/Solver.cpp \
-    -o main
+    -o main ; ./main
