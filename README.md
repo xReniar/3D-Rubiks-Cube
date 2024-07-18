@@ -11,7 +11,7 @@ sudo apt install libglm-dev
 sudo apt-get install libxi-dev
 sudo apt install libxxf86vm-dev libxi-dev
 ```
-For full-information click [here](https://vulkan-tutorial.com/Introduction)
+For full information click [here](https://vulkan-tutorial.com/Introduction)
 ## Compile & Execute
 To compile and execute just run `run.sh`:
 ```bash
