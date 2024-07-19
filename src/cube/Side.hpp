@@ -4,11 +4,11 @@
 #include"../constants.hpp"
 
 class Side {
-    public:
-        Color slot[9];
-        Side(Color color);
-        Side(Color colors[]);
-        void turn(Direction direction);
+public:
+    Color slot[9];
+    Side(Color color);
+    Side(Color colors[]);
+    void turn(Direction direction);
 };
 
 #endif

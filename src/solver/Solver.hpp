@@ -4,9 +4,9 @@
 #include"../cube/Cube.hpp"
 
 class Solver {
-    public:
-        Solver();
-        void solve(Cube cube);
+public:
+    Solver();
+    void solve(Cube cube);
 };
 
 #endif
