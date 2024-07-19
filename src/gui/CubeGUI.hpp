@@ -8,19 +8,21 @@
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include<glm/vec4.hpp>
 #include<glm/mat4x4.hpp>
-#include<vulkan/vulkan.h>
+
+const uint32_t WIDTH = 800;
+const uint32_t HEIGHT = 600;
 
 class CubeGUI {
 public:
     void run();
-    const uint32_t WIDTH = 800;
-    const uint32_t HEIGHT = 600;
 private:
     void initWindow();
     void initVulkan();
+    void createInstance();
     void mainLoop();
     void cleanup();
     GLFWwindow* window;
+    VkInstance instance;
 };
 
 #endif
