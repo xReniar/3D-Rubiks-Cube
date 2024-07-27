@@ -2,6 +2,6 @@
 #define RUBIKS_H
 
 #include"solver/Solver.hpp"
-#include"gui/CubeGUI.hpp"
+#include"gui/CubeApp.hpp"
 
 #endif
