@@ -4,19 +4,17 @@ int main(){
     Cube cube;
     Solver solver;
 
-    CubeGUI gui;
+    CubeApp app{};
 
     try {
-        gui.run();
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
+        app.run();
+    } catch(const std::exception &error) {
+        std::cerr << error.what() << "\n";
         return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;
-
     //solver.solve(cube);
 
     //cube.turn("UDFRBL");
-    return 0;
 }
