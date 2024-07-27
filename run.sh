@@ -14,6 +14,13 @@ g++ -std=c++17 -O2 \
     src/cube/Cube.cpp \
     src/solver/Solver.cpp \
     src/gui/CubeGUI.cpp \
+    src/gui/ValidationLayers.cpp \
+    src/gui/PhysicalDevices.cpp \
+    src/gui/LogicalDevice.cpp \
+    src/gui/WindowSurface.cpp \
+    src/gui/SwapChain.cpp \
+    src/gui/ImageViews.cpp \
+    src/gui/GraphicsPipeline.cpp \
     -o main -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 # execute project
