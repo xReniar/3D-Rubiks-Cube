@@ -13,7 +13,7 @@ g++ -std=c++17 -O2 \
     src/cube/*.cpp \
     src/solver/Solver.cpp \
     src/gui/*.cpp \
-    -o main -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+    -o VulkanProject -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 # execute project
-./main
+./VulkanProject
