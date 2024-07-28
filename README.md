@@ -12,7 +12,6 @@ sudo apt-get install libglfw3-dev
 sudo apt-get install libglm-dev
 sudo apt-get install libxi-dev
 sudo apt-get install libxxf86vm-dev
-sudo apt-get install libxi-dev
 ```
 Also read in the documentation how to install `glslc`, for full information click [here](https://vulkan-tutorial.com/Introduction)
 ## Compile & Execute
