@@ -2,6 +2,7 @@
 #define CUBEAPP_H
 
 #include"CubeGUI.hpp"
+#include"Pipeline.hpp"
 
 class CubeApp {
 public:
@@ -11,6 +12,7 @@ public:
     void run();
 private:
     CubeGUI cubeGUI{WIDTH, HEIGHT, "Vulkan Rubik's Cube"};
+    Pipeline pipeline{"shaders/shader.vert.spv","shaders/shader.frag.spv"};
 };
 
 
