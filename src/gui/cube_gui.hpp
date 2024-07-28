@@ -23,6 +23,7 @@ public:
     CubeGUI &operator=(const CubeGUI &) = delete;
 
     bool shouldClose() { return glfwWindowShouldClose(window); }
+    void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
 private:
     const int width;
     const int height;

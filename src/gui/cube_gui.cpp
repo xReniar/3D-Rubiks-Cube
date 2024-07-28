@@ -1,4 +1,4 @@
-#include"CubeGUI.hpp"
+#include"cube_gui.hpp"
 
 CubeGUI::CubeGUI(int w, int h, std::string name): width{w}, height{h}, windowName{name} {
     this->initWindow();
@@ -15,4 +15,9 @@ void CubeGUI::initWindow(){
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
+}
+
+void CubeGUI::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface){
+    if(glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS)
+        throw std::runtime_error("failed to create window surface");
 }
