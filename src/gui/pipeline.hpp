@@ -2,6 +2,7 @@
 #define PIPELINE_H
 
 #include"device.hpp"
+#include"model.hpp"
 
 #include<string>
 #include<vector>
