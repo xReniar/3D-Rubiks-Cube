@@ -4,6 +4,7 @@
 #include<array>
 
 CubeApp::CubeApp(){
+    loadModels();
     createPipelineLayout();
     createPipeline();
     createCommandBuffers();
@@ -81,9 +82,9 @@ void CubeApp::createCommandBuffers(){
 
         vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-        pipeline -> bind(commandBuffers[i]);
-        // this records a draw command to draw 3 vertices and 1 instance
-        vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+        pipeline->bind(commandBuffers[i]);
+        model->bind(commandBuffers[i]);
+        model->draw(commandBuffers[i]);
 
         vkCmdEndRenderPass(commandBuffers[i]);
         if(vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
@@ -101,4 +102,14 @@ void CubeApp::drawFrame(){
     result = swapChain.submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
     if(result != VK_SUCCESS)
         throw std::runtime_error("failed to present swap chain image!");
+}
+
+void CubeApp::loadModels(){
+    std::vector<Model::Vertex> vertices {
+        {{0.0f, -0.5f}},
+        {{0.5f, 0.5f}},
+        {{-0.5f, 0.5f}}
+    };
+
+    model = std::make_unique<Model>(device, vertices);
 }
