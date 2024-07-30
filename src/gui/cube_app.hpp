@@ -25,7 +25,7 @@ public:
 private:
     CubeGUI cubeGUI{WIDTH, HEIGHT, "Vulkan Rubik's Cube"};
     Device device{cubeGUI};
-    SwapChain swapChain{ device, cubeGUI.getExtent() };
+    std::unique_ptr<SwapChain> swapChain;
     std::unique_ptr<Pipeline> pipeline;
     VkPipelineLayout pipelineLayout;
     std::vector<VkCommandBuffer> commandBuffers;
@@ -36,6 +36,10 @@ private:
     void createCommandBuffers();
     void drawFrame();
     void loadModels();
+    void recreateSwapChain();
+    void recordCommandBuffer(int imageIndex);
+    void freeCommandBuffers();
+
 };
 
 
