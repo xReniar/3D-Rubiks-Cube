@@ -1,17 +1,19 @@
 #ifndef SWAPCHAIN_H
 #define SWAPCHAIN_H
 
-#include "device.hpp"
+#include"device.hpp"
 
-#include <vulkan/vulkan.h>
-#include <string>
-#include <vector>
+#include<vulkan/vulkan.h>
+#include<string>
+#include<vector>
+#include<memory>
 
 class SwapChain {
 public:
     static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
     SwapChain(Device &deviceRef, VkExtent2D windowExtent);
+    SwapChain(Device &deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
     ~SwapChain();
 
     SwapChain(const SwapChain &) = delete;
@@ -41,6 +43,7 @@ private:
     void createRenderPass();
     void createFramebuffers();
     void createSyncObjects();
+    void init();
 
     // Helper functions
     VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
@@ -63,6 +66,7 @@ private:
     VkExtent2D windowExtent;
 
     VkSwapchainKHR swapChain;
+    std::shared_ptr<SwapChain> oldSwapChain;
 
     std::vector<VkSemaphore> imageAvailableSemaphores;
     std::vector<VkSemaphore> renderFinishedSemaphores;
