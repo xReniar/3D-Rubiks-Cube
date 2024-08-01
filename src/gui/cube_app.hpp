@@ -6,6 +6,7 @@
 #include"swap_chain.hpp"
 #include"device.hpp"
 #include"model.hpp"
+#include"cube_obj.hpp"
 
 #include<memory>
 #include<vector>
@@ -29,16 +30,17 @@ private:
     std::unique_ptr<Pipeline> pipeline;
     VkPipelineLayout pipelineLayout;
     std::vector<VkCommandBuffer> commandBuffers;
-    std::unique_ptr<Model> model;
+    std::vector<CubeObj> gameObjects;
 
     void createPipelineLayout();
     void createPipeline();
     void createCommandBuffers();
     void drawFrame();
-    void loadModels();
+    void loadGameObjects();
     void recreateSwapChain();
     void recordCommandBuffer(int imageIndex);
     void freeCommandBuffers();
+    void renderGameObjects(VkCommandBuffer commandBuffer);
 
 };
 
