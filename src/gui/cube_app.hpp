@@ -2,11 +2,9 @@
 #define CUBEAPP_H
 
 #include"cube_gui.hpp"
-#include"pipeline.hpp"
-#include"swap_chain.hpp"
 #include"device.hpp"
-#include"model.hpp"
 #include"cube_obj.hpp"
+#include"renderer.hpp"
 
 #include<memory>
 #include<vector>
@@ -26,21 +24,10 @@ public:
 private:
     CubeGUI cubeGUI{WIDTH, HEIGHT, "Vulkan Rubik's Cube"};
     Device device{cubeGUI};
-    std::unique_ptr<SwapChain> swapChain;
-    std::unique_ptr<Pipeline> pipeline;
-    VkPipelineLayout pipelineLayout;
-    std::vector<VkCommandBuffer> commandBuffers;
+    Renderer renderer{cubeGUI, device};
     std::vector<CubeObj> gameObjects;
 
-    void createPipelineLayout();
-    void createPipeline();
-    void createCommandBuffers();
-    void drawFrame();
     void loadGameObjects();
-    void recreateSwapChain();
-    void recordCommandBuffer(int imageIndex);
-    void freeCommandBuffers();
-    void renderGameObjects(VkCommandBuffer commandBuffer);
 
 };
 
