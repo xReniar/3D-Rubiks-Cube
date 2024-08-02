@@ -21,7 +21,8 @@ enum Color {
     BLUE,
     RED,
     GREEN,
-    ORANGE
+    ORANGE,
+    BLACK
 };
 
 enum Solve_State {
