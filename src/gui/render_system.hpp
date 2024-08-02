@@ -4,6 +4,7 @@
 #include"pipeline.hpp"
 #include"device.hpp"
 #include"cube_obj.hpp"
+#include"camera.hpp"
 
 #include<memory>
 #include<vector>
@@ -16,7 +17,7 @@ public:
     RenderSystem(const RenderSystem &) = delete;
     RenderSystem &operator=(const RenderSystem &) = delete;
 
-    void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<CubeObj> &gameObjects);
+    void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<CubeObj> &gameObjects, const Camera& camera);
 private:
     Device &device;
     std::unique_ptr<Pipeline> pipeline;
