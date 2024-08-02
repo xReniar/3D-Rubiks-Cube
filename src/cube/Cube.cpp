@@ -250,6 +250,25 @@ char f(Color color){
     return 'x';
 }
 
+std::string Cube::state(){
+    std::vector<char> cubeState;
+    for(int i = 0;i < 9;i++)
+        cubeState.push_back(f(top_side.slot[i]));
+    for(int i = 0;i < 9;i++)
+        cubeState.push_back(f(right_side.slot[i]));
+    for(int i = 0;i < 9;i++)
+        cubeState.push_back(f(front_side.slot[i]));
+    for(int i = 0;i < 9;i++)
+        cubeState.push_back(f(bottom_side.slot[i]));
+    for(int i = 0;i < 9;i++)
+        cubeState.push_back(f(left_side.slot[i]));
+    for(int i = 0;i < 9;i++)
+        cubeState.push_back(f(back_side.slot[i]));
+
+    std::string str(cubeState.begin(), cubeState.end());
+    return str;
+}
+
 void Cube::show(){
     printf("      %c,%c,%c\n",f(top_side.slot[0]),f(top_side.slot[1]),f(top_side.slot[2]));
     printf("      %c,%c,%c\n",f(top_side.slot[3]),f(top_side.slot[4]),f(top_side.slot[5]));

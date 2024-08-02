@@ -3,6 +3,8 @@
 
 #include"Side.hpp"
 #include<string>
+#include<vector>
+#include<iostream>
 
 class Cube {
 private:
@@ -22,6 +24,7 @@ private:
 public:
     Cube();
     void turn(const std::string& str);
+    std::string state();
     void show();
 };
 
