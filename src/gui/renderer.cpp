@@ -111,7 +111,7 @@ void Renderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer){
     renderPassInfo.renderArea.extent = swapChain->getSwapChainExtent();
 
     std::array<VkClearValue, 2> clearValues{};
-    clearValues[0].color = { 0.01f, 0.01f, 0.01f, 0.1f};
+    clearValues[0].color = { 0.1f, 0.1f, 0.1f, 0.1f};
     clearValues[1].depthStencil = { 1.0f, 0 };           // getting error on narrowing conversion, changed from 0.0f to 0
     renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
     renderPassInfo.pClearValues = clearValues.data();
