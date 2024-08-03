@@ -58,152 +58,17 @@ void CubeApp::run(){
     vkDeviceWaitIdle(device.device());
 }
 
-std::unique_ptr<Model> createCubeModel(Device& device, glm::vec3 offset) {
-    Model::Builder modelBuilder{};
-    modelBuilder.vertices = {
-        // left face (white)
-        {{-.5f, -.5f, -.5f}, {.9f, .9f, .9f}},
-        {{-.5f, .5f, .5f}, {.9f, .9f, .9f}},
-        {{-.5f, -.5f, .5f}, {.9f, .9f, .9f}},
-        {{-.5f, .5f, -.5f}, {.9f, .9f, .9f}},
-    
-        // right face (yellow)
-        {{.5f, -.5f, -.5f}, {.8f, .8f, .1f}},
-        {{.5f, .5f, .5f}, {.8f, .8f, .1f}},
-        {{.5f, -.5f, .5f}, {.8f, .8f, .1f}},
-        {{.5f, .5f, -.5f}, {.8f, .8f, .1f}},
-    
-        // top face (orange, remember y axis points down)
-        {{-.5f, -.5f, -.5f}, {.9f, .6f, .1f}},
-        {{.5f, -.5f, .5f}, {.9f, .6f, .1f}},
-        {{-.5f, -.5f, .5f}, {.9f, .6f, .1f}},
-        {{.5f, -.5f, -.5f}, {.9f, .6f, .1f}},
-    
-        // bottom face (red)
-        {{-.5f, .5f, -.5f}, {.8f, .1f, .1f}},
-        {{.5f, .5f, .5f}, {.8f, .1f, .1f}},
-        {{-.5f, .5f, .5f}, {.8f, .1f, .1f}},
-        {{.5f, .5f, -.5f}, {.8f, .1f, .1f}},
-    
-        // nose face (blue)
-        {{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f}},
-        {{.5f, .5f, 0.5f}, {.1f, .1f, .8f}},
-        {{-.5f, .5f, 0.5f}, {.1f, .1f, .8f}},
-        {{.5f, -.5f, 0.5f}, {.1f, .1f, .8f}},
-    
-        // tail face (green)
-        {{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f}},
-        {{.5f, .5f, -0.5f}, {.1f, .8f, .1f}},
-        {{-.5f, .5f, -0.5f}, {.1f, .8f, .1f}},
-        {{.5f, -.5f, -0.5f}, {.1f, .8f, .1f}},
-    };
-    for (auto& v : modelBuilder.vertices) {
-        v.position += offset;
-    }
-    
-    modelBuilder.indices = {0,  1,  2,  0,  3,  1,  4,  5,  6,  4,  7,  5,  8,  9,  10, 8,  11, 9,
-                            12, 13, 14, 12, 15, 13, 16, 17, 18, 16, 19, 17, 20, 21, 22, 20, 23, 21};
-    
-    return std::make_unique<Model>(device, modelBuilder);
-}
-
-std::vector<glm::vec3> Vec3Color(const std::vector<Color>& colors){
-    std::vector<glm::vec3> vec3Colors(colors.size());
-    
-    glm::vec3 currentColor;
-    for(size_t i = 0;i < vec3Colors.size(); i++){
-        if(colors[i] == YELLOW) currentColor = {.8f, .8f, .1f};
-        if(colors[i] == WHITE) currentColor = {.9f, .9f, .9f};
-        if(colors[i] == BLUE) currentColor = {.1f, .1f, .8f};
-        if(colors[i] == RED) currentColor = {.8f, .1f, .1f};
-        if(colors[i] == GREEN) currentColor = {.1f, .8f, .1f};
-        if(colors[i] == ORANGE) currentColor = {.9f, .6f, .1f};
-        if(colors[i] == BLACK) currentColor = {.0f, .0f, .0f };
-        
-        vec3Colors[i] = currentColor;
-    }
-    return vec3Colors;
-}
-
-void CubeApp::createCenters(){
-    std::vector<std::vector<Color>> colors = {
-        {YELLOW, BLACK, BLACK, BLACK, BLACK, BLACK}, 
-        {BLACK, WHITE, BLACK, BLACK, BLACK, BLACK},
-        {BLACK, BLACK, BLUE, BLACK, BLACK, BLACK},
-        {BLACK, BLACK, BLACK, RED, BLACK, BLACK},
-        {BLACK, BLACK, BLACK, BLACK, GREEN, BLACK},
-        {BLACK, BLACK, BLACK, BLACK, BLACK, ORANGE}
-    };
-
-    std::vector<glm::vec3> offsets = {
-        { .0f, -1.0f, .0f },
-        { .0f, 1.0f, .0f },
-        { .0f, .0f, -1.0f },
-        { 1.0f, .0f, .0f },
-        { .0f, .0f, 1.0f },
-        { -1.0f, .0f, .0f }
-    };
-
-    assert(colors.size() == offsets.size());
-
-    for(int i = 0;i < colors.size();i++){
-        std::shared_ptr<Model> fixCenter = createCubeModel(device, offsets[i]);
-        auto center = CubeObj::createGameObject();
-        center.model = fixCenter;
-        center.transform.translation = { .0f, .0f, 2.5f };
-        center.transform.scale = { .25f, .25f, .25f };
-
-        gameObjects.push_back(std::move(center));
-    }
-}
-
-void CubeApp::createEdges(){
-    std::vector<std::vector<Color>> colors = {
-        {YELLOW, BLACK, BLUE, BLACK, BLACK, BLACK},
-        {YELLOW, BLACK, BLACK, RED, BLACK, BLACK},
-        {YELLOW, BLACK, BLACK, BLACK, GREEN, BLACK},
-        {YELLOW, BLACK, BLACK, BLACK, BLACK, ORANGE},
-        {BLACK, BLACK, BLUE, RED, BLACK, BLACK},
-        {BLACK, BLACK, BLACK, RED, GREEN, BLACK}
-    };
-
-    std::vector<glm::vec3> offsets = {
-        { .0f, -1.0f, -1.0f },
-        { 1.0f, -1.0f, .0f },
-        { .0f, -1.0f, 1.0f },
-        { -1.0f, -1.0f, .0f },
-        { 1.0f, .0f , -1.0f },
-        { 1.0f, .0f , 1.0f }
-    };
-
-    assert(colors.size() == offsets.size());
-
-    for(int i = 0;i < colors.size();i++){
-        std::shared_ptr<Model> edge = createCubeModel(device, offsets[i]);
-        auto edgeObj = CubeObj::createGameObject();
-        edgeObj.model = edge;
-        edgeObj.transform.translation = { .0f, .0f, 2.5f };
-        edgeObj.transform.scale = { .25f, .25f, .25f };
-
-        gameObjects.push_back(std::move(edgeObj));
-    }
-}
-
-void CubeApp::createCorners(){
-
-}
-
 void CubeApp::loadGameObjects(){
     /*
     createCenters();
     createEdges();
     createCorners();
     */
-    std::shared_ptr<Model> edge = createCubeModel(device, { .0f, .0f, .0f });
-    auto edgeObj = CubeObj::createGameObject();
-    edgeObj.model = edge;
-    edgeObj.transform.translation = { .0f, .0f, 2.5f };
-    edgeObj.transform.scale = { .25f, .25f, .25f };
+    std::shared_ptr<Model> edge = Model::createModelFromFile(device, "models/smooth_vase.obj");
+    auto cube = CubeObj::createGameObject();
+    cube.model = edge;
+    cube.transform.translation = { .0f, .0f, 2.5f };
+    cube.transform.scale = { .25f, .25f, .25f };
 
-    gameObjects.push_back(std::move(edgeObj));
+    gameObjects.push_back(std::move(cube));
 }
