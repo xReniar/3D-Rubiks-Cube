@@ -27,6 +27,7 @@ public:
     bool wasWindowResized() { return framebufferResized; }
     void resetWindowResizedFlag() { framebufferResized = false; }
     void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+    GLFWwindow *getGLFWwindow() const { return window; }
 private:
     int width;
     int height;
