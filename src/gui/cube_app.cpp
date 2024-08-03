@@ -1,5 +1,6 @@
 #include"cube_app.hpp"
 
+#include"controller.hpp"
 #include"render_system.hpp"
 #include"camera.hpp"
 #include"../constants.hpp"
@@ -12,6 +13,7 @@
 #include<cassert>
 #include<stdexcept>
 #include<array>
+#include<chrono>
 
 
 CubeApp::CubeApp(){
@@ -26,8 +28,20 @@ void CubeApp::run(){
     //camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
+    auto viewerObject = CubeObj::createGameObject();
+    Controller cameraController{};
+
+    auto currentTime = std::chrono::high_resolution_clock::now();
+
     while(!cubeGUI.shouldClose()){
         glfwPollEvents();
+
+        auto newTime = std::chrono::high_resolution_clock::now();
+        float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
+        currentTime = newTime;
+
+        cameraController.moveInPlaneXZ(cubeGUI.getGLFWwindow(), frameTime, viewerObject);
+        camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspect = renderer.getAspectRatio();
         //camera.setOrthographicProjection(-aspect, aspect,-1, 1, -1, 1);
@@ -186,6 +200,7 @@ void CubeApp::createCorners(){
 }
 
 void CubeApp::loadGameObjects(){
+    /*
     std::shared_ptr<Model> edge = createCubeModel(device, { .0f, .0f, .0f }, Vec3Color({YELLOW, WHITE, BLUE, RED, GREEN, ORANGE}));
     auto edgeObj = CubeObj::createGameObject();
     edgeObj.model = edge;
@@ -193,9 +208,8 @@ void CubeApp::loadGameObjects(){
     edgeObj.transform.scale = { .25f, .25f, .25f };
 
     gameObjects.push_back(std::move(edgeObj));
-    /*
+    */
     createCenters();
     createEdges();
     createCorners();
-    */
 }
