@@ -186,7 +186,16 @@ void CubeApp::createCorners(){
 }
 
 void CubeApp::loadGameObjects(){
+    std::shared_ptr<Model> edge = createCubeModel(device, { .0f, .0f, .0f }, Vec3Color({YELLOW, WHITE, BLUE, RED, GREEN, ORANGE}));
+    auto edgeObj = CubeObj::createGameObject();
+    edgeObj.model = edge;
+    edgeObj.transform.translation = { .0f, .0f, 2.5f };
+    edgeObj.transform.scale = { .25f, .25f, .25f };
+
+    gameObjects.push_back(std::move(edgeObj));
+    /*
     createCenters();
     createEdges();
     createCorners();
+    */
 }
