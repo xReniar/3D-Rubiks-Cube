@@ -29,7 +29,7 @@ void CubeApp::run(){
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
     auto viewerObject = CubeObj::createGameObject();
-    Controller cameraController{};
+    Controller controller{};
 
     auto currentTime = std::chrono::high_resolution_clock::now();
 
@@ -40,7 +40,8 @@ void CubeApp::run(){
         float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
         currentTime = newTime;
 
-        cameraController.moveInPlaneXZ(cubeGUI.getGLFWwindow(), frameTime, viewerObject);
+        controller.orbitAroundCube(cubeGUI.getGLFWwindow(), frameTime, viewerObject);
+        controller.rotateCube(cubeGUI.getGLFWwindow(), frameTime, gameObjects);
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspect = renderer.getAspectRatio();
@@ -64,11 +65,20 @@ void CubeApp::loadGameObjects(){
     createEdges();
     createCorners();
     */
-    std::shared_ptr<Model> edge = Model::createModelFromFile(device, "models/smooth_vase.obj");
-    auto cube = CubeObj::createGameObject();
-    cube.model = edge;
-    cube.transform.translation = { .0f, .0f, 2.5f };
-    cube.transform.scale = { .25f, .25f, .25f };
 
-    gameObjects.push_back(std::move(cube));
+    std::vector<std::string> models = {
+        "models/colored_cube.obj",
+        "models/c2.obj",
+        "models/c3.obj"
+    };
+
+    for(auto modelName : models){
+        std::shared_ptr<Model> model = Model::createModelFromFile(device, modelName);
+        auto cube = CubeObj::createGameObject();
+        cube.model = model;
+        cube.transform.translation = { .0f, .0f, 2.5f };
+        cube.transform.scale = { .25f, .25f, .25f };
+
+        gameObjects.push_back(std::move(cube));
+    }
 }
