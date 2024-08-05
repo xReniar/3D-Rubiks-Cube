@@ -27,9 +27,6 @@ private:
     Renderer renderer{cubeGUI, device};
     std::vector<CubeObj> gameObjects;
 
-    void createCenters();
-    void createEdges();
-    void createCorners();
     void loadGameObjects();
 
 };
