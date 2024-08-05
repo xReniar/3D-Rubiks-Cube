@@ -31,6 +31,8 @@ void CubeApp::run(){
     auto viewerObject = CubeObj::createGameObject();
     Controller controller{};
 
+    GLFWwindow* window = cubeGUI.getGLFWwindow();
+
     auto currentTime = std::chrono::high_resolution_clock::now();
 
     while(!cubeGUI.shouldClose()){
@@ -40,8 +42,8 @@ void CubeApp::run(){
         float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
         currentTime = newTime;
 
-        controller.orbitAroundCube(cubeGUI.getGLFWwindow(), frameTime, viewerObject);
-        controller.rotateCube(cubeGUI.getGLFWwindow(), frameTime, gameObjects);
+        controller.orbitAroundCube(window, frameTime, viewerObject);
+        controller.rotateCube(window, frameTime, gameObjects);
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspect = renderer.getAspectRatio();
