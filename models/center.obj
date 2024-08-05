@@ -1,4 +1,4 @@
-# Cube created from C++ code
+# center cube piece
 o Cube
 # faccia LEFT
 v -0.5 -0.5 -0.5 0.9 0.6 0.1
