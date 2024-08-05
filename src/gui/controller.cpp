@@ -50,18 +50,29 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             inverseKeyPressed = false;
         }
 
+        if(glfwGetKey(window, keys.double_turn) == GLFW_PRESS)
+            doubleTurnKeyPressed = true;
+
+        if(glfwGetKey(window, keys.double_turn) == GLFW_RELEASE && doubleTurnKeyPressed) {
+            if(numOfTurns == 1)
+                numOfTurns = 2;
+            else
+                numOfTurns = 1;
+            doubleTurnKeyPressed = false;
+        }
+
         if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.R_turn){
-            target.R_turn -= (turnAngle * inverse);
+            target.R_turn -= (turnAngle * inverse) * numOfTurns;
             animation.R_turn = true;
         }
 
         if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.U_turn){
-            target.U_turn += (turnAngle * inverse);
+            target.U_turn += (turnAngle * inverse) * numOfTurns;
             animation.U_turn = true;
         }
 
         if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.D_turn){
-            target.D_turn -= (turnAngle * inverse);
+            target.D_turn -= (turnAngle * inverse) * numOfTurns;
             animation.D_turn = true;
         }
         
@@ -72,13 +83,20 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             if (glm::epsilonEqual(current.R_turn, target.R_turn, 0.01f)) {
                 current.R_turn = target.R_turn;
                 animation.R_turn = false;
-                cube.turn("R");
+                if(numOfTurns == 2)
+                    cube.turn("R2");
+                else if(inverseKeyPressed)
+                    cube.turn("R'");
+                else
+                    cube.turn("R");
             }
 
             auto& obj = gameObjects[1];
             auto& obj2 = gameObjects[2];
+            auto& obj3 = gameObjects[3];
             obj.transform.rotation.x = current.R_turn;
             obj2.transform.rotation.x = current.R_turn;
+            obj3.transform.rotation.x = current.R_turn;
         }
 
         if (animation.U_turn) {
@@ -87,10 +105,15 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             if (glm::epsilonEqual(current.U_turn, target.U_turn, 0.01f)) {
                 current.U_turn = target.U_turn;
                 animation.U_turn = false;
-                cube.turn("U");
+                if(numOfTurns == 2)
+                    cube.turn("U2");
+                else if(inverseKeyPressed)
+                    cube.turn("U'");
+                else
+                    cube.turn("U");
             }
 
-            auto& obj2 = gameObjects[2];
+            auto& obj2 = gameObjects[3];
             obj2.transform.rotation.y = current.U_turn;
         }
 
@@ -100,7 +123,12 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             if (glm::epsilonEqual(current.D_turn, target.D_turn, 0.01f)) {
                 current.D_turn = target.D_turn;
                 animation.D_turn = false;
-                cube.turn("D");
+                if(numOfTurns == 2)
+                    cube.turn("D2");
+                else if(inverseKeyPressed)
+                    cube.turn("D'");
+                else
+                    cube.turn("D");
             }
 
             auto& obj2 = gameObjects[2];
