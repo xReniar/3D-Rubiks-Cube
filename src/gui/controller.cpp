@@ -50,28 +50,29 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
         inverseKeyPressed = false;
     }
 
-    if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !moves.R_turn){
+    if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.R_turn){
         target.R_turn -= (turnAngle * inverse);
-        moves.R_turn = true;
+        animation.R_turn = true;
     }
 
-    if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !moves.U_turn){
+    if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.U_turn){
         target.U_turn += (turnAngle * inverse);
-        moves.U_turn = true;
+        animation.U_turn = true;
     }
 
-    if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !moves.D_turn){
+    if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.D_turn){
         target.D_turn -= (turnAngle * inverse);
-        moves.D_turn = true;
+        animation.D_turn = true;
     }
     
 
-    if (moves.R_turn) {
+    if (animation.R_turn) {
         current.R_turn = glm::mix(current.R_turn, target.R_turn, rotationSpeed * dt);
 
         if (glm::epsilonEqual(current.R_turn, target.R_turn, 0.01f)) {
             current.R_turn = target.R_turn;
-            moves.R_turn = false;
+            animation.R_turn = false;
+            cube.turn("R");
         }
 
         auto& obj = gameObjects[1];
@@ -80,24 +81,26 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
         obj2.transform.rotation.x = current.R_turn;
     }
 
-    if (moves.U_turn) {
+    if (animation.U_turn) {
         current.U_turn = glm::mix(current.U_turn, target.U_turn, rotationSpeed * dt);
 
         if (glm::epsilonEqual(current.U_turn, target.U_turn, 0.01f)) {
             current.U_turn = target.U_turn;
-            moves.U_turn = false;
+            animation.U_turn = false;
+            cube.turn("U");
         }
 
         auto& obj2 = gameObjects[2];
         obj2.transform.rotation.y = current.U_turn;
     }
 
-    if (moves.D_turn) {
+    if (animation.D_turn) {
         current.D_turn = glm::mix(current.D_turn, target.D_turn, rotationSpeed * dt);
 
         if (glm::epsilonEqual(current.D_turn, target.D_turn, 0.01f)) {
             current.D_turn = target.D_turn;
-            moves.D_turn = false;
+            animation.D_turn = false;
+            cube.turn("D");
         }
 
         auto& obj2 = gameObjects[2];
