@@ -44,6 +44,8 @@ void CubeApp::run(){
 
         controller.orbitAroundCube(window, frameTime, viewerObject);
         controller.rotateCube(window, frameTime, gameObjects);
+        controller.solveCube(window, frameTime, gameObjects);
+
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspect = renderer.getAspectRatio();
@@ -69,9 +71,10 @@ void CubeApp::loadGameObjects(){
     */
 
     std::vector<std::string> models = {
-        "models/colored_cube.obj",
-        "models/c2.obj",
-        "models/c3.obj"
+        //"models/colored_cube.obj",
+        "models/center.obj",
+        "models/center_red.obj",
+        "models/edge_whiteRed.obj"
     };
 
     for(auto modelName : models){
