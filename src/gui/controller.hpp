@@ -3,6 +3,7 @@
 
 #include"cube_obj.hpp"
 #include"cube_gui.hpp"
+#include"../cube/Cube.hpp"
 
 struct TargetRotation {
     float U_turn = 0.0f;
@@ -45,13 +46,15 @@ public:
         int l_turn = GLFW_KEY_6;
     };
     
-    struct MoveState {
+    struct Animation {
         bool U_turn = false;
         bool D_turn = false;
         bool F_turn = false;
         bool R_turn = false;
         bool B_turn = false;
         bool L_turn = false;
+
+        bool isRotating(){ return !U_turn && !D_turn && !F_turn && !R_turn && !B_turn && !L_turn; }
     };
     
 
@@ -65,9 +68,11 @@ public:
 
     bool inverseKeyPressed = false;
 
-    MoveState moves{};
+    Animation animation{};
     TargetRotation target{};
     CurrentRotation current{};
+
+    Cube cube{};
 
     void orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerObject);
     void rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects);
