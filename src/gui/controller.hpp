@@ -4,6 +4,7 @@
 #include"cube_obj.hpp"
 #include"cube_gui.hpp"
 #include"../cube/Cube.hpp"
+#include"../solver/Solver.hpp"
 
 struct TargetRotation {
     float U_turn = 0.0f;
@@ -44,6 +45,8 @@ public:
         int r_turn = GLFW_KEY_4;
         int b_turn = GLFW_KEY_5;
         int l_turn = GLFW_KEY_6;
+
+        int solve = GLFW_KEY_SPACE;
     };
     
     struct Animation {
@@ -67,16 +70,18 @@ public:
     float inverse = 1.f;
 
     bool inverseKeyPressed = false;
+    bool solveKeyPressed = false;
 
     Animation animation{};
     TargetRotation target{};
     CurrentRotation current{};
 
     Cube cube{};
+    Solver solver{};
 
     void orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerObject);
     void rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects);
-    
+    void solveCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects);
 };
 
 #endif
