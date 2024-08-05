@@ -39,6 +39,7 @@ public:
         int lookDown = GLFW_KEY_DOWN;
 
         int inverse = GLFW_KEY_0;
+        int double_turn = GLFW_KEY_9;
         int u_turn = GLFW_KEY_1;
         int d_turn = GLFW_KEY_2;
         int f_turn = GLFW_KEY_3;
@@ -68,8 +69,10 @@ public:
     float rotationSpeed = glm::radians(360.0f);
     float turnAngle = glm::radians(90.0f);
     float inverse = 1.f;
+    int numOfTurns = 1;
 
     bool inverseKeyPressed = false;
+    bool doubleTurnKeyPressed = false;
     bool solveKeyPressed = false;
 
     Animation animation{};
