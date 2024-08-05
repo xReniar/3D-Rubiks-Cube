@@ -4,6 +4,7 @@ Solver::Solver(){
     
 }
 
-void Solver::solve(Cube cube){
-    
+std::string Solver::getSolution(std::string cubeState){
+    std::string solution = "";
+    return solution;
 }

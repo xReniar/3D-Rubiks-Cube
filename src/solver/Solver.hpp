@@ -6,7 +6,7 @@
 class Solver {
 public:
     Solver();
-    void solve(Cube cube);
+    std::string getSolution(std::string cubeState);
 };
 
 #endif
