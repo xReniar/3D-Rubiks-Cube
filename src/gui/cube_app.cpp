@@ -67,6 +67,7 @@ void CubeApp::loadGameObjects(){
     std::vector<std::string> models = {
         "models/center.obj",
         "models/center_red.obj",
+        "models/center_white.obj",
         "models/edge_whiteRed.obj",
         "models/edge_yellowRed.obj"
     };
