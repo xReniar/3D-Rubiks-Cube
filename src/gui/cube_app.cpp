@@ -65,7 +65,6 @@ void CubeApp::run(){
 
 void CubeApp::loadGameObjects(){
     std::vector<std::string> models = {
-        //"models/colored_cube.obj",
         "models/center.obj",
         "models/center_red.obj",
         "models/edge_whiteRed.obj",
