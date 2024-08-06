@@ -236,7 +236,6 @@ void Cube::turn(const std::string& str){
             i++;
         }
     }
-    this->show();
 }
 
 char f(Cubie slot){
