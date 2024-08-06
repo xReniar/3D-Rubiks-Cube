@@ -58,7 +58,7 @@ public:
         bool B_turn = false;
         bool L_turn = false;
 
-        bool isRotating(){ return !U_turn && !D_turn && !F_turn && !R_turn && !B_turn && !L_turn; }
+        bool isRotating(){ return U_turn || D_turn || F_turn || R_turn || B_turn || L_turn; }
     };
     
 
