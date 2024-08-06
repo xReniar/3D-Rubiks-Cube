@@ -1,12 +1,12 @@
 #!bin/bash
 
 # declaring path variables
-BIN_PATH="/usr/local/bin"
+GLSLC_PATH="/usr/local/bin"
 TINYOBJLOADER_PATH="./include"
 
 # compling shaders using glslc
-${BIN_PATH}/glslc shaders/shader.vert -o shaders/shader.vert.spv
-${BIN_PATH}/glslc shaders/shader.frag -o shaders/shader.frag.spv
+${GLSLC_PATH}/glslc shaders/shader.vert -o shaders/shader.vert.spv
+${GLSLC_PATH}/glslc shaders/shader.frag -o shaders/shader.frag.spv
 
 # compile project
 g++ -std=c++17 -O2 \
