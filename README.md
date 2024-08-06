@@ -5,6 +5,8 @@ This project was made with the following software version:
 - Linux Ubuntu 22.04
 - Vulkan Instance Version: `1.3.204`
 - C/C++ compiler Version: `11.4.0`
+## How to use
+To possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`
 ## Requirements
 To install `Vulkan` and development tools just execute in the terminal:
 ```bash
