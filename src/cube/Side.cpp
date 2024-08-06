@@ -1,20 +1,22 @@
 #include"Side.hpp"
 
-Side::Side(Color color){
+Side::Side(Color color, std::vector<int> pieceId){
     for(int i = 0;i < 9;i++){
-        slot[i] = color;
+        slot[i].color = color;
+        slot[i].id = pieceId[i];
     }
 }
 
-Side::Side(Color colors[]){
+Side::Side(Color colors[], std::vector<int> pieceId){
     for(int i = 0;i < 9;i++){
-        slot[i] = colors[i];
+        slot[i].color = colors[i];
+        slot[i].id = pieceId[i];
     }
 }
 
 void Side::turn(Direction Direction){
     /* make a copy */
-    Color _copy[9];
+    Cubie _copy[9];
     for(int i = 0;i < 9;i++){
         _copy[i] = slot[i];
     }
