@@ -66,10 +66,32 @@ void CubeApp::run(){
 void CubeApp::loadGameObjects(){
     std::vector<std::string> models = {
         "models/center.obj",
-        "models/center_red.obj",
+        "models/center_yellow.obj",
         "models/center_white.obj",
+        "models/center_blue.obj",
+        "models/center_red.obj",
+        "models/center_green.obj",
+        "models/center_orange.obj",
+        "models/edge_yellowBlue.obj",
+        "models/edge_yellowRed.obj",
+        "models/edge_yellowGreen.obj",
+        "models/edge_yellowOrange.obj",
+        "models/edge_whiteBlue.obj",
         "models/edge_whiteRed.obj",
-        "models/edge_yellowRed.obj"
+        "models/edge_whiteGreen.obj",
+        "models/edge_whiteOrange.obj",
+        "models/edge_blueRed.obj",
+        "models/edge_redGreen.obj",
+        "models/edge_greenOrange.obj",
+        "models/edge_orangeBlue.obj",
+        "models/corner_whiteBlueRed.obj",
+        "models/corner_whiteRedGreen.obj",
+        "models/corner_whiteGreenOrange.obj",
+        "models/corner_whiteOrangeBlue.obj",
+        "models/corner_yellowBlueRed.obj",
+        "models/corner_yellowRedGreen.obj",
+        "models/corner_yellowGreenOrange.obj",
+        "models/corner_yellowOrangeBlue.obj"
     };
 
     for(auto modelName : models){
