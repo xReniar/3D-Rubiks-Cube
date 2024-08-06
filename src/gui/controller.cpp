@@ -67,6 +67,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 animation.R_turn = true;
             }
 
+            if(glfwGetKey(window, keys.l_turn) == GLFW_PRESS && !animation.L_turn){
+                target.L_turn -= (turnAngle * inverse) * numOfTurns;
+                animation.L_turn = true;
+            }
+
             if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.U_turn){
                 target.U_turn += (turnAngle * inverse) * numOfTurns;
                 animation.U_turn = true;
@@ -75,6 +80,16 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.D_turn){
                 target.D_turn -= (turnAngle * inverse) * numOfTurns;
                 animation.D_turn = true;
+            }
+
+            if(glfwGetKey(window, keys.f_turn) == GLFW_PRESS && !animation.F_turn){
+                target.F_turn += (turnAngle * inverse) * numOfTurns;
+                animation.F_turn = true;
+            }
+
+            if(glfwGetKey(window, keys.b_turn) == GLFW_PRESS && !animation.B_turn){
+                target.B_turn -= (turnAngle * inverse) * numOfTurns;
+                animation.B_turn = true;
             }
         }
         
@@ -96,6 +111,26 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             for(int objId : cube.getFaceId("RIGHT")){
                 auto& obj = gameObjects[objId];
                 obj.transform.rotation.x = current.R_turn;
+            }
+        }
+
+        if (animation.L_turn) {
+            current.L_turn = glm::mix(current.L_turn, target.L_turn, rotationSpeed * dt);
+
+            if (glm::epsilonEqual(current.L_turn, target.L_turn, 0.01f)) {
+                current.L_turn = target.L_turn;
+                animation.L_turn = false;
+                if(numOfTurns == 2)
+                    cube.turn("L2");
+                else if(inverse <= 0)
+                    cube.turn("L'");
+                else
+                    cube.turn("L");
+            }
+
+            for(int objId : cube.getFaceId("LEFT")){
+                auto& obj = gameObjects[objId];
+                obj.transform.rotation.x = current.L_turn;
             }
         }
 
@@ -136,6 +171,46 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             for(int objId : cube.getFaceId("BOTTOM")){
                 auto& obj = gameObjects[objId];
                 obj.transform.rotation.y = current.D_turn;
+            }
+        }
+
+        if (animation.F_turn) {
+            current.F_turn = glm::mix(current.F_turn, target.F_turn, rotationSpeed * dt);
+
+            if (glm::epsilonEqual(current.F_turn, target.F_turn, 0.01f)) {
+                current.F_turn = target.F_turn;
+                animation.F_turn = false;
+                if(numOfTurns == 2)
+                    cube.turn("F2");
+                else if(inverse <= 0)
+                    cube.turn("F'");
+                else
+                    cube.turn("F");
+            }
+
+            for(int objId : cube.getFaceId("FRONT")){
+                auto& obj = gameObjects[objId];
+                obj.transform.rotation.z = current.F_turn;
+            }
+        }
+
+        if (animation.B_turn) {
+            current.B_turn = glm::mix(current.B_turn, target.B_turn, rotationSpeed * dt);
+
+            if (glm::epsilonEqual(current.B_turn, target.B_turn, 0.01f)) {
+                current.B_turn = target.B_turn;
+                animation.B_turn = false;
+                if(numOfTurns == 2)
+                    cube.turn("B2");
+                else if(inverse <= 0)
+                    cube.turn("B'");
+                else
+                    cube.turn("B");
+            }
+
+            for(int objId : cube.getFaceId("BACK")){
+                auto& obj = gameObjects[objId];
+                obj.transform.rotation.z = current.B_turn;
             }
         }
     }
