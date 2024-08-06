@@ -65,33 +65,32 @@ void CubeApp::run(){
 
 void CubeApp::loadGameObjects(){
     std::vector<std::string> models = {
-        "models/center.obj",
-        "models/center_yellow.obj",
-        "models/center_white.obj",
-        "models/center_blue.obj",
-        "models/center_red.obj",
-        "models/center_green.obj",
-        "models/center_orange.obj",
-        "models/edge_yellowBlue.obj",
-        "models/edge_yellowRed.obj",
-        "models/edge_yellowGreen.obj",
-        "models/edge_yellowOrange.obj",
-        "models/edge_whiteBlue.obj",
-        "models/edge_whiteRed.obj",
-        "models/edge_whiteGreen.obj",
-        "models/edge_whiteOrange.obj",
-        "models/edge_blueRed.obj",
-        "models/edge_redGreen.obj",
-        "models/edge_greenOrange.obj",
-        "models/edge_orangeBlue.obj",
-        "models/corner_whiteBlueRed.obj",
-        "models/corner_whiteRedGreen.obj",
-        "models/corner_whiteGreenOrange.obj",
-        "models/corner_whiteOrangeBlue.obj",
-        "models/corner_yellowBlueRed.obj",
-        "models/corner_yellowRedGreen.obj",
-        "models/corner_yellowGreenOrange.obj",
-        "models/corner_yellowOrangeBlue.obj"
+        "models/center_yellow.obj",                 // 0
+        "models/center_white.obj",                  // 1
+        "models/center_blue.obj",                   // 2
+        "models/center_red.obj",                    // 3
+        "models/center_green.obj",                  // 4
+        "models/center_orange.obj",                 // 5
+        "models/edge_yellowBlue.obj",               // 6
+        "models/edge_yellowRed.obj",                // 7
+        "models/edge_yellowGreen.obj",              // 8
+        "models/edge_yellowOrange.obj",             // 9
+        "models/edge_whiteBlue.obj",                // 10
+        "models/edge_whiteRed.obj",                 // 11
+        "models/edge_whiteGreen.obj",               // 12
+        "models/edge_whiteOrange.obj",              // 13
+        "models/edge_blueRed.obj",                  // 14
+        "models/edge_redGreen.obj",                 // 15
+        "models/edge_greenOrange.obj",              // 16
+        "models/edge_orangeBlue.obj",               // 17
+        "models/corner_whiteBlueRed.obj",           // 18
+        "models/corner_whiteRedGreen.obj",          // 19
+        "models/corner_whiteGreenOrange.obj",       // 20
+        "models/corner_whiteOrangeBlue.obj",        // 21
+        "models/corner_yellowBlueRed.obj",          // 22
+        "models/corner_yellowRedGreen.obj",         // 23
+        "models/corner_yellowGreenOrange.obj",      // 24
+        "models/corner_yellowOrangeBlue.obj"        // 25
     };
 
     for(auto modelName : models){
