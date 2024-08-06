@@ -61,19 +61,21 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             doubleTurnKeyPressed = false;
         }
 
-        if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.R_turn){
-            target.R_turn -= (turnAngle * inverse) * numOfTurns;
-            animation.R_turn = true;
-        }
+        if(!animation.isRotating()){
+            if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.R_turn){
+                target.R_turn -= (turnAngle * inverse) * numOfTurns;
+                animation.R_turn = true;
+            }
 
-        if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.U_turn){
-            target.U_turn += (turnAngle * inverse) * numOfTurns;
-            animation.U_turn = true;
-        }
+            if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.U_turn){
+                target.U_turn += (turnAngle * inverse) * numOfTurns;
+                animation.U_turn = true;
+            }
 
-        if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.D_turn){
-            target.D_turn -= (turnAngle * inverse) * numOfTurns;
-            animation.D_turn = true;
+            if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.D_turn){
+                target.D_turn -= (turnAngle * inverse) * numOfTurns;
+                animation.D_turn = true;
+            }
         }
         
 
