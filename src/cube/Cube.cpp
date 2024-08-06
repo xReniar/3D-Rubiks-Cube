@@ -1,18 +1,18 @@
 #include"Cube.hpp"
 
 Cube::Cube():
-    top_side(YELLOW),
-    bottom_side(WHITE),
-    front_side(BLUE),
-    right_side(RED),
-    back_side(GREEN),
-    left_side(ORANGE){
+    top_side(YELLOW, {24, 8, 23, 9, 0, 7, 25, 6, 22}),
+    bottom_side(WHITE, {21, 10, 18, 13, 1, 11, 20, 12, 19}),
+    front_side(BLUE, {25, 6, 22, 17, 2, 14, 21, 10, 18}),
+    right_side(RED, {22, 7, 23, 14, 3, 15, 18, 11, 19}),
+    back_side(GREEN, {23, 8, 24, 15, 4, 16, 19, 12, 20}),
+    left_side(ORANGE, {24, 9, 25, 16, 5, 17, 20, 13, 21}){
         
     }
 
 void Cube::u_turn(Direction direction){
     /* make a copy */
-    Color front[3],right[3],back[3],left[3];
+    Cubie front[3],right[3],back[3],left[3];
     for(int i = 0;i < 3;i++){
         front[i] = front_side.slot[i];
         right[i] = right_side.slot[i];
@@ -40,7 +40,7 @@ void Cube::u_turn(Direction direction){
 
 void Cube::d_turn(Direction direction){
     /* make a copy */
-    Color front[3],right[3],back[3],left[3];
+    Cubie front[3],right[3],back[3],left[3];
     for(int i = 6;i < 9;i++){
         front[i-6] = front_side.slot[i];
         right[i-6] = right_side.slot[i];
@@ -68,7 +68,7 @@ void Cube::d_turn(Direction direction){
 
 void Cube::f_turn(Direction direction){
     /* make a copy */
-    Color top[3],right[3],bottom[3],left[3];
+    Cubie top[3],right[3],bottom[3],left[3];
     for(int i = 0;i < 3;i++){
         top[i] = top_side.slot[6+i];
         right[i] = right_side.slot[i*3];
@@ -95,7 +95,7 @@ void Cube::f_turn(Direction direction){
 }
 
 void Cube::r_turn(Direction direction){
-    Color top[3],back[3],bottom[3],front[3];
+    Cubie top[3],back[3],bottom[3],front[3];
     for(int i = 2;i < 9;i=i+3){
         int x = (i - 2)/3;
         top[x] = top_side.slot[i];
@@ -124,7 +124,7 @@ void Cube::r_turn(Direction direction){
 }
 
 void Cube::b_turn(Direction direction){
-    Color top[3],right[3],bottom[3],left[3];
+    Cubie top[3],right[3],bottom[3],left[3];
     for(int i = 0;i < 3;i++){
         top[i] = top_side.slot[i];
         right[i] = right_side.slot[2+(i*3)];
@@ -150,7 +150,7 @@ void Cube::b_turn(Direction direction){
 }
 
 void Cube::l_turn(Direction direction){
-    Color top[3],back[3],bottom[3],front[3];
+    Cubie top[3],back[3],bottom[3],front[3];
     for(int i = 0;i < 7;i=i+3){
         int x = i/3;
         top[x] = top_side.slot[i];
@@ -236,10 +236,11 @@ void Cube::turn(const std::string& str){
             i++;
         }
     }
+    this->show();
 }
 
-char f(Color color){
-    switch(color){
+char f(Cubie slot){
+    switch(slot.color){
         case YELLOW: return 'y';
         case WHITE: return 'w';
         case BLUE: return 'b';
@@ -267,6 +268,22 @@ std::string Cube::state(){
 
     std::string str(cubeState.begin(), cubeState.end());
     return str;
+}
+
+std::vector<int> Cube::getFaceId(std::string side){
+    std::vector<int> faceId;
+    Side* requestedSide;
+    if(side == "TOP") requestedSide = &(this->top_side);
+    if(side == "BOTTOM") requestedSide = &(this->bottom_side);
+    if(side == "FRONT") requestedSide = &(this->front_side);
+    if(side == "RIGHT") requestedSide = &(this->right_side);
+    if(side == "BACK") requestedSide = &(this->back_side);
+    if(side == "LEFT") requestedSide = &(this->left_side);
+
+    for(int i = 0;i < 9;i++)
+        faceId.push_back(requestedSide->slot[i].id);
+
+    return faceId;
 }
 
 void Cube::show(){
