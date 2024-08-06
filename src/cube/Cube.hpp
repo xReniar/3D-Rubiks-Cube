@@ -14,6 +14,14 @@ private:
     Side right_side;
     Side back_side;
     Side left_side;
+
+    std::vector<int> top_pieces = {};
+    std::vector<int> bottom_pieces = {};
+    std::vector<int> front_pieces = {};
+    std::vector<int> right_pieces = {};
+    std::vector<int> back_pieces = {};
+    std::vector<int> left_pieces = {};
+
     void u_turn(Direction direction);
     void d_turn(Direction direction);
     void f_turn(Direction direction);
