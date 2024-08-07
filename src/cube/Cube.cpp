@@ -205,12 +205,6 @@ void Cube::rotate(_Side_ side,Direction direction){
     }
 }
 
-std::string toString(std::vector<int> *faceId){
-    std::string faceIdStr = "";
-    std::cout << faceId->size();
-    return faceIdStr;
-}
-
 void Cube::turn(const std::string& str){
     Direction direction = CLOCKWISE;
     int turns = 1;
@@ -242,15 +236,7 @@ void Cube::turn(const std::string& str){
             i++;
         }
     }
-    std::cout << this->getFaceId("TOP").size();
-    /*
-    toString(&this->getFaceId("TOP"));
-    toString(&this->getFaceId("BOTTOM"));
-    toString(&this->getFaceId("FRONT"));
-    toString(&this->getFaceId("RIGHT"));
-    toString(&this->getFaceId("BACK"));
-    toString(&this->getFaceId("LEFT"));
-    */
+    //this->show();
 }
 
 char f(Cubie slot){
@@ -310,4 +296,25 @@ void Cube::show(){
     printf("      %c,%c,%c\n",f(bottom_side.slot[0]),f(bottom_side.slot[1]),f(bottom_side.slot[2]));
     printf("      %c,%c,%c\n",f(bottom_side.slot[3]),f(bottom_side.slot[4]),f(bottom_side.slot[5]));
     printf("      %c,%c,%c\n",f(bottom_side.slot[6]),f(bottom_side.slot[7]),f(bottom_side.slot[8]));
+
+    /*
+    for(int i = 0;i < 9;i++)
+        std::cout << top_side.slot[i].id << "," << std::flush;
+    std::cout << "" << std::endl;
+    for(int i = 0;i < 9;i++)
+        std::cout << bottom_side.slot[i].id << "," << std::flush;
+    std::cout << "" << std::endl;
+    for(int i = 0;i < 9;i++)
+        std::cout << front_side.slot[i].id << "," << std::flush;
+    std::cout << "" << std::endl;
+    for(int i = 0;i < 9;i++)
+        std::cout << right_side.slot[i].id << "," << std::flush;
+    std::cout << "" << std::endl;
+    for(int i = 0;i < 9;i++)
+        std::cout << back_side.slot[i].id << "," << std::flush;
+    std::cout << "" << std::endl;
+    for(int i = 0;i < 9;i++)
+        std::cout << left_side.slot[i].id << "," << std::flush;
+    std::cout << "\n--------------------------" << std::endl;
+    */
 }
