@@ -68,7 +68,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             }
 
             if(glfwGetKey(window, keys.l_turn) == GLFW_PRESS && !animation.L_turn){
-                target.L_turn -= (turnAngle * inverse) * numOfTurns;
+                target.L_turn += (turnAngle * inverse) * numOfTurns;
                 animation.L_turn = true;
             }
 
@@ -111,7 +111,6 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 auto& obj = gameObjects[objId];
                 obj.transform.rotation.x = current.R_turn;
             }
-            std::cout << gameObjects[22].transform.rotation.y << std::flush;
         }
 
         if (animation.L_turn) {
