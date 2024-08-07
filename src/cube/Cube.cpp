@@ -205,6 +205,12 @@ void Cube::rotate(_Side_ side,Direction direction){
     }
 }
 
+std::string toString(std::vector<int> *faceId){
+    std::string faceIdStr = "";
+    std::cout << faceId->size();
+    return faceIdStr;
+}
+
 void Cube::turn(const std::string& str){
     Direction direction = CLOCKWISE;
     int turns = 1;
@@ -236,6 +242,15 @@ void Cube::turn(const std::string& str){
             i++;
         }
     }
+    std::cout << this->getFaceId("TOP").size();
+    /*
+    toString(&this->getFaceId("TOP"));
+    toString(&this->getFaceId("BOTTOM"));
+    toString(&this->getFaceId("FRONT"));
+    toString(&this->getFaceId("RIGHT"));
+    toString(&this->getFaceId("BACK"));
+    toString(&this->getFaceId("LEFT"));
+    */
 }
 
 char f(Cubie slot){
