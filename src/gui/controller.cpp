@@ -99,19 +99,19 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.R_turn, target.R_turn, 0.01f)) {
                 current.R_turn = target.R_turn;
+                
+                if(numOfTurns == 2) cube.turn("R2");
+                else if(inverse <= 0) cube.turn("R'");
+                else cube.turn("R");
+
                 animation.R_turn = false;
-                if(numOfTurns == 2)
-                    cube.turn("R2");
-                else if(inverse <= 0)
-                    cube.turn("R'");
-                else
-                    cube.turn("R");
             }
 
             for(int objId : cube.getFaceId("RIGHT")){
                 auto& obj = gameObjects[objId];
                 obj.transform.rotation.x = current.R_turn;
             }
+            std::cout << gameObjects[22].transform.rotation.y << std::flush;
         }
 
         if (animation.L_turn) {
@@ -119,13 +119,12 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.L_turn, target.L_turn, 0.01f)) {
                 current.L_turn = target.L_turn;
+
+                if(numOfTurns == 2) cube.turn("L2");
+                else if(inverse <= 0) cube.turn("L'");
+                else cube.turn("L");
+
                 animation.L_turn = false;
-                if(numOfTurns == 2)
-                    cube.turn("L2");
-                else if(inverse <= 0)
-                    cube.turn("L'");
-                else
-                    cube.turn("L");
             }
 
             for(int objId : cube.getFaceId("LEFT")){
@@ -139,13 +138,12 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.U_turn, target.U_turn, 0.01f)) {
                 current.U_turn = target.U_turn;
+
+                if(numOfTurns == 2) cube.turn("U2");
+                else if(inverse <= 0) cube.turn("U'");
+                else cube.turn("U");
+
                 animation.U_turn = false;
-                if(numOfTurns == 2)
-                    cube.turn("U2");
-                else if(inverse <= 0)
-                    cube.turn("U'");
-                else
-                    cube.turn("U");
             }
 
             for(int objId : cube.getFaceId("TOP")){
@@ -159,13 +157,12 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.D_turn, target.D_turn, 0.01f)) {
                 current.D_turn = target.D_turn;
+                
+                if(numOfTurns == 2) cube.turn("D2");
+                else if(inverse <= 0) cube.turn("D'");
+                else cube.turn("D");
+
                 animation.D_turn = false;
-                if(numOfTurns == 2)
-                    cube.turn("D2");
-                else if(inverse <= 0)
-                    cube.turn("D'");
-                else
-                    cube.turn("D");
             }
 
             for(int objId : cube.getFaceId("BOTTOM")){
@@ -179,13 +176,12 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.F_turn, target.F_turn, 0.01f)) {
                 current.F_turn = target.F_turn;
+                
+                if(numOfTurns == 2) cube.turn("F2");
+                else if(inverse <= 0) cube.turn("F'");
+                else cube.turn("F");
+
                 animation.F_turn = false;
-                if(numOfTurns == 2)
-                    cube.turn("F2");
-                else if(inverse <= 0)
-                    cube.turn("F'");
-                else
-                    cube.turn("F");
             }
 
             for(int objId : cube.getFaceId("FRONT")){
@@ -199,13 +195,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.B_turn, target.B_turn, 0.01f)) {
                 current.B_turn = target.B_turn;
+                if(numOfTurns == 2) cube.turn("B2");
+                else if(inverse <= 0) cube.turn("B'");
+                else cube.turn("B");
+
                 animation.B_turn = false;
-                if(numOfTurns == 2)
-                    cube.turn("B2");
-                else if(inverse <= 0)
-                    cube.turn("B'");
-                else
-                    cube.turn("B");
             }
 
             for(int objId : cube.getFaceId("BACK")){
