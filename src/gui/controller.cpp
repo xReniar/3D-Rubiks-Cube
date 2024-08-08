@@ -194,6 +194,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if (glm::epsilonEqual(current.B_turn, target.B_turn, 0.01f)) {
                 current.B_turn = target.B_turn;
+
                 if(numOfTurns == 2) cube.turn("B2");
                 else if(inverse <= 0) cube.turn("B'");
                 else cube.turn("B");
