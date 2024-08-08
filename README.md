@@ -8,6 +8,7 @@ This project was made with the following software version:
 ## How to use
 To possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`
 ## Requirements
+The following instructions are for `Ubuntu`, for other operating systems read [here](https://vulkan-tutorial.com/Development_environment).
 ### Install Vulkan
 To install `Vulkan` and development tools just execute in the terminal:
 ```bash
@@ -21,7 +22,17 @@ sudo apt-get install libxi-dev
 sudo apt-get install libxxf86vm-dev
 ```
 ### Install glslc
-The steps to install `glslc` may vary depending which OS you are using, just follow these [instructions](https://vulkan-tutorial.com/Development_environment#page_Shader-Compiler) and place it in `usr/local/bin`.
+The shader compiler used is `glslc`, to download it click [here](https://github.com/google/shaderc/blob/main/downloads.md) by selecting the `gcc` release. This will download a `.tgz` file, just extract it and copy the `glslc` executable in `usr/local/bin`:
+```bash
+# go where the file is downloaded
+cd path/to/install.tgz
+
+# extract the file
+tar -xzvf install.tgz
+
+# copy to `usr/local/bin`
+sudo cp -r install/bin/glslc /usr/local/bin
+```
 ## Compile & Execute
 To compile and execute just run `run.sh`:
 ```bash
