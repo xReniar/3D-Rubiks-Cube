@@ -2,15 +2,30 @@
 #define CUBE_OBJ_H
 
 #include"model.hpp"
+#include<glm/gtc/quaternion.hpp>
+#include<glm/gtx/quaternion.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<memory>
+#include<map>
 
 struct TransformComponent {
     glm::vec3 translation{};
     glm::vec3 scale{ 1.f, 1.f, 1.f};
     glm::vec3 rotation{};
+    std::map<char, char> axis;
 
     glm::mat4 mat4(){
+        /*
+        glm::quat rotationQuat = glm::quat(glm::radians(rotation));
+
+        // Crea la matrice di trasformazione
+        glm::mat4 transformMatrix = glm::mat4(1.0f);
+        transformMatrix = glm::translate(transformMatrix, translation);
+        transformMatrix = transformMatrix * glm::mat4_cast(rotationQuat);
+        transformMatrix = glm::scale(transformMatrix, scale);
+
+        return transformMatrix;
+        */
         /*
         const float c3 = glm::cos(rotation.z);
         const float s3 = glm::sin(rotation.z);
@@ -90,10 +105,17 @@ public:
     std::shared_ptr<Model> model{};
     glm::vec3 color{};
     TransformComponent transform{};
+
+    void adjustAxis(std::string rotateSide);
+    void setAngleAxis(char axis, float value);
 private:
     id_t id;
 
-    CubeObj(id_t objId): id{objId}{}    
+    CubeObj(id_t objId): id{objId}{
+        transform.axis['x'] = 'x';
+        transform.axis['y'] = 'y';
+        transform.axis['z'] = 'z';
+    }
 };
 
 #endif

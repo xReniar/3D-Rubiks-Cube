@@ -106,10 +106,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
                 animation.R_turn = false;
             }
-
+            
             for(int objId : cube.getFaceId("RIGHT")){
                 auto& obj = gameObjects[objId];
-                obj.transform.rotation.x = current.R_turn;
+                obj.setAngleAxis(obj.transform.axis['x'], current.R_turn);
+                //obj.transform.rotation.x = current.R_turn;
             }
         }
 
@@ -128,7 +129,8 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             for(int objId : cube.getFaceId("LEFT")){
                 auto& obj = gameObjects[objId];
-                obj.transform.rotation.x = current.L_turn;
+                obj.setAngleAxis(obj.transform.axis['x'], current.L_turn);
+                //obj.transform.rotation.x = current.L_turn;
             }
         }
 
@@ -144,10 +146,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
                 animation.U_turn = false;
             }
-
+            
             for(int objId : cube.getFaceId("TOP")){
                 auto& obj = gameObjects[objId];
-                obj.transform.rotation.y = current.U_turn;
+                //obj.transform.rotation.y = current.U_turn;
+                obj.setAngleAxis(obj.transform.axis['y'], current.U_turn);
             }
         }
 
@@ -163,10 +166,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
                 animation.D_turn = false;
             }
-
+            
             for(int objId : cube.getFaceId("BOTTOM")){
                 auto& obj = gameObjects[objId];
-                obj.transform.rotation.y = current.D_turn;
+                //obj.transform.rotation.y = current.D_turn;
+                obj.setAngleAxis(obj.transform.axis['y'], current.D_turn);
             }
         }
 
@@ -182,10 +186,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
                 animation.F_turn = false;
             }
-
+            
             for(int objId : cube.getFaceId("FRONT")){
                 auto& obj = gameObjects[objId];
-                obj.transform.rotation.z = current.F_turn;
+                obj.setAngleAxis(obj.transform.axis['z'], current.F_turn);
+                //obj.transform.rotation.z = current.F_turn;
             }
         }
 
@@ -204,7 +209,8 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             for(int objId : cube.getFaceId("BACK")){
                 auto& obj = gameObjects[objId];
-                obj.transform.rotation.z = current.B_turn;
+                obj.setAngleAxis(obj.transform.axis['z'], current.B_turn);
+                //obj.transform.rotation.z = current.B_turn;
             }
         }
     }
