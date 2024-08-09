@@ -4,7 +4,7 @@ void CubeObj::adjustAxis(std::string rotateSide, float angle) {
     if(rotateSide == "TOP") transform.coordinateSystem.rotate('y', angle);
     if(rotateSide == "BOTTOM") transform.coordinateSystem.rotate('y', -angle);
     if(rotateSide == "FRONT") transform.coordinateSystem.rotate('z', angle);
-    if(rotateSide == "BACK") transform.coordinateSystem.rotate('z', angle); // wrong
+    if(rotateSide == "BACK") transform.coordinateSystem.rotate('z', -angle);
     if(rotateSide == "RIGHT") transform.coordinateSystem.rotate('x', -angle);
     if(rotateSide == "LEFT") transform.coordinateSystem.rotate('x', angle);
 }
