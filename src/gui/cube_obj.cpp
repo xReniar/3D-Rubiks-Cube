@@ -1,35 +1,36 @@
 #include"cube_obj.hpp"
 
-void CubeObj::adjustAxis(std::string rotateSide){
-    if(rotateSide == "TOP" || rotateSide == "BOTTOM"){
-        int copy = transform.axis['x'];
-        transform.axis['x'] = transform.axis['z'];
-        transform.axis['z'] = copy;
-    }
-
-    if(rotateSide == "FRONT" || rotateSide == "BACK"){
-        char copy = transform.axis['x'];
-        transform.axis['x'] = transform.axis['y'];
-        transform.axis['y'] = copy;
-    }
-
-    if(rotateSide == "RIGHT" || rotateSide == "LEFT"){
-        char copy = transform.axis['y'];
-        transform.axis['y'] = transform.axis['z'];
-        transform.axis['z'] = copy;
-    }
+void CubeObj::adjustAxis(std::string rotateSide, float angle) {
+    if(rotateSide == "TOP") transform.coordinateSystem.rotate('y', angle);
+    if(rotateSide == "BOTTOM") transform.coordinateSystem.rotate('y', -angle);
+    if(rotateSide == "FRONT") transform.coordinateSystem.rotate('z', angle);
+    if(rotateSide == "BACK") transform.coordinateSystem.rotate('z', angle); // wrong
+    if(rotateSide == "RIGHT") transform.coordinateSystem.rotate('x', -angle);
+    if(rotateSide == "LEFT") transform.coordinateSystem.rotate('x', angle);
 }
 
-void CubeObj::setAngleAxis(char axis, float value){
-    if(transform.axis[axis] == 'x'){
-        transform.rotation.x = value;
-    }
+void CubeObj::rotate(char plane, float value){
+    char correctPlane = plane;
+    /*
+    for(const auto& pair : transform.axis)
+        if(pair.second.value == plane)
+            correctPlane = pair.first;
+    */
+    //std::cout << correctPlane << std::endl;
     
-    if(transform.axis[axis] == 'y'){
-        transform.rotation.y = value;
-    }
-    
-    if(transform.axis[axis] == 'z'){
-        transform.rotation.z = value;
-    }
+}
+
+void CubeObj::showCoordinate(){
+    std::cout << "x: " <<
+        transform.coordinateSystem.i.x << ", " <<
+        transform.coordinateSystem.i.y << ", " <<
+        transform.coordinateSystem.i.z << std::endl;
+    std::cout << "y: " <<
+        transform.coordinateSystem.j.x << ", " <<
+        transform.coordinateSystem.j.y << ", " <<
+        transform.coordinateSystem.j.z << std::endl;
+    std::cout << "z: " <<
+        transform.coordinateSystem.k.x << ", " <<
+        transform.coordinateSystem.k.y << ", " <<
+        transform.coordinateSystem.k.z << std::endl;
 }
