@@ -51,7 +51,7 @@ public:
 
     float rotationSpeed = glm::radians(360.0f);
     float turnAngle = glm::radians(90.0f);
-    float inverse = 1.f;
+    int inverse = 1;
     int numOfTurns = 1;
 
     bool inverseKeyPressed = false;
