@@ -40,28 +40,29 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
     if(!solveKeyPressed){
-        // change moves from clockwise to anticlockwise or viceversa
-        if(glfwGetKey(window, keys.inverse) == GLFW_PRESS)
-            inverseKeyPressed = true;
-
-        // check if inverse key has been released
-        if(glfwGetKey(window, keys.inverse) == GLFW_RELEASE && inverseKeyPressed) {
-            inverse *= -1.0f;
-            inverseKeyPressed = false;
-        }
-
-        if(glfwGetKey(window, keys.double_turn) == GLFW_PRESS)
-            doubleTurnKeyPressed = true;
-
-        if(glfwGetKey(window, keys.double_turn) == GLFW_RELEASE && doubleTurnKeyPressed) {
-            if(numOfTurns == 1)
-                numOfTurns = 2;
-            else
-                numOfTurns = 1;
-            doubleTurnKeyPressed = false;
-        }
-
         if(!animation.isRotating()){
+            // change moves from clockwise to anticlockwise or viceversa
+            if(glfwGetKey(window, keys.inverse) == GLFW_PRESS)
+                inverseKeyPressed = true;
+
+            if(glfwGetKey(window, keys.inverse) == GLFW_RELEASE && inverseKeyPressed) {
+                inverse *= -1;
+                inverseKeyPressed = false;
+            }
+
+            // enable/disable double turning
+            if(glfwGetKey(window, keys.double_turn) == GLFW_PRESS)
+                doubleTurnKeyPressed = true;
+
+            if(glfwGetKey(window, keys.double_turn) == GLFW_RELEASE && doubleTurnKeyPressed) {
+                if(numOfTurns == 1)
+                    numOfTurns = 2;
+                else
+                    numOfTurns = 1;
+                doubleTurnKeyPressed = false;
+            }
+
+            // normal rotations
             if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.R_turn){
                 for(int objId : cube.getFaceId("RIGHT"))
                     gameObjects[objId].transform.targetRotation.x -= (turnAngle * inverse) * numOfTurns;
@@ -99,7 +100,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             }
         }
 
-        //gameObjects[22].showCoordinate();
+        gameObjects[22].showCoordinate();
         
 
         if (animation.R_turn) {
@@ -114,7 +115,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                     gameObjects[objId].adjustAxis("RIGHT", turnAngle * inverse * numOfTurns);
                 
                 if(numOfTurns == 2) cube.turn("R2");
-                else if(inverse <= 0) cube.turn("R'");
+                else if(inverse == -1) cube.turn("R'");
                 else cube.turn("R");
 
                 animation.R_turn = false;
@@ -136,7 +137,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                     gameObjects[objId].adjustAxis("LEFT",turnAngle * inverse * numOfTurns);
 
                 if(numOfTurns == 2) cube.turn("L2");
-                else if(inverse <= 0) cube.turn("L'");
+                else if(inverse == -1) cube.turn("L'");
                 else cube.turn("L");
 
                 animation.L_turn = false;
@@ -154,8 +155,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                     obj.transform.rotation.y = obj.transform.targetRotation.y;
                 }
 
+                for(int objId : cube.getFaceId("TOP"))
+                    gameObjects[objId].adjustAxis("TOP", turnAngle * inverse * numOfTurns);
+
                 if(numOfTurns == 2) cube.turn("U2");
-                else if(inverse <= 0) cube.turn("U'");
+                else if(inverse == -1) cube.turn("U'");
                 else cube.turn("U");
 
                 animation.U_turn = false;
@@ -177,7 +181,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                     gameObjects[objId].adjustAxis("BOTTOM", turnAngle * inverse * numOfTurns);
                 
                 if(numOfTurns == 2) cube.turn("D2");
-                else if(inverse <= 0) cube.turn("D'");
+                else if(inverse == -1) cube.turn("D'");
                 else cube.turn("D");
 
                 animation.D_turn = false;
@@ -199,7 +203,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                     gameObjects[objId].adjustAxis("FRONT", turnAngle * inverse * numOfTurns);
                 
                 if(numOfTurns == 2) cube.turn("F2");
-                else if(inverse <= 0) cube.turn("F'");
+                else if(inverse == -1) cube.turn("F'");
                 else cube.turn("F");
 
                 animation.F_turn = false;
@@ -221,7 +225,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                     gameObjects[objId].adjustAxis("BACK", turnAngle * inverse * numOfTurns);
 
                 if(numOfTurns == 2) cube.turn("B2");
-                else if(inverse <= 0) cube.turn("B'");
+                else if(inverse == -1) cube.turn("B'");
                 else cube.turn("B");
 
                 animation.B_turn = false;
