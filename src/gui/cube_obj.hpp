@@ -8,6 +8,12 @@
 #include<memory>
 #include<map>
 
+struct TargetRotation {
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
+};
+
 struct CoordinateSystem {
     glm::vec3 i{1.0f, 0.0f, 0.0f};
     glm::vec3 j{0.0f, 1.0f, 0.0f};
@@ -53,6 +59,7 @@ struct TransformComponent {
     glm::vec3 rotation{};
 
     CoordinateSystem coordinateSystem;
+    TargetRotation targetRotation;
 
     glm::mat4 mat4(){
         const float c3 = glm::cos(rotation.z);
@@ -112,6 +119,7 @@ public:
 private:
     id_t id;
 
+    float rotationSpeed = glm::radians(360.0f);
     CubeObj(id_t objId): id{objId}{}
 };
 
