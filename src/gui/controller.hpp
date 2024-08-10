@@ -6,23 +6,6 @@
 #include"../cube/Cube.hpp"
 #include"../solver/Solver.hpp"
 
-struct TargetRotation {
-    float U_turn = 0.0f;
-    float D_turn = 0.0f;
-    float F_turn = 0.0f;
-    float R_turn = 0.0f;
-    float B_turn = 0.0f;
-    float L_turn = 0.0f;
-};
-
-struct CurrentRotation {
-    float U_turn = 0.0f;
-    float D_turn = 0.0f;
-    float F_turn = 0.0f;
-    float R_turn = 0.0f;
-    float B_turn = 0.0f;
-    float L_turn = 0.0f;
-};
 
 class Controller {
 public:
@@ -77,7 +60,6 @@ public:
 
     Animation animation{};
     TargetRotation target{};
-    CurrentRotation current{};
 
     Cube cube{};
     Solver solver{};
