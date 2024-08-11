@@ -1,7 +1,5 @@
 # 3D Rubik's Cube 
-3D Rubik's cube implementation using C/C++ with Vulkan.
-
-This project was made with the following software version:
+3D Rubik's cube implementation using C/C++ with Vulkan. This project was made with the following software version:
 - Linux Ubuntu 22.04
 - Vulkan Instance Version: `1.3.204`
 - C/C++ compiler Version: `11.4.0`
