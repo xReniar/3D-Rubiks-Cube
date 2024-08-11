@@ -4,9 +4,15 @@
 - Vulkan Instance Version: `1.3.204`
 - C/C++ compiler Version: `11.4.0`
 ## How to use
-To possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`
+To possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
 ## Requirements
 The following instructions are for `Ubuntu`, for other operating systems read [here](https://vulkan-tutorial.com/Development_environment).
+### Install g++ and python
+Ubuntu comes with python preinstalled but to make sure that everything is installed just run this commands:
+```bash
+sudo apt install g++
+sudo apt install python3
+``` 
 ### Install Vulkan
 To install `Vulkan` and development tools just execute in the terminal:
 ```bash
