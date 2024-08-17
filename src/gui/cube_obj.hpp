@@ -8,60 +8,22 @@
 #include<memory>
 #include<map>
 
-struct TargetRotation {
-    float x = 0.0f;
-    float y = 0.0f;
-    float z = 0.0f;
-};
-
-struct CoordinateSystem {
-    glm::vec3 i{1.0f, 0.0f, 0.0f};
-    glm::vec3 j{0.0f, 1.0f, 0.0f};
-    glm::vec3 k{0.0f, 0.0f, 1.0f};
-
-    glm::vec3 approximate(const glm::vec3& v) {
-        const float epsilon = 1e-6f;
-        return glm::vec3(
-            std::abs(v.x) < epsilon ? 0.0f : v.x,
-            std::abs(v.y) < epsilon ? 0.0f : v.y,
-            std::abs(v.z) < epsilon ? 0.0f : v.z
-        );
-    }
-
-    void rotate(char plane, float angle){
-        glm::mat3 rotMat{};
-        if(plane == 'x'){
-            rotMat = {
-                {1.0f, 0.0f, 0.0f},
-                {0.0f, glm::cos(angle), glm::sin(angle)},
-                {0.0f, -glm::sin(angle), glm::cos(angle)}};
-        } else if(plane == 'y'){
-            rotMat = {
-                {glm::cos(angle), 0.0f, -glm::sin(angle)},
-                {0.0f, 1, 0.0f},
-                {glm::sin(angle), 0, glm::cos(angle)}};
-        } else {
-            rotMat = {
-                {glm::cos(angle), glm::sin(angle), 0.0f},
-                {-glm::sin(angle), glm::cos(angle), 0.0f},
-                {0.0f, 0.0f, 1.0f}};
-        }
-
-        i = glm::normalize(approximate(rotMat * i));
-        j = glm::normalize(approximate(rotMat * j));
-        k = glm::normalize(approximate(rotMat * k));
-    }
-};
-
 struct TransformComponent {
     glm::vec3 translation{};
-    glm::vec3 scale{ 1.f, 1.f, 1.f};
+    glm::vec3 scale{ 1.f, 1.f, 1.f };
     glm::vec3 rotation{};
 
-    CoordinateSystem coordinateSystem;
-    TargetRotation targetRotation;
-
     glm::mat4 mat4(){
+        /*
+        glm::quat rotationQuat = glm::quat(rotation);
+        // Crea la matrice di trasformazione
+        glm::mat4 transformMatrix = glm::mat4(1.0f);
+        transformMatrix = glm::translate(transformMatrix, translation);
+        transformMatrix = transformMatrix * glm::mat4_cast(rotationQuat);
+        transformMatrix = glm::scale(transformMatrix, scale);
+        return transformMatrix;
+        */
+        
         const float c3 = glm::cos(rotation.z);
         const float s3 = glm::sin(rotation.z);
         const float c2 = glm::cos(rotation.y);
@@ -113,9 +75,7 @@ public:
     glm::vec3 color{};
     TransformComponent transform{};
 
-    void adjustAxis(std::string rotateSide, float angle);
-    void rotate(char plane, float value);
-    void showCoordinate();
+    void rotate(const glm::vec3& axis, float angle, bool toRound);
 private:
     id_t id;
 
