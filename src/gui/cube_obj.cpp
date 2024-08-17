@@ -1,6 +1,10 @@
 #include"cube_obj.hpp"
 
-void CubeObj::rotate(const glm::vec3& axis, float angle, bool toRound){
+void CubeObj::rotate(char plane, float angle, bool toRound){
+    glm::vec3 axis{};
+    if(plane == 'x') axis = glm::vec3(1.0f, 0.0f, 0.0f);
+    if(plane == 'y') axis = glm::vec3(0.0f, 1.0f, 0.0f);
+    if(plane == 'z') axis = glm::vec3(0.0f, 0.0f, 1.0f);
     glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, axis);
 
     // in questa versione si riduce il raggio di rotazione e si ruota intorno al centro del cubo
@@ -14,40 +18,18 @@ void CubeObj::rotate(const glm::vec3& axis, float angle, bool toRound){
     glm::quat newRotation = rotationQuat * currentRotation;
     transform.rotation = glm::eulerAngles(newRotation);
 
+    // rendi positivo lo 0 meno
+    if(transform.rotation.x == -0.0f) transform.rotation.x = 0.0f;
+    if(transform.rotation.y == -0.0f) transform.rotation.y = 0.0f;
+    if(transform.rotation.z == -0.0f) transform.rotation.z = 0.0f;
+
     if(toRound){
         if(axis.x == 1.0f) transform.rotation.x = glm::radians(round(glm::degrees(transform.rotation.x)));
         if(axis.y == 1.0f) transform.rotation.y = glm::radians(round(glm::degrees(transform.rotation.y)));
         if(axis.z == 1.0f) transform.rotation.z = glm::radians(round(glm::degrees(transform.rotation.z)));
+
+        if(std::fabs(transform.rotation.x) < 1e-2) transform.rotation.x = 0.0f;
+        if(std::fabs(transform.rotation.y) < 1e-2) transform.rotation.y = 0.0f;
+        if(std::fabs(transform.rotation.z) < 1e-2) transform.rotation.z = 0.0f;
     }
 }
-
-/*
-void CubeObj::rotateGlobal(const glm::vec3& axis, float angle) {
-    glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, axis);
-
-    // Calcola la posizione relativa al centro
-    glm::vec3 relativePos = transform.translation - glm::vec3(0.0f, 0.0f, 2.5f);
-    
-    // Scala il raggio di rotazione
-    relativePos *= 1.0f;
-
-    // Applica la rotazione
-    glm::vec4 rotatedPos = rotationMatrix * glm::vec4(relativePos, 1.0f);
-
-    // Interpola tra la posizione corrente e quella ruotata
-    glm::vec3 newPos = glm::mix(transform.translation, glm::vec3(rotatedPos) + glm::vec3(0.0f, 0.0f, 2.5f), angle);
-    transform.translation = newPos;
-
-    // Applica la rotazione all'orientamento del pezzo
-    glm::quat currentRotation = glm::quat(transform.rotation);
-    glm::quat targetRotation = glm::quat(rotationMatrix) * currentRotation;
-    glm::quat newRotation = glm::slerp(currentRotation, targetRotation, 1.0f);
-    transform.rotation = glm::eulerAngles(newRotation);
-
-    // Aggiorna il sistema di coordinate locale
-    glm::mat3 rotMat3 = glm::mat3(glm::mat4_cast(newRotation));
-    transform.coordinateSystem.i = rotMat3 * glm::vec3(1.0f, 0.0f, 0.0f);
-    transform.coordinateSystem.j = rotMat3 * glm::vec3(0.0f, 1.0f, 0.0f);
-    transform.coordinateSystem.k = rotMat3 * glm::vec3(0.0f, 0.0f, 1.0f);
-}
-*/
