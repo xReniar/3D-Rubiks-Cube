@@ -59,7 +59,6 @@ public:
     bool solveKeyPressed = false;
 
     Animation animation{};
-    TargetRotation target{};
 
     Cube cube{};
     Solver solver{};
@@ -67,6 +66,10 @@ public:
     void orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerObject);
     void rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects);
     void solveCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects);
+
+    float oldRotationAngle = 0.0f;
+    float currentRotationAngle = 0.0f;
+    float targetRotationAngle = 0.0f;
 };
 
 #endif
