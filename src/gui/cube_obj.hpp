@@ -14,16 +14,23 @@ struct TransformComponent {
     glm::vec3 rotation{};
 
     glm::mat4 mat4(){
+        // Crea matrici di rotazione separate per ogni asse
         /*
-        glm::quat rotationQuat = glm::quat(rotation);
-        // Crea la matrice di trasformazione
-        glm::mat4 transformMatrix = glm::mat4(1.0f);
-        transformMatrix = glm::translate(transformMatrix, translation);
-        transformMatrix = transformMatrix * glm::mat4_cast(rotationQuat);
-        transformMatrix = glm::scale(transformMatrix, scale);
-        return transformMatrix;
+        glm::mat4 rotX = glm::rotate(glm::mat4(1.0f), rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+        glm::mat4 rotY = glm::rotate(glm::mat4(1.0f), rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 rotZ = glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+        // Combina le rotazioni nell'ordine Z * Y * X per rotazioni globali
+        glm::mat4 rotationMatrix = rotY * rotX * rotZ;
+
+        // Crea matrici di scala e traslazione
+        glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
+        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), translation);
+
+        // Combina tutte le trasformazioni
+        // L'ordine è: scala, poi rotazione, poi traslazione
+        return translationMatrix * rotationMatrix * scaleMatrix;
         */
-        
         const float c3 = glm::cos(rotation.z);
         const float s3 = glm::sin(rotation.z);
         const float c2 = glm::cos(rotation.y);
@@ -75,11 +82,11 @@ public:
     glm::vec3 color{};
     TransformComponent transform{};
 
-    void rotate(const glm::vec3& axis, float angle, bool toRound);
+    //const glm::vec3& axis
+    void rotate(char plane, float angle, bool toRound);
 private:
     id_t id;
-
-    float rotationSpeed = glm::radians(360.0f);
+    
     CubeObj(id_t objId): id{objId}{}
 };
 
