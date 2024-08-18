@@ -91,7 +91,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
         if(animation.U_turn){
             oldRotationAngle = currentRotationAngle;
-            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * 0.01);
+            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
                 for (int objId : cube.getFaceId("TOP")) {
@@ -114,7 +114,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
         if(animation.D_turn){
             oldRotationAngle = currentRotationAngle;
-            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * 0.01);
+            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
                 for (int objId : cube.getFaceId("BOTTOM")) {
@@ -137,7 +137,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
         if(animation.F_turn){
             oldRotationAngle = currentRotationAngle;
-            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * 0.01);
+            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
                 for(int objId : cube.getFaceId("FRONT")) {
@@ -160,7 +160,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
         if(animation.B_turn){
             oldRotationAngle = currentRotationAngle;
-            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * 0.01);
+            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
                 for(int objId : cube.getFaceId("BACK")) {
@@ -183,7 +183,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
         if(animation.R_turn){
             oldRotationAngle = currentRotationAngle;
-            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * 0.01);
+            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
                 for(int objId : cube.getFaceId("RIGHT")) {
@@ -206,7 +206,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
         if(animation.L_turn){
             oldRotationAngle = currentRotationAngle;
-            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * 0.01);
+            currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
                 for(int objId : cube.getFaceId("LEFT")) {
