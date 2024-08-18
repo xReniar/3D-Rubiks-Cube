@@ -50,7 +50,8 @@ public:
     float lookSpeed{1.5f};
 
     float rotationSpeed = glm::radians(360.0f);
-    float turnAngle = glm::radians(90.0f);
+    //float turnAngle = glm::radians(90.0f);
+    float turnAngle = 90.0f;
     int inverse = 1;
     int numOfTurns = 1;
 
