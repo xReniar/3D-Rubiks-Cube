@@ -39,12 +39,10 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 }
 
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
-    /*
-    auto& obj = gameObjects[22];
+    auto& obj = gameObjects[1];
     std::cout << obj.transform.rotation.x << ", "
               << obj.transform.rotation.y << ", "
               << obj.transform.rotation.z << std::endl;
-    */
     if(!solveKeyPressed){
         if(!animation.isRotating()){
             // change moves from clockwise to anticlockwise or viceversa
@@ -69,37 +67,26 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             }
 
             // normal rotations
-            if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.isRotating()){
-                targetRotationAngle = glm::radians(90.0f * numOfTurns);
+            if(glfwGetKey(window, keys.u_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.U_turn = true;
-            }
 
-            if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.isRotating()){
-                targetRotationAngle = glm::radians(90.0f * numOfTurns);
+            if(glfwGetKey(window, keys.d_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.D_turn = true;
-            }
 
-            if(glfwGetKey(window, keys.f_turn) == GLFW_PRESS && !animation.isRotating()){
-                std::cout << targetRotationAngle << std::endl;
-                targetRotationAngle = glm::radians(90.0f * numOfTurns);
-                std::cout << targetRotationAngle << std::endl;
+            if(glfwGetKey(window, keys.f_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.F_turn = true;
-            }
 
-            if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.isRotating()){
-                targetRotationAngle = glm::radians(90.0f * numOfTurns);
+            if(glfwGetKey(window, keys.r_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.R_turn = true;
-            }
 
-            if(glfwGetKey(window, keys.b_turn) == GLFW_PRESS && !animation.isRotating()){
-                targetRotationAngle = glm::radians(90.0f * numOfTurns);
+            if(glfwGetKey(window, keys.b_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.B_turn = true;
-            }
 
-            if(glfwGetKey(window, keys.l_turn) == GLFW_PRESS && !animation.isRotating()){
-                targetRotationAngle = glm::radians(90.0f * numOfTurns);
+            if(glfwGetKey(window, keys.l_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.L_turn = true;
-            }
+
+            if(animation.isRotating())
+                targetRotationAngle = glm::radians(turnAngle * numOfTurns);
         }
 
         if(animation.U_turn){
