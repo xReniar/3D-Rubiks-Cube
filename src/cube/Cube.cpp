@@ -283,11 +283,11 @@ std::vector<int> Cube::getFaceId(std::string side){
     for(int i = 0;i < 9;i++)
         faceId.push_back(requestedSide->slot[i].id);
 
+    /*
     std::vector<int> res;
-    res.push_back(1);
-    res.push_back(2);
-    res.push_back(3);
+    res.push_back(0);
     return res;
+    */
     return faceId;
 }
 
