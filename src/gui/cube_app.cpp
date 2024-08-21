@@ -65,34 +65,6 @@ void CubeApp::run(){
 
 void CubeApp::loadGameObjects(){
     std::vector<std::string> models = {
-        /*
-        "models/center_yellow.obj",                 // 0
-        "models/center_white.obj",                  // 1
-        "models/center_blue.obj",                   // 2
-        "models/center_red.obj",                    // 3
-        "models/center_green.obj",                  // 4
-        "models/center_orange.obj",                 // 5
-        "models/edge_yellowBlue.obj",               // 6
-        "models/edge_yellowRed.obj",                // 7
-        "models/edge_yellowGreen.obj",              // 8
-        "models/edge_yellowOrange.obj",             // 9
-        "models/edge_whiteBlue.obj",                // 10
-        "models/edge_whiteRed.obj",                 // 11
-        "models/edge_whiteGreen.obj",               // 12
-        "models/edge_whiteOrange.obj",              // 13
-        "models/edge_blueRed.obj",                  // 14
-        "models/edge_redGreen.obj",                 // 15
-        "models/edge_greenOrange.obj",              // 16
-        "models/edge_orangeBlue.obj",               // 17
-        "models/corner_whiteBlueRed.obj",           // 18
-        "models/corner_whiteRedGreen.obj",          // 19
-        "models/corner_whiteGreenOrange.obj",       // 20
-        "models/corner_whiteOrangeBlue.obj",        // 21
-        "models/corner_yellowBlueRed.obj",          // 22
-        "models/corner_yellowRedGreen.obj",         // 23
-        "models/corner_yellowGreenOrange.obj",      // 24
-        "models/corner_yellowOrangeBlue.obj"        // 25
-        */
         "models/blender/center_yellow.obj",
         "models/blender/center_white.obj",
         "models/blender/center_blue.obj",
@@ -126,6 +98,45 @@ void CubeApp::loadGameObjects(){
         auto cube = CubeObj::createGameObject();
         cube.model = model;
         cube.transform.translation = { .0f, .0f, 2.5f };
+        cube.transform.scale = { .25f, .25f, .25f };
+
+        gameObjects.push_back(std::move(cube));
+    }
+
+    models = {
+        "models/old/center_yellow.obj",                 // 0
+        "models/old/center_white.obj",                  // 1
+        "models/old/center_blue.obj",                   // 2
+        "models/old/center_red.obj",                    // 3
+        "models/old/center_green.obj",                  // 4
+        "models/old/center_orange.obj",                 // 5
+        "models/old/edge_yellowBlue.obj",               // 6
+        "models/old/edge_yellowRed.obj",                // 7
+        "models/old/edge_yellowGreen.obj",              // 8
+        "models/old/edge_yellowOrange.obj",             // 9
+        "models/old/edge_whiteBlue.obj",                // 10
+        "models/old/edge_whiteRed.obj",                 // 11
+        "models/old/edge_whiteGreen.obj",               // 12
+        "models/old/edge_whiteOrange.obj",              // 13
+        "models/old/edge_blueRed.obj",                  // 14
+        "models/old/edge_redGreen.obj",                 // 15
+        "models/old/edge_greenOrange.obj",              // 16
+        "models/old/edge_orangeBlue.obj",               // 17
+        "models/old/corner_whiteBlueRed.obj",           // 18
+        "models/old/corner_whiteRedGreen.obj",          // 19
+        "models/old/corner_whiteGreenOrange.obj",       // 20
+        "models/old/corner_whiteOrangeBlue.obj",        // 21
+        "models/old/corner_yellowBlueRed.obj",          // 22
+        "models/old/corner_yellowRedGreen.obj",         // 23
+        "models/old/corner_yellowGreenOrange.obj",      // 24
+        "models/old/corner_yellowOrangeBlue.obj"        // 25
+    };
+
+    for(auto modelName : models){
+        std::shared_ptr<Model> model = Model::createModelFromFile(device, modelName);
+        auto cube = CubeObj::createGameObject();
+        cube.model = model;
+        cube.transform.translation = { .0f, .0f, 3.5f };
         cube.transform.scale = { .25f, .25f, .25f };
 
         gameObjects.push_back(std::move(cube));
