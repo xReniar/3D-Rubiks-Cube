@@ -93,10 +93,32 @@ void CubeApp::loadGameObjects(){
         "models/corner_yellowGreenOrange.obj",      // 24
         "models/corner_yellowOrangeBlue.obj"        // 25
         */
-        "models/center.obj",
-        "models/corner_yellowBlueRed.obj",
-        "models/corner_yellowRedGreen.obj",
-        "models/edge_yellowRed.obj"
+        "models/blender/center_yellow.obj",
+        "models/blender/center_white.obj",
+        "models/blender/center_blue.obj",
+        "models/blender/center_red.obj",
+        "models/blender/center_green.obj",
+        "models/blender/center_orange.obj",
+        "models/blender/edge_yellowBlue.obj",
+        "models/blender/edge_yellowRed.obj",
+        "models/blender/edge_yellowGreen.obj",
+        "models/blender/edge_yellowOrange.obj",
+        "models/blender/edge_whiteBlue.obj",
+        "models/blender/edge_whiteRed.obj",
+        "models/blender/edge_whiteGreen.obj",
+        "models/blender/edge_whiteOrange.obj",
+        "models/blender/edge_BlueRed.obj",
+        "models/blender/edge_RedGreen.obj",
+        "models/blender/edge_GreenOrange.obj",
+        "models/blender/edge_OrangeBlue.obj",
+        "models/blender/corner_whiteBlueRed.obj",
+        "models/blender/corner_whiteRedGreen.obj",
+        "models/blender/corner_whiteGreenOrange.obj",
+        "models/blender/corner_whiteOrangeBlue.obj",
+        "models/blender/corner_yellowBlueRed.obj",
+        "models/blender/corner_yellowRedGreen.obj",
+        "models/blender/corner_yellowGreenOrange.obj",
+        "models/blender/corner_yellowOrangeBlue.obj"
     };
 
     for(auto modelName : models){
