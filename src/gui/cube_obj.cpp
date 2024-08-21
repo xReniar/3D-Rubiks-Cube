@@ -32,4 +32,11 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
         if(std::fabs(transform.rotation.y) < 1e-1) transform.rotation.y = 0.0f;
         if(std::fabs(transform.rotation.z) < 1e-1) transform.rotation.z = 0.0f;
     }
+
+    /*
+    std::cout << transform.rotation.x << ", "
+              << transform.rotation.y << ", "
+              << transform.rotation.z << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    */
 }
