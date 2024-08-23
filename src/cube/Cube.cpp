@@ -286,6 +286,8 @@ std::vector<int> Cube::getFaceId(std::string side){
     /*
     std::vector<int> res;
     res.push_back(0);
+    res.push_back(1);
+    res.push_back(2);
     return res;
     */
     return faceId;
