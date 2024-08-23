@@ -103,6 +103,7 @@ void CubeApp::loadGameObjects(){
         gameObjects.push_back(std::move(cube));
     }
 
+    /*
     models = {
         "models/old/center_yellow.obj",                 // 0
         "models/old/center_white.obj",                  // 1
@@ -141,4 +142,5 @@ void CubeApp::loadGameObjects(){
 
         gameObjects.push_back(std::move(cube));
     }
+    */
 }
