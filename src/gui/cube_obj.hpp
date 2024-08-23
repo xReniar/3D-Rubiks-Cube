@@ -81,12 +81,13 @@ public:
     std::shared_ptr<Model> model{};
     glm::vec3 color{};
     TransformComponent transform{};
+    float epsilon = glm::radians(1.0f);
 
     //const glm::vec3& axis
     void rotate(char plane, float angle, bool toRound);
 private:
     id_t id;
-    
+
     CubeObj(id_t objId): id{objId}{}
 };
 
