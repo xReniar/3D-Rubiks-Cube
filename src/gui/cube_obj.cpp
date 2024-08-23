@@ -28,15 +28,14 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
         if(axis.y == 1.0f) transform.rotation.y = glm::radians(round(glm::degrees(transform.rotation.y)));
         if(axis.z == 1.0f) transform.rotation.z = glm::radians(round(glm::degrees(transform.rotation.z)));
 
-        if(std::fabs(transform.rotation.x) < 1) transform.rotation.x = 0.0f;
-        if(std::fabs(transform.rotation.y) < 1) transform.rotation.y = 0.0f;
-        if(std::fabs(transform.rotation.z) < 1) transform.rotation.z = 0.0f;
+        if(std::fabs(transform.rotation.x) < epsilon) transform.rotation.x = 0.0f;
+        if(std::fabs(transform.rotation.y) < epsilon) transform.rotation.y = 0.0f;
+        if(std::fabs(transform.rotation.z) < epsilon) transform.rotation.z = 0.0f;
     }
 
-    /*
-    std::cout << transform.rotation.x << ", "
-              << transform.rotation.y << ", "
-              << transform.rotation.z << std::endl;
-    std::cout << "---------------------------" << std::endl;
-    */
+    //std::cout << transform.rotation.x << ", "
+    //          << transform.rotation.y << ", "
+    //          << transform.rotation.z << std::endl;
+    //std::cout << "---------------------------" << std::endl;
+    
 }
