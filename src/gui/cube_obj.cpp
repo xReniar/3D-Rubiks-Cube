@@ -8,9 +8,9 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
     glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, axis);
 
     // in questa versione si riduce il raggio di rotazione e si ruota intorno al centro del cubo
-    glm::vec3 relativePos = (transform.translation - glm::vec3(0.0f, 0.0f, 2.5f)) * 1.0f;
+    glm::vec3 relativePos = (transform.translation) * 1.0f;
     glm::vec4 rotatedPos = rotationMatrix * glm::vec4(relativePos, 1.0f);
-    transform.translation = glm::vec3(rotatedPos) + glm::vec3(0.0f, 0.0f, 2.5f);
+    transform.translation = glm::vec3(rotatedPos);
 
     // Applica la rotazione all'orientamento del pezzo
     glm::quat currentRotation = glm::quat(transform.rotation);
@@ -31,6 +31,10 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
         if(std::fabs(transform.rotation.x) < epsilon) transform.rotation.x = 0.0f;
         if(std::fabs(transform.rotation.y) < epsilon) transform.rotation.y = 0.0f;
         if(std::fabs(transform.rotation.z) < epsilon) transform.rotation.z = 0.0f;
+
+        if (std::abs(transform.translation.x) <= 0.1f) transform.translation.x = 0.0f;
+        if (std::abs(transform.translation.y) <= 0.1f) transform.translation.y = 0.0f;
+        if (std::abs(transform.translation.z) <= 0.1f) transform.translation.z = 0.0f;
     }
 
     //std::cout << transform.rotation.x << ", "
