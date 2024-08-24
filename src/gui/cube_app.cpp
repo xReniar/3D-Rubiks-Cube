@@ -29,6 +29,7 @@ void CubeApp::run(){
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
     auto viewerObject = CubeObj::createGameObject();
+    viewerObject.transform.translation.z = -4.5f;
     Controller controller{};
 
     GLFWwindow* window = cubeGUI.getGLFWwindow();
@@ -64,83 +65,50 @@ void CubeApp::run(){
 }
 
 void CubeApp::loadGameObjects(){
+    // defining translation
+    std::vector<glm::vec3> translation{};
+    for(int i = -1;i <= 1;i++)
+        for(int j = -1;j <= 1;j++)
+            for(int k = -1;k <= 1;k++)
+                if(!(i == 0 && j == 0 && k == 0))
+                    translation.push_back(glm::vec3(((float) i)/2,((float) j)/2,((float) k)/2));
+
     std::vector<std::string> models = {
-        "models/blender/center_yellow.obj",
-        "models/blender/center_white.obj",
-        "models/blender/center_blue.obj",
-        "models/blender/center_red.obj",
-        "models/blender/center_green.obj",
-        "models/blender/center_orange.obj",
-        "models/blender/edge_yellowBlue.obj",
-        "models/blender/edge_yellowRed.obj",
-        "models/blender/edge_yellowGreen.obj",
-        "models/blender/edge_yellowOrange.obj",
-        "models/blender/edge_whiteBlue.obj",
-        "models/blender/edge_whiteRed.obj",
-        "models/blender/edge_whiteGreen.obj",
-        "models/blender/edge_whiteOrange.obj",
-        "models/blender/edge_BlueRed.obj",
-        "models/blender/edge_RedGreen.obj",
-        "models/blender/edge_GreenOrange.obj",
-        "models/blender/edge_OrangeBlue.obj",
-        "models/blender/corner_whiteBlueRed.obj",
-        "models/blender/corner_whiteRedGreen.obj",
-        "models/blender/corner_whiteGreenOrange.obj",
-        "models/blender/corner_whiteOrangeBlue.obj",
-        "models/blender/corner_yellowBlueRed.obj",
-        "models/blender/corner_yellowRedGreen.obj",
-        "models/blender/corner_yellowGreenOrange.obj",
-        "models/blender/corner_yellowOrangeBlue.obj"
+        "models/new_blender/corner_yellowOrangeBlue.obj",    // 0
+        "models/new_blender/edge_yellowOrange.obj",          // 1
+        "models/new_blender/corner_yellowGreenOrange.obj",   // 2
+        "models/new_blender/edge_OrangeBlue.obj",            // 3
+        "models/new_blender/center_orange.obj",              // 4
+        "models/new_blender/edge_GreenOrange.obj",           // 5
+        "models/new_blender/corner_whiteOrangeBlue.obj",     // 6
+        "models/new_blender/edge_whiteOrange.obj",           // 7
+        "models/new_blender/corner_whiteGreenOrange.obj",    // 8
+        "models/new_blender/edge_yellowBlue.obj",            // 9
+        "models/new_blender/center_yellow.obj",              // 10
+        "models/new_blender/edge_yellowGreen.obj",           // 11
+        "models/new_blender/center_blue.obj",                // 12
+        "models/new_blender/center_green.obj",               // 13
+        "models/new_blender/edge_whiteBlue.obj",             // 14
+        "models/new_blender/center_white.obj",               // 15
+        "models/new_blender/edge_whiteGreen.obj",            // 16
+        "models/new_blender/corner_yellowBlueRed.obj",       // 17
+        "models/new_blender/edge_yellowRed.obj",             // 18
+        "models/new_blender/corner_yellowRedGreen.obj",      // 19
+        "models/new_blender/edge_BlueRed.obj",               // 20
+        "models/new_blender/center_red.obj",                 // 21
+        "models/new_blender/edge_RedGreen.obj",              // 22
+        "models/new_blender/corner_whiteBlueRed.obj",        // 23
+        "models/new_blender/edge_whiteRed.obj",              // 24
+        "models/new_blender/corner_whiteRedGreen.obj"        // 25
     };
 
-    for(auto modelName : models){
-        std::shared_ptr<Model> model = Model::createModelFromFile(device, modelName);
+    for(int i = 0;i < models.size(); i++){
+        std::shared_ptr<Model> model = Model::createModelFromFile(device, models[i]);
         auto cube = CubeObj::createGameObject();
         cube.model = model;
-        cube.transform.translation = { .0f, .0f, 2.5f };
-        cube.transform.scale = { .25f, .25f, .25f };
+        cube.transform.translation = translation[i];
+        cube.transform.scale = { .5f, .5f, .5f };
 
         gameObjects.push_back(std::move(cube));
     }
-
-    /*
-    models = {
-        "models/old/center_yellow.obj",                 // 0
-        "models/old/center_white.obj",                  // 1
-        "models/old/center_blue.obj",                   // 2
-        "models/old/center_red.obj",                    // 3
-        "models/old/center_green.obj",                  // 4
-        "models/old/center_orange.obj",                 // 5
-        "models/old/edge_yellowBlue.obj",               // 6
-        "models/old/edge_yellowRed.obj",                // 7
-        "models/old/edge_yellowGreen.obj",              // 8
-        "models/old/edge_yellowOrange.obj",             // 9
-        "models/old/edge_whiteBlue.obj",                // 10
-        "models/old/edge_whiteRed.obj",                 // 11
-        "models/old/edge_whiteGreen.obj",               // 12
-        "models/old/edge_whiteOrange.obj",              // 13
-        "models/old/edge_blueRed.obj",                  // 14
-        "models/old/edge_redGreen.obj",                 // 15
-        "models/old/edge_greenOrange.obj",              // 16
-        "models/old/edge_orangeBlue.obj",               // 17
-        "models/old/corner_whiteBlueRed.obj",           // 18
-        "models/old/corner_whiteRedGreen.obj",          // 19
-        "models/old/corner_whiteGreenOrange.obj",       // 20
-        "models/old/corner_whiteOrangeBlue.obj",        // 21
-        "models/old/corner_yellowBlueRed.obj",          // 22
-        "models/old/corner_yellowRedGreen.obj",         // 23
-        "models/old/corner_yellowGreenOrange.obj",      // 24
-        "models/old/corner_yellowOrangeBlue.obj"        // 25
-    };
-
-    for(auto modelName : models){
-        std::shared_ptr<Model> model = Model::createModelFromFile(device, modelName);
-        auto cube = CubeObj::createGameObject();
-        cube.model = model;
-        cube.transform.translation = { .0f, .0f, 3.5f };
-        cube.transform.scale = { .25f, .25f, .25f };
-
-        gameObjects.push_back(std::move(cube));
-    }
-    */
 }
