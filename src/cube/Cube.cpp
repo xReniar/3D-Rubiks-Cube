@@ -1,12 +1,12 @@
 #include"Cube.hpp"
 
 Cube::Cube():
-    top_side(YELLOW, {24, 8, 23, 9, 0, 7, 25, 6, 22}),
-    bottom_side(WHITE, {21, 10, 18, 13, 1, 11, 20, 12, 19}),
-    front_side(BLUE, {25, 6, 22, 17, 2, 14, 21, 10, 18}),
-    right_side(RED, {22, 7, 23, 14, 3, 15, 18, 11, 19}),
-    back_side(GREEN, {23, 8, 24, 15, 4, 16, 19, 12, 20}),
-    left_side(ORANGE, {24, 9, 25, 16, 5, 17, 20, 13, 21}){
+    top_side(YELLOW, {2, 11, 19, 1, 10, 18, 0, 9, 17}),
+    bottom_side(WHITE, {6, 14, 23, 7, 15, 24, 8, 16, 25}),
+    front_side(BLUE, {0, 9, 17, 3, 12, 20, 6, 14, 23}),
+    right_side(RED, {17, 18, 19, 20, 21, 22, 23, 24, 25}),
+    back_side(GREEN, {19, 11, 2, 22, 13, 5, 25, 16, 8}),
+    left_side(ORANGE, {2, 1, 0, 5, 4, 3, 8, 7, 6}){
         
     }
 
