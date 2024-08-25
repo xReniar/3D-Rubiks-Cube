@@ -13,7 +13,7 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
     if (glfwGetKey(window, keys.lookDown) == GLFW_PRESS) rotate.x -= 1.f;
 
     if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon()) {
-        viewerObject.transform.rotation += lookSpeed * dt * glm::normalize(rotate);
+        viewerObject.transform.rotation += lookSpeed * dt * glm::normalize(rotate); 
     }
 
     // limit pitch values between about +/- 85ish degrees
@@ -39,12 +39,8 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 }
 
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
-    /*
-    auto& obj = gameObjects[18];
-    std::cout << obj.transform.rotation.x << ", "
-              << obj.transform.rotation.y << ", "
-              << obj.transform.rotation.z << std::endl;
-    */
+    auto& o = gameObjects[17];
+    std::cout << o.transform.translation.x << ", " << o.transform.translation.y << ", " << o.transform.translation.z << std::endl;
     if(!solveKeyPressed){
         if(!animation.isRotating()){
             // change moves from clockwise to anticlockwise or viceversa
@@ -99,6 +95,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 for (int objId : cube.getFaceId("TOP")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('y', (targetRotationAngle - currentRotationAngle) * inverse, true);
+                    obj.transform.coordSystem.rotate('y', glm::radians(90.0f * numOfTurns * inverse));
                 }
 
                 currentRotationAngle = 0.0f;
@@ -122,6 +119,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 for (int objId : cube.getFaceId("BOTTOM")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('y', (-(targetRotationAngle - currentRotationAngle) * inverse), true);
+                    obj.transform.coordSystem.rotate('y', -glm::radians(90.0f * numOfTurns * inverse));
                 }
 
                 currentRotationAngle = 0.0f;
@@ -145,6 +143,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 for(int objId : cube.getFaceId("FRONT")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('z', ((targetRotationAngle - currentRotationAngle) * inverse), true);
+                    obj.transform.coordSystem.rotate('z', glm::radians(90.0f * numOfTurns * inverse));
                 }
 
                 currentRotationAngle = 0.0f;
@@ -168,6 +167,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 for(int objId : cube.getFaceId("BACK")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('z', (-(targetRotationAngle - currentRotationAngle) * inverse), true);
+                    obj.transform.coordSystem.rotate('z', -glm::radians(90.0f * numOfTurns * inverse));
                 }
 
                 currentRotationAngle = 0.0f;
@@ -191,8 +191,8 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 for(int objId : cube.getFaceId("RIGHT")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('x', (-(targetRotationAngle - currentRotationAngle) * inverse), true);
+                    obj.transform.coordSystem.rotate('x', -glm::radians(90.0f * numOfTurns * inverse));
                 }
-
                 currentRotationAngle = 0.0f;
                 if(numOfTurns == 2) cube.turn("R2");
                 else if(inverse == -1) cube.turn("R'");
@@ -214,6 +214,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 for(int objId : cube.getFaceId("LEFT")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('x', ((targetRotationAngle - currentRotationAngle) * inverse), true);
+                    obj.transform.coordSystem.rotate('x', glm::radians(90.0f * numOfTurns * inverse));
                 }
 
                 currentRotationAngle = 0.0f;
