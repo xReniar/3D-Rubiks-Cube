@@ -70,7 +70,11 @@ void RenderSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<
 
         SimplePushCostantData push{};
         push.color = obj.color;
-        push.transform = projectionView * obj.transform.mat4();
+        if(obj.getId() == 26){
+            push.transform = projectionView * obj.transform.mat4_camera();
+        } else {
+            push.transform = projectionView * obj.transform.mat4();
+        }
 
         vkCmdPushConstants(
             commandBuffer,
