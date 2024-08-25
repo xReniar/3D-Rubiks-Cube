@@ -13,33 +13,26 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
     transform.translation = glm::vec3(rotatedPos);
 
     // Applica la rotazione all'orientamento del pezzo
-    glm::quat currentRotation = glm::quat(transform.rotation);
-    glm::quat rotationQuat = glm::quat(glm::rotate(glm::mat4(1.0f), angle, axis));
-    glm::quat newRotation = rotationQuat * currentRotation;
-    transform.rotation = glm::eulerAngles(newRotation);
+    char correct_plane;
+    int sign;
 
-    // rendi positivo lo 0 meno
-    if(transform.rotation.x == -0.0f) transform.rotation.x = 0.0f;
-    if(transform.rotation.y == -0.0f) transform.rotation.y = 0.0f;
-    if(transform.rotation.z == -0.0f) transform.rotation.z = 0.0f;
+    std::vector<char> xyz{'x','y','z'};
+    for(char _plane_ : xyz){
+        char _plane_res_ = std::get<0>(transform.coordSystem.getAxis(_plane_));
+        char _sign_res_ = std::get<1>(transform.coordSystem.getAxis(_plane_));
+        if(_plane_res_ == plane){
+            correct_plane = _plane_;
+            sign = _sign_res_;
+        }
+    }
+    glm::quat rotMatrix{};
+    if(correct_plane == 'x') rotMatrix = glm::rotate(glm::mat4(1.0f), sign * angle, glm::vec3(1.0f, 0.0f, 0.0f));
+    if(correct_plane == 'y') rotMatrix = glm::rotate(glm::mat4(1.0f), sign * angle, glm::vec3(0.0f, 1.0f, 0.0f));
+    if(correct_plane == 'z') rotMatrix = glm::rotate(glm::mat4(1.0f), sign * angle, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    transform.quatRotation = transform.quatRotation * rotMatrix;
 
     if(toRound){
-        if(axis.x == 1.0f) transform.rotation.x = glm::radians(round(glm::degrees(transform.rotation.x)));
-        if(axis.y == 1.0f) transform.rotation.y = glm::radians(round(glm::degrees(transform.rotation.y)));
-        if(axis.z == 1.0f) transform.rotation.z = glm::radians(round(glm::degrees(transform.rotation.z)));
 
-        if(std::fabs(transform.rotation.x) < epsilon) transform.rotation.x = 0.0f;
-        if(std::fabs(transform.rotation.y) < epsilon) transform.rotation.y = 0.0f;
-        if(std::fabs(transform.rotation.z) < epsilon) transform.rotation.z = 0.0f;
-
-        if (std::abs(transform.translation.x) <= 0.1f) transform.translation.x = 0.0f;
-        if (std::abs(transform.translation.y) <= 0.1f) transform.translation.y = 0.0f;
-        if (std::abs(transform.translation.z) <= 0.1f) transform.translation.z = 0.0f;
     }
-
-    //std::cout << transform.rotation.x << ", "
-    //          << transform.rotation.y << ", "
-    //          << transform.rotation.z << std::endl;
-    //std::cout << "---------------------------" << std::endl;
-    
 }
