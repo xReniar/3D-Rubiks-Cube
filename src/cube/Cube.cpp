@@ -209,11 +209,11 @@ void Cube::turn(const std::string& str){
     Direction direction = CLOCKWISE;
     int turns = 1;
     for(int i = 0;i < str.length();i++){
-        /* check if there are (') or (2) */
+        // check if there are (') or (2)
         if(i != str.length() && str[i + 1] == '\'') direction = ANTICLOCKWISE;
         if(i != str.length() && (str[i + 1] >= '0' && str[i + 1] <= '9')) turns = (str[i + 1] - '0');
 
-        /* execute move */
+        // execute move
         for(int j = 0;j < turns;j++){
             if(str[i] == 'U')
                 rotate(TOP_SIDE,direction);
@@ -229,7 +229,7 @@ void Cube::turn(const std::string& str){
                 rotate(LEFT_SIDE,direction);
         }
 
-        /* reset direction and turns values */
+        // reset direction and turns values
         if(direction == ANTICLOCKWISE || turns > 1){
             direction = CLOCKWISE;
             turns = 1;
@@ -286,8 +286,6 @@ std::vector<int> Cube::getFaceId(std::string side){
     /*
     std::vector<int> res;
     res.push_back(0);
-    res.push_back(1);
-    res.push_back(2);
     return res;
     */
     return faceId;
