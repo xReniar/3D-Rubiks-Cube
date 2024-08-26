@@ -114,7 +114,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
             if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-                for (int objId : cube.getFaceId("B")) {
+                for (int objId : cube.getFaceId("D")) {
                     auto& obj = gameObjects[objId];
                     obj.rotate('y', (-(targetRotationAngle - currentRotationAngle) * inverse), true);
                     obj.transform.coordSystem.rotate('y', -glm::radians(90.0f * numOfTurns * inverse));
@@ -127,7 +127,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
                 animation.D_turn = false;
             } else {
-                for (int objId : cube.getFaceId("B")) {
+                for (int objId : cube.getFaceId("D")) {
                     gameObjects[objId].rotate('y', (-(currentRotationAngle - oldRotationAngle) * inverse), false);
                 }
             }
