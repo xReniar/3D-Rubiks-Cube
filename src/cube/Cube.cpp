@@ -236,7 +236,6 @@ void Cube::turn(const std::string& str){
             i++;
         }
     }
-    //this->show();
 }
 
 char f(Cubie slot){
@@ -273,66 +272,15 @@ std::string Cube::state(){
 std::vector<int> Cube::getFaceId(std::string side){
     std::vector<int> faceId;
     Side* requestedSide;
-    if(side == "TOP") requestedSide = &(this->top_side);
-    if(side == "BOTTOM") requestedSide = &(this->bottom_side);
-    if(side == "FRONT") requestedSide = &(this->front_side);
-    if(side == "RIGHT") requestedSide = &(this->right_side);
-    if(side == "BACK") requestedSide = &(this->back_side);
-    if(side == "LEFT") requestedSide = &(this->left_side);
+    if(side == "U") requestedSide = &(this->top_side);
+    if(side == "D") requestedSide = &(this->bottom_side);
+    if(side == "F") requestedSide = &(this->front_side);
+    if(side == "R") requestedSide = &(this->right_side);
+    if(side == "B") requestedSide = &(this->back_side);
+    if(side == "L") requestedSide = &(this->left_side);
 
     for(int i = 0;i < 9;i++)
         faceId.push_back(requestedSide->slot[i].id);
-
-    /*
-    std::vector<int> res;
-    res.push_back(0);
-    return res;
-    */
+        
     return faceId;
-}
-
-void Cube::show(){
-    printf("      %c,%c,%c\n",f(top_side.slot[0]),f(top_side.slot[1]),f(top_side.slot[2]));
-    printf("      %c,%c,%c\n",f(top_side.slot[3]),f(top_side.slot[4]),f(top_side.slot[5]));
-    printf("      %c,%c,%c\n",f(top_side.slot[6]),f(top_side.slot[7]),f(top_side.slot[8]));
-    printf("%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n",f(left_side.slot[0]),f(left_side.slot[1]),f(left_side.slot[2]),f(front_side.slot[0]),f(front_side.slot[1]),f(front_side.slot[2]),f(right_side.slot[0]),f(right_side.slot[1]),f(right_side.slot[2]),f(back_side.slot[0]),f(back_side.slot[1]),f(back_side.slot[2]));
-    printf("%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n",f(left_side.slot[3]),f(left_side.slot[4]),f(left_side.slot[5]),f(front_side.slot[3]),f(front_side.slot[4]),f(front_side.slot[5]),f(right_side.slot[3]),f(right_side.slot[4]),f(right_side.slot[5]),f(back_side.slot[3]),f(back_side.slot[4]),f(back_side.slot[5]));
-    printf("%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n",f(left_side.slot[6]),f(left_side.slot[7]),f(left_side.slot[8]),f(front_side.slot[6]),f(front_side.slot[7]),f(front_side.slot[8]),f(right_side.slot[6]),f(right_side.slot[7]),f(right_side.slot[8]),f(back_side.slot[6]),f(back_side.slot[7]),f(back_side.slot[8]));
-    printf("      %c,%c,%c\n",f(bottom_side.slot[0]),f(bottom_side.slot[1]),f(bottom_side.slot[2]));
-    printf("      %c,%c,%c\n",f(bottom_side.slot[3]),f(bottom_side.slot[4]),f(bottom_side.slot[5]));
-    printf("      %c,%c,%c\n",f(bottom_side.slot[6]),f(bottom_side.slot[7]),f(bottom_side.slot[8]));
-    printf("\n");
-
-    printf("         %2d|%2d|%2d\n", top_side.slot[0].id, top_side.slot[1].id, top_side.slot[2].id);
-    printf("         %2d|%2d|%2d\n", top_side.slot[3].id, top_side.slot[4].id, top_side.slot[5].id);
-    printf("         %2d|%2d|%2d\n", top_side.slot[6].id, top_side.slot[7].id, top_side.slot[8].id);
-    printf("%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d\n", left_side.slot[0].id, left_side.slot[1].id, left_side.slot[2].id, front_side.slot[0].id, front_side.slot[1].id, front_side.slot[2].id, right_side.slot[0].id, right_side.slot[1].id, right_side.slot[2].id, back_side.slot[0].id, back_side.slot[1].id, back_side.slot[2].id);
-    printf("%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d\n", left_side.slot[3].id, left_side.slot[4].id, left_side.slot[5].id, front_side.slot[3].id, front_side.slot[4].id, front_side.slot[5].id, right_side.slot[3].id, right_side.slot[4].id, right_side.slot[5].id, back_side.slot[3].id, back_side.slot[4].id, back_side.slot[5].id);
-    printf("%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d|%2d\n", left_side.slot[6].id, left_side.slot[7].id, left_side.slot[8].id, front_side.slot[6].id, front_side.slot[7].id, front_side.slot[8].id, right_side.slot[6].id, right_side.slot[7].id, right_side.slot[8].id, back_side.slot[6].id, back_side.slot[7].id, back_side.slot[8].id);
-    printf("         %2d|%2d|%2d\n", bottom_side.slot[0].id, bottom_side.slot[1].id, bottom_side.slot[2].id);
-    printf("         %2d|%2d|%2d\n", bottom_side.slot[3].id, bottom_side.slot[4].id, bottom_side.slot[5].id);
-    printf("         %2d|%2d|%2d\n", bottom_side.slot[6].id, bottom_side.slot[7].id, bottom_side.slot[8].id);
-    printf("\n");
-
-
-    /*
-    for(int i = 0;i < 9;i++)
-        std::cout << top_side.slot[i].id << "," << std::flush;
-    std::cout << "" << std::endl;
-    for(int i = 0;i < 9;i++)
-        std::cout << bottom_side.slot[i].id << "," << std::flush;
-    std::cout << "" << std::endl;
-    for(int i = 0;i < 9;i++)
-        std::cout << front_side.slot[i].id << "," << std::flush;
-    std::cout << "" << std::endl;
-    for(int i = 0;i < 9;i++)
-        std::cout << right_side.slot[i].id << "," << std::flush;
-    std::cout << "" << std::endl;
-    for(int i = 0;i < 9;i++)
-        std::cout << back_side.slot[i].id << "," << std::flush;
-    std::cout << "" << std::endl;
-    for(int i = 0;i < 9;i++)
-        std::cout << left_side.slot[i].id << "," << std::flush;
-    std::cout << "\n--------------------------" << std::endl;
-    */
 }
