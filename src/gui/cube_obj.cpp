@@ -1,18 +1,15 @@
 #include"cube_obj.hpp"
 
 void CubeObj::rotate(char plane, float angle, bool toRound){
+    // rotation step
     glm::vec3 axis{};
     if(plane == 'x') axis = glm::vec3(1.0f, 0.0f, 0.0f);
     if(plane == 'y') axis = glm::vec3(0.0f, 1.0f, 0.0f);
     if(plane == 'z') axis = glm::vec3(0.0f, 0.0f, 1.0f);
     glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, axis);
+    transform.translation = glm::vec3(rotationMatrix * glm::vec4(transform.translation, 1.0f));
 
-    // in questa versione si riduce il raggio di rotazione e si ruota intorno al centro del cubo
-    glm::vec3 relativePos = (transform.translation) * 1.0f;
-    glm::vec4 rotatedPos = rotationMatrix * glm::vec4(relativePos, 1.0f);
-    transform.translation = glm::vec3(rotatedPos);
-
-    // Applica la rotazione all'orientamento del pezzo
+    // orientation step
     char correct_plane;
     int sign;
 
@@ -33,6 +30,23 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
     transform.quatRotation = transform.quatRotation * rotMatrix;
 
     if(toRound){
+        // approximate translation
+        transform.translation = glm::round(transform.translation / 0.001f) * 0.001f;
 
+        float components[4] = {transform.quatRotation.w, transform.quatRotation.x, transform.quatRotation.y, transform.quatRotation.z};
+
+        for(int i = 0; i < 4; ++i) {
+            // when value is near 0
+            components[i] = std::abs(components[i]) < 1e-3f ? 0.0f : components[i];
+            // when value is near +1 or -1
+            components[i] = std::abs(components[i]) > 0.9f ? std::round(components[i] / 0.001f) * 0.001f : components[i];
+            // when value is near 0.5 or -0.5
+            components[i] = std::abs(std::abs(components[i]) - 0.5f) < 0.05f ? std::round(components[i] / 0.001f) * 0.001f : components[i];
+        }
+
+        transform.quatRotation.w = components[0];
+        transform.quatRotation.x = components[1];
+        transform.quatRotation.y = components[2];
+        transform.quatRotation.z = components[3];
     }
 }
