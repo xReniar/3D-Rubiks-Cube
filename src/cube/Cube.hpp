@@ -27,7 +27,6 @@ public:
     void turn(const std::string& str);
     std::string state();
     std::vector<int> getFaceId(std::string side);
-    void show();
 };
 
 #endif
