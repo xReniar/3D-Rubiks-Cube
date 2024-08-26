@@ -39,8 +39,6 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 }
 
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
-    auto& o = gameObjects[17];
-    std::cout << o.transform.translation.x << ", " << o.transform.translation.y << ", " << o.transform.translation.z << std::endl;
     if(!solveKeyPressed){
         if(!animation.isRotating()){
             // change moves from clockwise to anticlockwise or viceversa
