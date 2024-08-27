@@ -240,12 +240,12 @@ void Cube::turn(const std::string& str){
 
 char f(Cubie slot){
     switch(slot.color){
-        case YELLOW: return 'y';
-        case WHITE: return 'w';
-        case BLUE: return 'b';
-        case RED: return 'r';
-        case GREEN: return 'g';
-        case ORANGE: return 'o';
+        case YELLOW: return 'U';
+        case WHITE: return 'D';
+        case BLUE: return 'F';
+        case RED: return 'R';
+        case GREEN: return 'B';
+        case ORANGE: return 'L';
     }
     return 'x';
 }
