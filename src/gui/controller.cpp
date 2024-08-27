@@ -41,6 +41,12 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
     if(!solveKeyPressed){
         if(!animation.isRotating()){
+            if(glfwGetKey(window, keys.solve) == GLFW_PRESS && !solveKeyPressed){
+                // start calculating solution
+                solver.kociemba(cube.state().c_str());
+                solveKeyPressed = true;
+            }
+
             // change moves from clockwise to anticlockwise or viceversa
             if(glfwGetKey(window, keys.inverse) == GLFW_PRESS)
                 inverseKeyPressed = true;
@@ -231,14 +237,10 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 }
 
 void Controller::solveCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
-    /*
-    volendo tutte le mosse si fanno alla fine e si scive una funzione di controller simile a Cube::turn dove vengono gestite le animazioni
-    */
-    if(glfwGetKey(window, keys.solve) == GLFW_PRESS && !solveKeyPressed){
-        // implement the solve process
-        solveKeyPressed = true;
-        // block "free movements"
-        std::string solution = solver.getSolution(cube.state());
-        solveKeyPressed = false;
+    if(solveKeyPressed){
+        if(solver.solution.size() != 0){
+            std::cout << solver.solution << std::endl;
+            solveKeyPressed = false;
+        }
     }
 }
