@@ -5,8 +5,8 @@
 
 class Solver {
 public:
-    Solver();
-    std::string getSolution(std::string cubeState);
+    std::string solution;
+    void kociemba(const char* cubeState);
 };
 
 #endif
