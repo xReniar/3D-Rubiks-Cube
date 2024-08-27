@@ -1,10 +1,7 @@
 #include"Solver.hpp"
 
-Solver::Solver(){
-    
-}
-
-std::string Solver::getSolution(std::string cubeState){
+void Solver::kociemba(const char* cubeState){
     std::string solution = "";
-    return solution;
+    std::cout << cubeState << std::endl;
+    this->solution = solution;
 }
