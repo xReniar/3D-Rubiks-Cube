@@ -75,11 +75,11 @@ void CubeApp::loadGameObjects(){
 
     std::vector<std::string> models = {
         "models/blender/corner_yellowOrangeBlue.obj",    // 0
-        "models/blender/edge_yellowOrange.obj",          // 1
+        "models/old/edge_yellowOrange.obj",          // 1
         "models/blender/corner_yellowGreenOrange.obj",   // 2
-        "models/blender/edge_OrangeBlue.obj",            // 3
+        "models/blender/edge_orangeBlue.obj",            // 3
         "models/blender/center_orange.obj",              // 4
-        "models/blender/edge_GreenOrange.obj",           // 5
+        "models/blender/edge_greenOrange.obj",           // 5
         "models/blender/corner_whiteOrangeBlue.obj",     // 6
         "models/blender/edge_whiteOrange.obj",           // 7
         "models/blender/corner_whiteGreenOrange.obj",    // 8
@@ -94,9 +94,9 @@ void CubeApp::loadGameObjects(){
         "models/blender/corner_yellowBlueRed.obj",       // 17
         "models/blender/edge_yellowRed.obj",             // 18
         "models/blender/corner_yellowRedGreen.obj",      // 19
-        "models/blender/edge_BlueRed.obj",               // 20
+        "models/blender/edge_blueRed.obj",               // 20
         "models/blender/center_red.obj",                 // 21
-        "models/blender/edge_RedGreen.obj",              // 22
+        "models/blender/edge_redGreen.obj",              // 22
         "models/blender/corner_whiteBlueRed.obj",        // 23
         "models/blender/edge_whiteRed.obj",              // 24
         "models/blender/corner_whiteRedGreen.obj"        // 25
