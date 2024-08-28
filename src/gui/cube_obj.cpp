@@ -22,19 +22,23 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
             sign = _sign_res_;
         }
     }
+    
     glm::quat rotMatrix{};
-    if(correct_plane == 'x') rotMatrix = glm::rotate(glm::mat4(1.0f), sign * angle, glm::vec3(1.0f, 0.0f, 0.0f));
-    if(correct_plane == 'y') rotMatrix = glm::rotate(glm::mat4(1.0f), sign * angle, glm::vec3(0.0f, 1.0f, 0.0f));
-    if(correct_plane == 'z') rotMatrix = glm::rotate(glm::mat4(1.0f), sign * angle, glm::vec3(0.0f, 0.0f, 1.0f));
+    float sin = std::sin(sign * angle * 0.5f);
+    float cos = std::cos(sign * angle * 0.5f);
+    if(correct_plane == 'x') rotMatrix = glm::quat(cos, sin , 0.0f, 0.0f);
+    if(correct_plane == 'y') rotMatrix = glm::quat(cos, 0.0f , sin, 0.0f);
+    if(correct_plane == 'z') rotMatrix = glm::quat(cos, 0.0f , 0.0f, sin);
 
     transform.quatRotation = transform.quatRotation * rotMatrix;
 
+    // rounding step
     if(toRound){
         // approximate translation
         transform.translation = glm::round(transform.translation / 0.001f) * 0.001f;
 
+        // approximate orientation
         float components[4] = {transform.quatRotation.w, transform.quatRotation.x, transform.quatRotation.y, transform.quatRotation.z};
-
         for(int i = 0; i < 4; ++i) {
             // when value is near 0
             components[i] = std::abs(components[i]) < 1e-3f ? 0.0f : components[i];
@@ -43,7 +47,6 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
             // when value is near 0.5 or -0.5
             components[i] = std::abs(std::abs(components[i]) - 0.5f) < 0.05f ? std::round(components[i] / 0.001f) * 0.001f : components[i];
         }
-
         transform.quatRotation.w = components[0];
         transform.quatRotation.x = components[1];
         transform.quatRotation.y = components[2];
