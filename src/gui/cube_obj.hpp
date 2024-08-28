@@ -5,6 +5,7 @@
 #include<glm/gtc/quaternion.hpp>
 #include<glm/gtx/quaternion.hpp>
 #include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
 #include<memory>
 #include<map>
 #include<tuple>
@@ -58,13 +59,32 @@ struct TransformComponent {
     glm::quat quatRotation{1.0f, 0.0f, 0.0f, 0.0f};; // for cube
     
     glm::mat4 mat4(){
-        glm::mat4 transform = glm::mat4(1.0f);
+        const float w = quatRotation.w;
+        const float x = quatRotation.x;
+        const float y = quatRotation.y;
+        const float z = quatRotation.z;
 
-        transform = glm::translate(transform, translation);
-        transform = transform * glm::mat4_cast(quatRotation);
-        transform = glm::scale(transform, scale);
-
-        return transform;
+        return glm::mat4{
+            {
+                scale.x * (1 - 2*glm::pow(y,2) - 2*glm::pow(z,2)),
+                scale.x * (2*(x * y) + 2*(z * w)),
+                scale.x * (2*(x * z) - 2*(y * w)),
+                0.0f,
+            },
+            {
+                scale.y * (2*(x * y) - 2*(z * w)),
+                scale.y * (1 - 2*glm::pow(x,2) - 2*glm::pow(z,2)),
+                scale.y * (2*(y * z) + 2*(x * w)),
+                0.0f,
+            },
+            {
+                scale.z * (2*(x * z) + 2*(y * w)),
+                scale.z * (2*(y * z) - 2*(x * w)),
+                scale.z * (1 - 2*glm::pow(x,2) - 2*glm::pow(y,2)),
+                0.0f,
+            },
+            {translation.x, translation.y, translation.z, 1.0f}
+        };
 
     }
 };
