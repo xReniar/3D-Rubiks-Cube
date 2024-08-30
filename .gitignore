@@ -1,4 +1,5 @@
 .vscode
 shaders/*.spv
 __pycache__
+tables.json
 VulkanProject
