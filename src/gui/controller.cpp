@@ -4,6 +4,7 @@
 
 #include<glm/gtc/epsilon.hpp>
 #include<limits>
+#include<thread>
 
 void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerObject){
     glm::vec3 rotate{0};
@@ -41,9 +42,13 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
     if(!solveKeyPressed){
         if(!animation.isRotating()){
-            if(glfwGetKey(window, keys.solve) == GLFW_PRESS && !solveKeyPressed){
+            if(glfwGetKey(window, keys.solve) == GLFW_PRESS && !solveKeyPressed && !cube.isSolved()){
                 // start calculating solution
-                solver.kociemba(cube.state().c_str());
+                std::thread solveThread([&](){
+                    solver.kociemba(cube.state().c_str());
+                });
+                solveThread.detach();
+
                 solveKeyPressed = true;
             }
 
@@ -240,6 +245,7 @@ void Controller::solveCube(GLFWwindow* window, float dt, std::vector<CubeObj> &g
     if(solveKeyPressed){
         if(solver.solution.size() != 0){
             std::cout << solver.solution << std::endl;
+            solver.solution = "";
             solveKeyPressed = false;
         }
     }
