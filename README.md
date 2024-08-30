@@ -4,7 +4,9 @@
 - Vulkan Instance Version: `1.3.204`
 - C/C++ compiler Version: `11.4.0`
 ## How to use
-To possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
+- Is it possible to watch the cube with different angles just use `WASD` to move and arrow keys to change the view. Use `Q` to go up and `E` to go down.
+- The possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
+- The projects uses the `Kociemba algorithm`, to start calculating the solution just press `space`. The first time is always slower because it needs to create a `tables.json` file used to get the solution. For the next solves the average waiting time is usually around 7-10 sec. When pressing space the standard moves are disabled and they'll be enabled when cube is solved.
 ## Requirements
 The following instructions are for `Ubuntu`, for other operating systems read [here](https://vulkan-tutorial.com/Development_environment).
 ### Install g++ and python
