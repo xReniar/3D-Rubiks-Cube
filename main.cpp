@@ -1,9 +1,6 @@
 #include"src/Rubiks.hpp"
 
 int main(){
-    Cube cube;
-    Solver solver;
-
     CubeApp app{};
 
     try {
