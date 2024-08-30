@@ -39,8 +39,8 @@ class Tables:
 
     @classmethod
     def load_tables(cls):
-        if os.path.isfile("tables.json"):
-            with open("tables.json", "r") as f:
+        if os.path.isfile("src/solver/kociemba/tables.json"):
+            with open("src/solver/kociemba/tables.json", "r") as f:
                 tables = json.load(f)
             cls.twist_move = tables["twist_move"]
             cls.flip_move = tables["flip_move"]
@@ -91,7 +91,7 @@ class Tables:
                 "edge4_edge8_prune": cls.edge4_edge8_prune.table,
                 "edge4_corner_prune": cls.edge4_corner_prune.table,
             }
-            with open("tables.json", "w") as f:
+            with open("src/solver/kociemba/tables.json", "w") as f:
                 json.dump(tables, f)
 
         cls._tables_loaded = True
