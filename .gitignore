@@ -1,3 +1,4 @@
 .vscode
 shaders/*.spv
+__pycache__
 VulkanProject
