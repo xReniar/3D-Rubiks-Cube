@@ -284,3 +284,7 @@ std::vector<int> Cube::getFaceId(std::string side){
         
     return faceId;
 }
+
+bool Cube::isSolved(){
+    return this->state() == "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB";
+}

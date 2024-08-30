@@ -26,6 +26,7 @@ public:
     Cube();
     void turn(const std::string& str);
     std::string state();
+    bool isSolved();
     std::vector<int> getFaceId(std::string side);
 };
 
