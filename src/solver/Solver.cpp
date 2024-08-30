@@ -3,7 +3,7 @@
 Solver::Solver(){
     Py_Initialize();
     PySys_SetPath(L".:/usr/lib/python3.10");
-    PyRun_SimpleString("import sys; sys.path.append('./src/solver/'); print(sys.path);");
+    PyRun_SimpleString("import sys; sys.path.append('./src/solver/');");
     //PyRun_SimpleString("import os, sys; sys.path.append(os.path.abspath('./src/solver')); print(sys.path)");
 }
 
