@@ -12,11 +12,7 @@ class SolutionManager:
 
         self.facelets = facelets.upper()
 
-    def solve(self):
-        # defining parameters
-        max_length=25
-        timeout=float("inf")
-
+    def solve(self, max_length=25, timeout=float("inf")):
         # prepare for phase 1
         self._phase_1_initialise(max_length)
         self._allowed_length = max_length
