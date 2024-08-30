@@ -1,6 +1,6 @@
 TINYOBJ_PATH = ./include
 PYTHON_PATH = /usr/include/python3.10
-CFLAGS = -std=c++17 -O2 -I${TINYOBJ_PATH}
+CFLAGS = -std=c++17 -O2 -I${TINYOBJ_PATH} -I${PYTHON_PATH}
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi -lpython3.10
 BIN_PATH = /usr/local/bin
 
