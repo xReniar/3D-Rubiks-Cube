@@ -25,11 +25,4 @@ enum Color {
     BLACK
 };
 
-enum Solve_State {
-    CROSS,
-    F2L,
-    OLL,
-    PLL
-};
-
 #endif
