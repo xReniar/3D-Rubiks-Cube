@@ -3,17 +3,18 @@
 - Linux Ubuntu 22.04
 - Vulkan Instance Version: `1.3.204`
 - C/C++ compiler Version: `11.4.0`
+- Python version: `3.10.12`
 ## How to use
 - Is it possible to watch the cube with different angles just use `WASD` to move and arrow keys to move the view. Use `Q` to go down and `E` to go up.
 - The possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
-- The projects uses the `Kociemba algorithm`, to start calculating the solution just press `space`. The first time is always slower because it needs to create a `tables.json` file used to get the solution. For the next solves the average waiting time is usually around 7-10 sec. When pressing space the standard moves are disabled and they'll be enabled when cube is solved.
+- The projects uses the `Kociemba algorithm`, to solve the cube just press `space`. When calculating the solution the cube turns are disabled
 ## Requirements
 The following instructions are for `Ubuntu`, for other operating systems read [here](https://vulkan-tutorial.com/Development_environment).
-### Install g++ and python
+### Check if g++ and python3 are installed
 Ubuntu comes with python preinstalled but to make sure that everything is installed just run this commands:
 ```bash
-sudo apt install g++
-sudo apt install python3
+g++ --version
+python3 --version
 ``` 
 ### Install Vulkan
 To install `Vulkan` and development tools just execute in the terminal:
@@ -38,6 +39,11 @@ tar -xzvf install.tgz
 
 # copy to `usr/local/bin`
 sudo cp -r install/bin/glslc /usr/local/bin
+```
+### Packages for cube solver
+The cube is solved using `Kociemba` algorithm, for ubuntu you might need to install libffi system library, for more information check [here](https://github.com/muodov/kociemba)
+```bash
+sudo apt-get install libffi-dev
 ```
 ## Compile & Execute
 To compile and execute just run `run.sh`:
