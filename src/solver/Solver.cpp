@@ -23,8 +23,13 @@ void Solver::kociemba(const char* cubeState){
     args = PyTuple_Pack(1, PyUnicode_FromString(cubeState));
     callfunc = PyObject_CallObject(func, args);
 
-    std::string solution = PyUnicode_AsUTF8(callfunc);
-    this->solution = solution;
+    std::string result = PyUnicode_AsUTF8(callfunc);
+    std::stringstream stringStream(result);
+    std::string word;
+
+    while (stringStream >> word)
+        solution.push_back(word);
+    solutionReady = true;
 
     freeMemory();
 }
