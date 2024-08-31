@@ -49,7 +49,7 @@ public:
     float moveSpeed{3.f};
     float lookSpeed{1.5f};
 
-    float rotationSpeed = glm::radians(360.0f);
+    float rotationSpeed = glm::radians(540.0f);
     int inverse = 1;
     int numOfTurns = 1;
 
