@@ -12,6 +12,7 @@ Solver::~Solver(){
 } 
 
 void Solver::kociemba(const char* cubeState){
+    std::cout << "[SOLVER] - calculating solution" << std::endl;
     // loading solver module
     name = PyUnicode_FromString((char *)"kociemba");
     load_module = PyImport_Import(name);
@@ -24,6 +25,8 @@ void Solver::kociemba(const char* cubeState){
     callfunc = PyObject_CallObject(func, args);
 
     std::string result = PyUnicode_AsUTF8(callfunc);
+    std::cout << "[SOLVER] - solution found: " << result << std::endl;
+
     std::stringstream stringStream(result);
     std::string word;
 

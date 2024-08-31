@@ -58,6 +58,8 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if(glfwGetKey(window, keys.inverse) == GLFW_RELEASE && inverseKeyPressed) {
                 inverse *= -1;
+                if(inverse > 0) std::cout << "[CHANGE] - inverse turning disabled" << std::endl;
+                else std::cout << "[CHANGE] - inverse turning enabled" << std::endl;
                 inverseKeyPressed = false;
             }
 
@@ -66,10 +68,13 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 doubleTurnKeyPressed = true;
 
             if(glfwGetKey(window, keys.double_turn) == GLFW_RELEASE && doubleTurnKeyPressed) {
-                if(numOfTurns == 1)
+                if(numOfTurns == 1){
                     numOfTurns = 2;
-                else
+                    std::cout << "[CHANGE] - double turning enabled" << std::endl;
+                } else {
                     numOfTurns = 1;
+                    std::cout << "[CHANGE] - double turning disabled" << std::endl;
+                }
                 doubleTurnKeyPressed = false;
             }
 
