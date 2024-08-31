@@ -11,8 +11,4 @@ int main(){
     }
 
     return EXIT_SUCCESS;
-    //solver.solve(cube);
-
-    //cube.state();
-    //cube.turn("UDFRBL");
 }
