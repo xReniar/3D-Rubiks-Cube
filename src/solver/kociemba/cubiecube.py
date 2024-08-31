@@ -1,503 +1,608 @@
-from functools import reduce
+import copy
+from builtins import range
 
-from .pieces import Corner, Edge
-from . import facecube
+from .corner import URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB, corner_values
+from .edge import UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR, edge_values
+from .facecube import FaceCube
 
 
-def choose(n, k):
-    if 0 <= k <= n:
-        num = 1
-        den = 1
-        for i in range(1, min(k, n - k) + 1):
-            num *= n
-            den *= i
-            n -= 1
-        return num // den
-    else:
+# n choose k
+def Cnk(n, k):
+    if n < k:
         return 0
-
-_cpU = (
-    Corner.UBR,
-    Corner.URF,
-    Corner.UFL,
-    Corner.ULB,
-    Corner.DFR,
-    Corner.DLF,
-    Corner.DBL,
-    Corner.DRB,
-)
-_coU = (0, 0, 0, 0, 0, 0, 0, 0)
-_epU = (
-    Edge.UB,
-    Edge.UR,
-    Edge.UF,
-    Edge.UL,
-    Edge.DR,
-    Edge.DF,
-    Edge.DL,
-    Edge.DB,
-    Edge.FR,
-    Edge.FL,
-    Edge.BL,
-    Edge.BR,
-)
-_eoU = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-_cpR = (
-    Corner.DFR,
-    Corner.UFL,
-    Corner.ULB,
-    Corner.URF,
-    Corner.DRB,
-    Corner.DLF,
-    Corner.DBL,
-    Corner.UBR,
-)
-_coR = (2, 0, 0, 1, 1, 0, 0, 2)
-_epR = (
-    Edge.FR,
-    Edge.UF,
-    Edge.UL,
-    Edge.UB,
-    Edge.BR,
-    Edge.DF,
-    Edge.DL,
-    Edge.DB,
-    Edge.DR,
-    Edge.FL,
-    Edge.BL,
-    Edge.UR,
-)
-_eoR = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-_cpF = (
-    Corner.UFL,
-    Corner.DLF,
-    Corner.ULB,
-    Corner.UBR,
-    Corner.URF,
-    Corner.DFR,
-    Corner.DBL,
-    Corner.DRB,
-)
-_coF = (1, 2, 0, 0, 2, 1, 0, 0)
-_epF = (
-    Edge.UR,
-    Edge.FL,
-    Edge.UL,
-    Edge.UB,
-    Edge.DR,
-    Edge.FR,
-    Edge.DL,
-    Edge.DB,
-    Edge.UF,
-    Edge.DF,
-    Edge.BL,
-    Edge.BR,
-)
-_eoF = (0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0)
-
-_cpD = (
-    Corner.URF,
-    Corner.UFL,
-    Corner.ULB,
-    Corner.UBR,
-    Corner.DLF,
-    Corner.DBL,
-    Corner.DRB,
-    Corner.DFR,
-)
-_coD = (0, 0, 0, 0, 0, 0, 0, 0)
-_epD = (
-    Edge.UR,
-    Edge.UF,
-    Edge.UL,
-    Edge.UB,
-    Edge.DF,
-    Edge.DL,
-    Edge.DB,
-    Edge.DR,
-    Edge.FR,
-    Edge.FL,
-    Edge.BL,
-    Edge.BR,
-)
-_eoD = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-_cpL = (
-    Corner.URF,
-    Corner.ULB,
-    Corner.DBL,
-    Corner.UBR,
-    Corner.DFR,
-    Corner.UFL,
-    Corner.DLF,
-    Corner.DRB,
-)
-_coL = (0, 1, 2, 0, 0, 2, 1, 0)
-_epL = (
-    Edge.UR,
-    Edge.UF,
-    Edge.BL,
-    Edge.UB,
-    Edge.DR,
-    Edge.DF,
-    Edge.FL,
-    Edge.DB,
-    Edge.FR,
-    Edge.UL,
-    Edge.DL,
-    Edge.BR,
-)
-_eoL = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-_cpB = (
-    Corner.URF,
-    Corner.UFL,
-    Corner.UBR,
-    Corner.DRB,
-    Corner.DFR,
-    Corner.DLF,
-    Corner.ULB,
-    Corner.DBL,
-)
-_coB = (0, 0, 1, 2, 0, 0, 2, 1)
-_epB = (
-    Edge.UR,
-    Edge.UF,
-    Edge.UL,
-    Edge.BR,
-    Edge.DR,
-    Edge.DF,
-    Edge.DL,
-    Edge.BL,
-    Edge.FR,
-    Edge.FL,
-    Edge.UB,
-    Edge.DB,
-)
-_eoB = (0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1)
+    if k > n // 2:
+        k = n - k
+    s = 1
+    i = n
+    j = 1
+    while i != n - k:
+        s *= i
+        s //= j
+        i -= 1
+        j += 1
+    return s
 
 
-class CubieCube:
+def rotateLeft(arr, l, r):
+    """Left rotation of all array elements between l and r"""
+    temp = arr[l]
+    for i in range(l, r):
+        arr[i] = arr[i + 1]
+    arr[r] = temp
+
+
+def rotateRight(arr, l, r):
+    """Right rotation of all array elements between l and r"""
+    temp = arr[r]
+    for i in range(r, l, -1):
+        arr[i] = arr[i - 1]
+    arr[l] = temp
+
+
+def getURtoDF(idx1, idx2):
+    """Permutation of the six edges UR,UF,UL,UB,DR,DF"""
+    a = CubieCube()
+    b = CubieCube()
+    a.setURtoUL(idx1)
+    b.setUBtoDF(idx2)
+    for i in range(8):
+        if a.ep[i] != BR:
+            if b.ep[i] != BR:   # collision
+                return -1
+            else:
+                b.ep[i] = a.ep[i]
+    return b.getURtoDF()
+
+
+class CubieCube(object):
+    """Cube on the cubie level"""
+
+    # initialize to Id-Cube
+
     def __init__(self, cp=None, co=None, ep=None, eo=None):
-        if cp and co and ep and eo:
-            self.cp = cp[:]
-            self.co = co[:]
-            self.ep = ep[:]
-            self.eo = eo[:]
-        else:
-            # Initialise clean cube if position not given.
-            self.cp = [
-                Corner.URF,
-                Corner.UFL,
-                Corner.ULB,
-                Corner.UBR,
-                Corner.DFR,
-                Corner.DLF,
-                Corner.DBL,
-                Corner.DRB,
-            ]
-            self.co = [0, 0, 0, 0, 0, 0, 0, 0]
-            self.ep = [
-                Edge.UR,
-                Edge.UF,
-                Edge.UL,
-                Edge.UB,
-                Edge.DR,
-                Edge.DF,
-                Edge.DL,
-                Edge.DB,
-                Edge.FR,
-                Edge.FL,
-                Edge.BL,
-                Edge.BR,
-            ]
-            self.eo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        # corner permutation
+        self.cp = copy.copy(cp) if cp else [URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB]
 
-    def corner_multiply(self, b):
-        corner_perm = [self.cp[b.cp[i]] for i in range(8)]
-        corner_ori = [(self.co[b.cp[i]] + b.co[i]) % 3 for i in range(8)]
-        self.co = corner_ori[:]
-        self.cp = corner_perm[:]
+        # corner orientation
+        self.co = copy.copy(co) if co else [0, 0, 0, 0, 0, 0, 0, 0]
 
-    def edge_multiply(self, b):
-        edge_perm = [self.ep[b.ep[i]] for i in range(12)]
-        edge_ori = [(self.eo[b.ep[i]] + b.eo[i]) % 2 for i in range(12)]
-        self.eo = edge_ori[:]
-        self.ep = edge_perm[:]
+        # edge permutation
+        self.ep = copy.copy(ep) if ep else [UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR]
+
+        # edge orientation
+        self.eo = copy.copy(eo) if eo else [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    def toFaceCube(self):
+        """return cube in facelet representation"""
+
+        fcRet = FaceCube()
+        for i in corner_values:
+            j = self.cp[i]  # cornercubie with index j is at cornerposition with index i
+            ori = self.co[i]   # Orientation of this cubie
+            for n in range(3):
+                _butya = FaceCube.cornerFacelet[i][(n + ori) % 3]
+                fcRet.f[_butya] = FaceCube.cornerColor[j][n]
+        for i in edge_values:
+            ori = self.eo[i]   # Orientation of this cubie
+            for n in range(2):
+                _butya = FaceCube.edgeFacelet[i][(n + ori) % 2]
+                fcRet.f[_butya] = FaceCube.edgeColor[self.ep[i]][n]
+        return fcRet
+
+    def cornerMultiply(self, b):
+        """
+        Multiply this CubieCube with another cubiecube b, restricted to the corners.<br>
+        Because we also describe reflections of the whole cube by permutations, we get a complication with the corners. The
+        orientations of mirrored corners are described by the numbers 3, 4 and 5. The composition of the orientations
+        cannot
+        be computed by addition modulo three in the cyclic group C3 any more. Instead the rules below give an addition in
+        the dihedral group D3 with 6 elements.<br>
+
+        NOTE: Because we do not use symmetry reductions and hence no mirrored cubes in this simple implementation of the
+        Two-Phase-Algorithm, some code is not necessary here.
+
+        b - CubieCube instance
+        """
+
+        cPerm = []  # new Corner[8]
+        cOri = []   # new byte[8]
+        for i in corner_values:
+            cPerm.append(self.cp[b.cp[i]])
+
+            oriA = self.co[b.cp[i]]
+            oriB = b.co[i]
+            ori = 0
+
+            if oriA < 3 and oriB < 3:  # if both cubes are regular cubes...
+                ori = (oriA + oriB) & 0xff   # just do an addition modulo 3 here
+                if ori >= 3:
+                    ori -= 3    # the composition is a regular cube
+
+            # +++++++++++++++++++++not used in this implementation +++++++++++++
+            elif oriA < 3 and oriB >= 3:    # if cube b is in a mirrored
+                # state...
+                ori = (oriA + oriB) & 0xff
+                if ori >= 6:
+                    ori -= 3    # the composition is a mirrored cube
+            elif oriA >= 3 and oriB < 3:    # if cube a is an a mirrored
+                # state...
+                ori = (oriA - oriB) & 0xff
+                if ori < 3:
+                    ori += 3    # the composition is a mirrored cube
+            elif oriA >= 3 and oriB >= 3:   # if both cubes are in mirrored
+                # states...
+                ori = (oriA - oriB) & 0xff
+                if ori < 0:
+                    ori += 3    # the composition is a regular cube
+            # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+            cOri.append(ori)
+
+        for i in corner_values:
+            self.cp[i] = cPerm[i]
+            self.co[i] = cOri[i]
+
+    def edgeMultiply(self, b):
+        """
+        Multiply this CubieCube with another cubiecube b, restricted to the edges.
+
+        b - CubieCube instance
+        """
+
+        ePerm = []  # new Edge[12]
+        eOri = []   # new byte[12]
+        for i in edge_values:
+            _ = b.ep[i]
+            ePerm.append(self.ep[_])
+            eOri.append(((b.eo[i] + self.eo[_]) % 2) & 0xff)
+
+        for i in edge_values:
+            self.ep[i] = ePerm[i]
+            self.eo[i] = eOri[i]
 
     def multiply(self, b):
-        self.corner_multiply(b)
-        self.edge_multiply(b)
+        """
+        Multiply this CubieCube with another CubieCube b.
 
-    def move(self, i):
-        self.multiply(MOVE_CUBE[i])
+        b - CubieCube instance
+        """
 
-    def inverse_cubiecube(self):
-        cube = CubieCube()
-        for e in range(12):
-            cube.ep[self.ep[e]] = e
-        for e in range(12):
-            cube.eo[e] = self.eo[cube.ep[e]]
-        for c in range(8):
-            cube.cp[self.cp[c]] = c
-        for c in range(8):
-            ori = self.co[cube.cp[c]]
-            cube.co[c] = (-ori) % 3
-        return cube
+        self.cornerMultiply(b)
+        self.edgeMultiply(b)
 
-    def to_facecube(self):
-        ret = facecube.FaceCube()
-        for i in range(8):
-            j = self.cp[i]
-            ori = self.co[i]
-            for k in range(3):
-                ret.f[
-                    facecube.corner_facelet[i][(k + ori) % 3]
-                ] = facecube.corner_color[j][k]
-        for i in range(12):
-            j = self.ep[i]
-            ori = self.eo[i]
-            for k in range(2):
-                facelet_index = facecube.edge_facelet[i][(k + ori) % 2]
-                ret.f[facelet_index] = facecube.edge_color[j][k]
+    def invCubieCube(self, c):
+        """
+        Compute the inverse CubieCube
+
+        c - CubieCube instance
+        """
+
+        for i in edge_values:
+            c.ep[self.ep[i]] = i
+        for i in edge_values:
+            c.eo[i] = self.eo[c.ep[i]]
+        for i in corner_values:
+            c.cp[self.cp[i]] = i
+        for i in corner_values:
+            ori = self.co[c.cp[i]]
+            if ori >= 3:
+                # Just for completeness. We do not invert mirrored cubes in the program.
+                c.co[i] = ori
+            else:
+                # the standard case
+                c.co[i] = -ori
+                if c.co[i] < 0:
+                    c.co[i] += 3
+
+    # ********************* Get and set coordinates ***************************
+
+    def getTwist(self):
+        """return the twist of the 8 corners. 0 <= twist < 3^7"""
+
+        ret = 0
+        for i in range(URF, DRB):
+            ret = (3 * ret + self.co[i]) & 0xffff
         return ret
 
-    @property
-    def corner_parity(self):
+    def setTwist(self, twist):
+        twistParity = 0
+        for i in range(DRB - 1, URF - 1, -1):
+            self.co[i] = (twist % 3) & 0xff
+            twistParity += self.co[i]
+            twist //= 3
+        self.co[DRB] = ((3 - twistParity % 3) % 3) & 0xff
+
+    def getFlip(self):
+        """return the flip of the 12 edges. 0<= flip < 2^11"""
+
+        ret = 0
+        for i in range(UR, BR):
+            ret = (2 * ret + self.eo[i]) & 0xffff
+        return ret
+
+    def setFlip(self, flip):
+        flipParity = 0
+        for i in range(BR - 1, UR - 1, -1):
+            self.eo[i] = (flip % 2) & 0xff
+            flipParity += self.eo[i]
+            flip //= 2
+        self.eo[BR] = ((2 - flipParity % 2) % 2) & 0xff
+
+    def cornerParity(self):
+        """Parity of the corner permutation"""
         s = 0
-        for i in range(7, 0, -1):
-            for j in range(i - 1, -1, -1):
+        for i in range(DRB, URF, -1):
+            for j in range(i - 1, URF - 1, -1):
                 if self.cp[j] > self.cp[i]:
                     s += 1
-        return s % 2
+        return (s % 2) & 0xffff
 
-    @property
-    def edge_parity(self):
+    def edgeParity(self):
+        """Parity of the edges permutation. Parity of corners and edges are the same if the cube is solvable."""
         s = 0
-        for i in range(11, 0, -1):
-            for j in range(i - 1, -1, -1):
+        for i in range(BR, UR, -1):
+            for j in range(i - 1, UR - 1, -1):
                 if self.ep[j] > self.ep[i]:
                     s += 1
-        return s % 2
+        return (s % 2) & 0xffff
 
-    # ----------   Phase 1 Coordinates  ---------- #
-    @property
-    def twist(self):
-        return reduce(lambda x, y: 3 * x + y, self.co[:7])
-
-    @twist.setter
-    def twist(self, twist):
-        if not 0 <= twist < 3 ** 7:
-            raise ValueError(
-                "{} is out of range for twist, must take values in "
-                "0, ..., 2186.".format(twist)
-            )
-        total = 0
-        for i in range(7):
-            x = twist % 3
-            self.co[6 - i] = x
-            total += x
-            twist //= 3
-        self.co[7] = (-total) % 3
-
-    @property
-    def flip(self):
-        return reduce(lambda x, y: 2 * x + y, self.eo[:11])
-
-    @flip.setter
-    def flip(self, flip):
-        if not 0 <= flip < 2 ** 11:
-            raise ValueError(
-                "{} is out of range for flip, must take values in "
-                "0, ..., 2047.".format(flip)
-            )
-        total = 0
-        for i in range(11):
-            x = flip % 2
-            self.eo[10 - i] = x
-            total += x
-            flip //= 2
-        self.eo[11] = (-total) % 2
-
-    @property
-    def udslice(self):
-        udslice, seen = 0, 0
-        for j in range(12):
-            if 8 <= self.ep[j] < 12:
-                seen += 1
-            elif seen >= 1:
-                udslice += choose(j, seen - 1)
-        return udslice
-
-    @udslice.setter
-    def udslice(self, udslice):
-        if not 0 <= udslice < choose(12, 4):
-            raise ValueError(
-                "{} is out of range for udslice, must take values in "
-                "0, ..., 494.".format(udslice)
-            )
-        udslice_edge = [Edge.FR, Edge.FL, Edge.BL, Edge.BR]
-        other_edge = [
-            Edge.UR,
-            Edge.UF,
-            Edge.UL,
-            Edge.UB,
-            Edge.DR,
-            Edge.DF,
-            Edge.DL,
-            Edge.DB,
-        ]
-        # invalidate edges
-        for i in range(12):
-            self.ep[i] = Edge.DB
-        # we first position the slice edges
-        seen = 3
-        for j in range(11, -1, -1):
-            if udslice - choose(j, seen) < 0:
-                self.ep[j] = udslice_edge[seen]
-                seen -= 1
-            else:
-                udslice -= choose(j, seen)
-        # then the remaining edges
+    def getFRtoBR(self):
+        """permutation of the UD-slice edges FR,FL,BL and BR"""
+        a = 0
         x = 0
-        for j in range(12):
-            if self.ep[j] == Edge.DB:
-                self.ep[j] = other_edge[x]
+        edge4 = [None] * 4  # new Edge[4]
+        # compute the index a < (12 choose 4) and the permutation array perm.
+        for j in range(BR, UR - 1, -1):
+            if (FR <= self.ep[j] and self.ep[j] <= BR):
+                a += Cnk(11 - j, x + 1)
+                edge4[3 - x] = self.ep[j]
                 x += 1
 
-    @property
-    def edge4(self):
-        edge4 = self.ep[8:]
-        ret = 0
-        for j in range(3, 0, -1):
-            s = 0
-            for i in range(j):
-                if edge4[i] > edge4[j]:
-                    s += 1
-            ret = j * (ret + s)
-        return ret
+        b = 0
+        for j in range(3, 0, -1):  # compute the index b < 4! for the permutation in perm
+            k = 0
+            while (edge4[j] != j + 8):
+                rotateLeft(edge4, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return (24 * a + b) & 0xffff
 
-    @edge4.setter
-    def edge4(self, edge4):
-        if not 0 <= edge4 < 24:
-            raise ValueError(
-                f"{edge4} is out of range for edge4, must take values in 0-23"
-            )
-        sliceedge = [Edge.FR, Edge.FL, Edge.BL, Edge.BR]
-        coeffs = [0] * 3
-        for i in range(1, 4):
-            coeffs[i - 1] = edge4 % (i + 1)
-            edge4 //= i + 1
-        perm = [0] * 4
-        for i in range(2, -1, -1):
-            perm[i + 1] = sliceedge.pop(i + 1 - coeffs[i])
-        perm[0] = sliceedge[0]
-        self.ep[8:] = perm[:]
+    def setFRtoBR(self, idx):
+        sliceEdge = [FR, FL, BL, BR]
+        otherEdge = [UR, UF, UL, UB, DR, DF, DL, DB]
+        b = idx % 24   # Permutation
+        a = idx // 24   # Combination
+        for i in edge_values:
+            self.ep[i] = DB     # Use UR to invalidate all edges
 
-    @property
-    def edge8(self):
-        edge8 = 0
-        for j in range(7, 0, -1):
-            s = 0
-            for i in range(j):
-                if self.ep[i] > self.ep[j]:
-                    s += 1
-            edge8 = j * (edge8 + s)
-        return edge8
+        for j in range(1, 4):  # generate permutation from index b
+            k = b % (j + 1)
+            b //= j + 1
 
-    @edge8.setter
-    def edge8(self, edge8):
-        edges = list(range(8))
-        perm = [0] * 8
-        coeffs = [0] * 7
-        for i in range(1, 8):
-            coeffs[i - 1] = edge8 % (i + 1)
-            edge8 //= i + 1
-        for i in range(6, -1, -1):
-            perm[i + 1] = edges.pop(i + 1 - coeffs[i])
-        perm[0] = edges[0]
-        self.ep[:8] = perm[:]
+            while k > 0:    # while (k-- > 0) #????????????????
+                k -= 1
+                rotateRight(sliceEdge, 0, j)
 
-    @property
-    def corner(self):
-        c = 0
-        for j in range(7, 0, -1):
-            s = 0
-            for i in range(j):
-                if self.cp[i] > self.cp[j]:
-                    s += 1
-            c = j * (c + s)
-        return c
+        x = 3   # generate combination and set slice edges
+        for j in range(UR, BR + 1):
+            if a - Cnk(11 - j, x + 1) >= 0:
+                self.ep[j] = sliceEdge[3 - x]
+                a -= Cnk(11 - j, x + 1)
+                x -= 1
+        x = 0   # set the remaining edges UR..DB
+        for j in range(UR, BR + 1):
+            if self.ep[j] == DB:
+                self.ep[j] = otherEdge[x]
+                x += 1
 
-    @corner.setter
-    def corner(self, corn):
-        corners = list(range(8))
-        perm = [0] * 8
-        coeffs = [0] * 7
-        for i in range(1, 8):
-            coeffs[i - 1] = corn % (i + 1)
-            corn //= i + 1
-        for i in range(6, -1, -1):
-            perm[i + 1] = corners.pop(i + 1 - coeffs[i])
-        perm[0] = corners[0]
-        self.cp = perm[:]
+    def getURFtoDLF(self):
+        """Permutation of all corners except DBL and DRB"""
+        a = 0
+        x = 0
+        corner6 = []    # new Corner[6]
+        # compute the index a < (8 choose 6) and the corner permutation.
+        for j in range(URF, DRB + 1):
+            if self.cp[j] <= DLF:
+                a += Cnk(j, x + 1)
+                corner6.append(self.cp[j])
+                x += 1
 
-    @property
-    def edge(self):
-        e = 0
-        for j in range(11, 0, -1):
-            s = 0
-            for i in range(j):
-                if self.ep[i] > self.ep[j]:
-                    s += 1
-            e = j * (e + s)
-        return e
+        b = 0
+        for j in range(5, 0, -1):   # compute the index b < 6! for the
+            # permutation in corner6
+            k = 0
+            while corner6[j] != j:
+                rotateLeft(corner6, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return (720 * a + b) & 0xffff
 
-    @edge.setter
-    def edge(self, edge):
-        edges = list(range(12))
-        perm = [0] * 12
-        coeffs = [0] * 11
-        for i in range(1, 12):
-            coeffs[i - 1] = edge % (i + 1)
-            edge //= i + 1
-        for i in range(10, -1, -1):
-            perm[i + 1] = edges.pop(i + 1 - coeffs[i])
-        perm[0] = edges[0]
-        self.ep = perm[:]
+    def setURFtoDLF(self, idx):
+        corner6 = [URF, UFL, ULB, UBR, DFR, DLF]
+        otherCorner = [DBL, DRB]
+        b = idx % 720  # Permutation
+        a = idx // 720  # Combination
+        for i in corner_values:
+            self.cp[i] = DRB    # Use DRB to invalidate all corners
+
+        for j in range(1, 6):   # generate permutation from index b
+            k = b % (j + 1)
+            b //= j + 1
+            while k > 0:
+                k -= 1
+                rotateRight(corner6, 0, j)
+        x = 5
+        # generate combination and set corners
+        for j in range(DRB, -1, -1):
+            if a - Cnk(j, x + 1) >= 0:
+                self.cp[j] = corner6[x]
+                a -= Cnk(j, x + 1)
+                x -= 1
+        x = 0
+        for j in range(URF, DRB + 1):
+            if self.cp[j] == DRB:
+                self.cp[j] = otherCorner[x]
+                x += 1
+
+    def getURtoDF(self):
+        """Permutation of the six edges UR,UF,UL,UB,DR,DF."""
+        a = 0
+        x = 0
+        edge6 = []  # new Edge[6]
+        # compute the index a < (12 choose 6) and the edge permutation.
+        for j in range(UR, BR + 1):
+            if self.ep[j] <= DF:
+                a += Cnk(j, x + 1)
+                edge6.append(self.ep[j])
+                x += 1
+
+        b = 0
+        for j in range(5, 0, -1):  # compute the index b < 6! for the permutation in edge6
+            k = 0
+            while edge6[j] != j:
+                rotateLeft(edge6, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return 720 * a + b
+
+    def setURtoDF(self, idx):
+        edge6 = [UR, UF, UL, UB, DR, DF]
+        otherEdge = [DL, DB, FR, FL, BL, BR]
+        b = idx % 720  # Permutation
+        a = idx // 720  # Combination
+        for i in edge_values:
+            self.ep[i] = BR     # Use BR to invalidate all edges
+
+        for j in range(1, 6):   # generate permutation from index b
+            k = b % (j + 1)
+            b //= j + 1
+            while k > 0:
+                k -= 1
+                rotateRight(edge6, 0, j)
+        x = 5
+        # generate combination and set edges
+        for j in range(BR, -1, -1):
+            if a - Cnk(j, x + 1) >= 0:
+                self.ep[j] = edge6[x]
+                a -= Cnk(j, x + 1)
+                x -= 1
+        x = 0
+        # set the remaining edges DL..BR
+        for j in range(UR, BR + 1):
+            if self.ep[j] == BR:
+                self.ep[j] = otherEdge[x]
+                x += 1
+
+    def getURtoUL(self):
+        """Permutation of the three edges UR,UF,UL"""
+        a = 0
+        x = 0
+        edge3 = []  # new Edge[3]
+        # compute the index a < (12 choose 3) and the edge permutation.
+        for j in range(UR, BR + 1):
+            if self.ep[j] <= UL:
+                a += Cnk(j, x + 1)
+                edge3.append(self.ep[j])
+                x += 1
+
+        b = 0
+        for j in range(2, 0, -1):  # compute the index b < 3! for the permutation in edge3
+            k = 0
+            while edge3[j] != j:
+                rotateLeft(edge3, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return (6 * a + b) & 0xffff
+
+    def setURtoUL(self, idx):
+        edge3 = [UR, UF, UL]
+        b = idx % 6    # Permutation
+        a = idx // 6    # Combination
+        for i in edge_values:
+            self.ep[i] = BR    # Use BR to invalidate all edges
+
+        for j in range(1, 3):   # generate permutation from index b
+            k = b % (j + 1)
+            b //= j + 1
+            while k > 0:
+                k -= 1
+                rotateRight(edge3, 0, j)
+        x = 2  # generate combination and set edges
+        for j in range(BR, -1, -1):
+            if a - Cnk(j, x + 1) >= 0:
+                self.ep[j] = edge3[x]
+                a -= Cnk(j, x + 1)
+                x -= 1
+
+    def getUBtoDF(self):
+        """Permutation of the three edges UB,DR,DF"""
+        a = 0
+        x = 0
+        edge3 = []  # new Edge[3]
+        # compute the index a < (12 choose 3) and the edge permutation.
+        for j in range(UR, BR + 1):
+            if UB <= self.ep[j] and self.ep[j] <= DF:
+                a += Cnk(j, x + 1)
+                edge3.append(self.ep[j])
+                x += 1
+
+        b = 0
+        for j in range(2, 0, -1):  # compute the index b < 3! for the permutation in edge3
+            k = 0
+            while edge3[j] != UB + j:
+                rotateLeft(edge3, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return (6 * a + b) & 0xffff
+
+    def setUBtoDF(self, idx):
+        edge3 = [UB, DR, DF]
+        b = idx % 6    # Permutation
+        a = idx // 6    # Combination
+        for i in edge_values:
+            self.ep[i] = BR     # Use BR to invalidate all edges
+
+        for j in range(1, 3):
+            # generate permutation from index b
+            k = b % (j + 1)
+            b //= j + 1
+            while k > 0:
+                k -= 1
+                rotateRight(edge3, 0, j)
+        x = 2
+        # generate combination and set edges
+        for j in range(BR, -1, -1):
+            if a - Cnk(j, x + 1) >= 0:
+                self.ep[j] = edge3[x]
+                a -= Cnk(j, x + 1)
+                x -= 1
+
+    def getURFtoDLB(self):
+        perm = copy.copy(self.cp)
+        b = 0
+        for j in range(7, 0, -1):  # compute the index b < 8! for the permutation in perm
+            k = 0
+            while perm[j] != j:
+                rotateLeft(perm, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return b
+
+    def setURFtoDLB(self, idx):
+        perm = [URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB]
+        for j in range(1, 8):
+            k = idx % (j + 1)
+            idx //= j + 1
+            while k > 0:
+                k -= 1
+                rotateRight(perm, 0, j)
+        x = 7
+        # set corners
+        for j in range(7, -1, -1):
+            self.cp[j] = perm[x]
+            x -= 1
+
+    def getURtoBR(self):
+        perm = copy.copy(self.ep)
+        b = 0
+        for j in range(11, 0, -1):     # compute the index b < 12! for the permutation in perm
+            k = 0
+            while perm[j] != j:
+                rotateLeft(perm, 0, j)
+                k += 1
+            b = (j + 1) * b + k
+        return b
+
+    def setURtoBR(self, idx):
+        perm = [UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR]
+        for j in range(1, 12):
+            k = idx % (j + 1)
+            idx //= j + 1
+            while k > 0:
+                k -= 1
+                rotateRight(perm, 0, j)
+        x = 11  # set edges
+        for j in range(11, -1, -1):
+            self.ep[j] = perm[x]
+            x -= 1
+
+    def verify(self):
+        """
+        Check a cubiecube for solvability. Return the error code.
+        0: Cube is solvable
+        -2: Not all 12 edges exist exactly once
+        -3: Flip error: One edge has to be flipped
+        -4: Not all corners exist exactly once
+        -5: Twist error: One corner has to be twisted
+        -6: Parity error: Two corners ore two edges have to be exchanged
+        """
+
+        sum = 0
+        edgeCount = [0] * 12  # new int[12]
+        for i in edge_values:
+            edgeCount[self.ep[i]] += 1
+        for i in range(12):
+            if edgeCount[i] != 1:
+                return -2
+
+        for i in range(12):
+            sum += self.eo[i]
+        if sum % 2 != 0:
+            return -3
+
+        cornerCount = [0] * 8   # new int[8]
+        for i in corner_values:
+            cornerCount[self.cp[i]] += 1
+        for i in range(8):
+            if cornerCount[i] != 1:
+                return -4   # missing corners
+
+        sum = 0
+        for i in range(8):
+            sum += self.co[i]
+        if sum % 3 != 0:
+            return -5   # twisted corner
+
+        if (self.edgeParity() ^ self.cornerParity()) != 0:
+            return -6   # parity error
+
+        return 0    # cube ok
 
 
-# we store the six possible clockwise 1/4 turn moves in the following array.
-MOVE_CUBE = [CubieCube() for i in range(6)]
+# ************************ Moves on the cubie level ****************************
 
-MOVE_CUBE[0].cp = _cpU
-MOVE_CUBE[0].co = _coU
-MOVE_CUBE[0].ep = _epU
-MOVE_CUBE[0].eo = _eoU
+cpU = [UBR, URF, UFL, ULB, DFR, DLF, DBL, DRB]
+coU = [0, 0, 0, 0, 0, 0, 0, 0]
+epU = [UB, UR, UF, UL, DR, DF, DL, DB, FR, FL, BL, BR]
+eoU = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-MOVE_CUBE[1].cp = _cpR
-MOVE_CUBE[1].co = _coR
-MOVE_CUBE[1].ep = _epR
-MOVE_CUBE[1].eo = _eoR
+cpR = [DFR, UFL, ULB, URF, DRB, DLF, DBL, UBR]
+coR = [2, 0, 0, 1, 1, 0, 0, 2]
+epR = [FR, UF, UL, UB, BR, DF, DL, DB, DR, FL, BL, UR]
+eoR = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+cpF = [UFL, DLF, ULB, UBR, URF, DFR, DBL, DRB]
+coF = [1, 2, 0, 0, 2, 1, 0, 0]
+epF = [UR, FL, UL, UB, DR, FR, DL, DB, UF, DF, BL, BR]
+eoF = [0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0]
+cpD = [URF, UFL, ULB, UBR, DLF, DBL, DRB, DFR]
+coD = [0, 0, 0, 0, 0, 0, 0, 0]
+epD = [UR, UF, UL, UB, DF, DL, DB, DR, FR, FL, BL, BR]
+eoD = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+cpL = [URF, ULB, DBL, UBR, DFR, UFL, DLF, DRB]
+coL = [0, 1, 2, 0, 0, 2, 1, 0]
+epL = [UR, UF, BL, UB, DR, DF, FL, DB, FR, UL, DL, BR]
+eoL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+cpB = [URF, UFL, UBR, DRB, DFR, DLF, ULB, DBL]
+coB = [0, 0, 1, 2, 0, 0, 2, 1]
+epB = [UR, UF, UL, BR, DR, DF, DL, BL, FR, FL, UB, DB]
+eoB = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1]
 
-MOVE_CUBE[2].cp = _cpF
-MOVE_CUBE[2].co = _coF
-MOVE_CUBE[2].ep = _epF
-MOVE_CUBE[2].eo = _eoF
-
-MOVE_CUBE[3].cp = _cpD
-MOVE_CUBE[3].co = _coD
-MOVE_CUBE[3].ep = _epD
-MOVE_CUBE[3].eo = _eoD
-
-MOVE_CUBE[4].cp = _cpL
-MOVE_CUBE[4].co = _coL
-MOVE_CUBE[4].ep = _epL
-MOVE_CUBE[4].eo = _eoL
-
-MOVE_CUBE[5].cp = _cpB
-MOVE_CUBE[5].co = _coB
-MOVE_CUBE[5].ep = _epB
-MOVE_CUBE[5].eo = _eoB
+# this CubieCube array represents the 6 basic cube moves
+moveCube = [
+    CubieCube(cp=cpU, co=coU, ep=epU, eo=eoU),
+    CubieCube(cp=cpR, co=coR, ep=epR, eo=eoR),
+    CubieCube(cp=cpF, co=coF, ep=epF, eo=eoF),
+    CubieCube(cp=cpD, co=coD, ep=epD, eo=eoD),
+    CubieCube(cp=cpL, co=coL, ep=epL, eo=eoL),
+    CubieCube(cp=cpB, co=coB, ep=epB, eo=eoB),
+]

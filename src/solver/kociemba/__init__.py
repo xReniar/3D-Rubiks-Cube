@@ -1,23 +1,25 @@
-from . import solve
-import time
+from . import search
 
-def solve_best_generator(cube_state, max_length=25, max_time=10):
-    sm = solve.SolutionManager(cube_state)
-    timeout = time.time() + max_time
-    while True:
-        solution = sm.solve(max_length, timeout)
+def _solve(cube, pattern, max_depth=24):
+    errors = {
+        'Error 1': 'There is not exactly one facelet of each colour',
+        'Error 2': 'Not all 12 edges exist exactly once',
+        'Error 3': 'Flip error: One edge has to be flipped',
+        'Error 4': 'Not all corners exist exactly once',
+        'Error 5': 'Twist error: One corner has to be twisted',
+        'Error 6': 'Parity error: Two corners or two edges have to be exchanged',
+        'Error 7': 'No solution exists for the given maxDepth',
+        'Error 8': 'Timeout, no solution within given time'
+    }
+    if pattern is not None:
+        cube = search.patternize(cube, pattern)
+    res = search.Search().solution(cube, max_depth, 1000, False).strip()
+    if res in errors:
+        raise ValueError(errors[res])
+    else:
+        return res
 
-        if(isinstance(solution, str)):
-            yield solution
-            max_length = len(solution.split(" ")) - 1
-        elif solution == -2 or solution == -1:
-            break
-        else:
-            raise RuntimeError(
-                f"SolutionManager.solve: unexpected return value {solution}"
-            )    
-
-def main(cube_state:str):
-    solutions = list(solve_best_generator(cube_state, max_length=25, max_time=10))
-    solutions.sort()
-    return solutions[0]
+def main(cubestring):
+    patternstring=None
+    max_depth=24
+    return _solve(cubestring, patternstring, max_depth)
