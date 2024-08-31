@@ -1,5 +1,5 @@
 .vscode
 shaders/*.spv
 __pycache__
-tables.json
+*.pkl
 VulkanProject
