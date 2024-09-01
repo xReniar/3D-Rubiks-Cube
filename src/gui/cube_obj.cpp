@@ -73,7 +73,7 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
 
         // approximate orientation
         float components[4] = {transform.quatRotation.w, transform.quatRotation.x, transform.quatRotation.y, transform.quatRotation.z};
-        for(int i = 0; i < 4; ++i) {
+        for(int i = 0; i < 4; i++) {
             // when value is near 0
             components[i] = std::abs(components[i]) < 1e-3f ? 0.0f : components[i];
             // when value is near +1 or -1
