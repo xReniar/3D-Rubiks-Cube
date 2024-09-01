@@ -44,11 +44,11 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
         if(!animation.isRotating()){
             if(glfwGetKey(window, keys.solve) == GLFW_PRESS && !solveKeyPressed && !cube.isSolved()){
                 // start calculating solution
+                std::cout << "[CONTROLLER] - pressed space, cube turns disabled" << std::endl;
                 std::thread solveThread([&](){
                     solver.kociemba(cube.state().c_str());
                 });
                 solveThread.detach();
-
                 solveKeyPressed = true;
             }
 
@@ -253,10 +253,10 @@ void Controller::solveCube(GLFWwindow* window, float dt, std::vector<CubeObj> &g
                 // reset turn variables
                 inverse = 1;
                 numOfTurns = 1;
-
                 // reset status variables
                 solver.solutionReady = false;
                 solveKeyPressed = false;
+                std::cout << "[CONTROLLER] - cube solved, cube turns enabled" << std::endl;
             } else {
                 // getting first move and then removing it from solution list
                 std::string turn = solver.solution.front();
