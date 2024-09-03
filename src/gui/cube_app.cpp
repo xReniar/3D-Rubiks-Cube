@@ -29,7 +29,7 @@ void CubeApp::run(){
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
     auto viewerObject = CubeObj::createGameObject();
-    viewerObject.transform.translation.z = -4.5f;
+    viewerObject.transform.translation.z = -2.5f;
     Controller controller{};
 
     GLFWwindow* window = cubeGUI.getGLFWwindow();
@@ -65,13 +65,82 @@ void CubeApp::run(){
 }
 
 void CubeApp::loadGameObjects(){
+    int scaler = 4;
     // defining translation
+    /*
+    std::vector<glm::vec3> translation{};
+    for(int i = -1;i <= 2;i++)
+        for(int j = -1;j <= 2;j++)
+            for(int k = -1;k <= 2;k++)
+                //if(!(i == 0 && j == 0 && k == 0))
+                if(!((k == 0 || k == 1) && ((i==0 && j == 0) || (i == 0 && j == 1) || (i==1 && j == 0) || (i == 1) && (j == 1))))
+                    translation.push_back(glm::vec3(((float) i)/scaler,((float) j)/scaler,((float) k)/scaler));
+
+    std::vector<std::string> models = {
+        "models/blender/corner_yellowOrangeBlue.obj",    // 0
+        "models/blender/edge_yellowOrange.obj",          // 1
+        "models/blender/edge_yellowOrange.obj",          // 1
+        "models/blender/corner_yellowGreenOrange.obj",   // 2
+        "models/blender/edge_orangeBlue.obj",            // 3
+        "models/blender/center_orange.obj",              // 4
+        "models/blender/center_orange.obj",              // 4
+        "models/blender/edge_greenOrange.obj",           // 5
+        "models/blender/edge_orangeBlue.obj",            // 3
+        "models/blender/center_orange.obj",              // 4
+        "models/blender/center_orange.obj",              // 4
+        "models/blender/edge_greenOrange.obj",           // 5
+        "models/blender/corner_whiteOrangeBlue.obj",     // 6
+        "models/blender/edge_whiteOrange.obj",           // 7
+        "models/blender/edge_whiteOrange.obj",           // 7
+        "models/blender/corner_whiteGreenOrange.obj",    // 8
+        "models/blender/edge_yellowBlue.obj",            // 9
+        "models/blender/center_yellow.obj",              // 10
+        "models/blender/center_yellow.obj",              // 10
+        "models/blender/edge_yellowGreen.obj",           // 11
+        "models/blender/center_blue.obj",                // 12
+        "models/blender/center_green.obj",               // 13
+        "models/blender/center_blue.obj",                // 12
+        "models/blender/center_green.obj",               // 13
+        "models/blender/edge_whiteBlue.obj",             // 14
+        "models/blender/center_white.obj",               // 15
+        "models/blender/center_white.obj",               // 15
+        "models/blender/edge_whiteGreen.obj",            // 16
+        "models/blender/edge_yellowBlue.obj",            // 9
+        "models/blender/center_yellow.obj",              // 10
+        "models/blender/center_yellow.obj",              // 10
+        "models/blender/edge_yellowGreen.obj",           // 11
+        "models/blender/center_blue.obj",                // 12
+        "models/blender/center_green.obj",               // 13
+        "models/blender/center_blue.obj",                // 12
+        "models/blender/center_green.obj",               // 13
+        "models/blender/edge_whiteBlue.obj",             // 14
+        "models/blender/center_white.obj",               // 15
+        "models/blender/center_white.obj",               // 15
+        "models/blender/edge_whiteGreen.obj",            // 16 //
+        "models/blender/corner_yellowBlueRed.obj",       // 17
+        "models/blender/edge_yellowRed.obj",             // 18
+        "models/blender/edge_yellowRed.obj",             // 18
+        "models/blender/corner_yellowRedGreen.obj",      // 19
+        "models/blender/edge_blueRed.obj",               // 20
+        "models/blender/center_red.obj",                 // 21
+        "models/blender/center_red.obj",                 // 21
+        "models/blender/edge_redGreen.obj",              // 22
+        "models/blender/edge_blueRed.obj",               // 20
+        "models/blender/center_red.obj",                 // 21
+        "models/blender/center_red.obj",                 // 21
+        "models/blender/edge_redGreen.obj",              // 22
+        "models/blender/corner_whiteBlueRed.obj",        // 23
+        "models/blender/edge_whiteRed.obj",              // 24
+        "models/blender/edge_whiteRed.obj",              // 24
+        "models/blender/corner_whiteRedGreen.obj"        // 25
+    };
+    */
     std::vector<glm::vec3> translation{};
     for(int i = -1;i <= 1;i++)
         for(int j = -1;j <= 1;j++)
             for(int k = -1;k <= 1;k++)
                 if(!(i == 0 && j == 0 && k == 0))
-                    translation.push_back(glm::vec3(((float) i)/2,((float) j)/2,((float) k)/2));
+                    translation.push_back(glm::vec3(((float) i)/scaler,((float) j)/scaler,((float) k)/scaler));
 
     std::vector<std::string> models = {
         "models/blender/corner_yellowOrangeBlue.obj",    // 0
@@ -107,7 +176,7 @@ void CubeApp::loadGameObjects(){
         auto cube = CubeObj::createGameObject();
         cube.model = model;
         cube.transform.translation = translation[i];
-        cube.transform.scale = { .5f, .5f, .5f };
+        cube.transform.scale = { (float) 1/scaler, (float) 1/scaler, (float) 1/scaler };
 
         gameObjects.push_back(std::move(cube));
     }
