@@ -45,7 +45,7 @@ void CubeApp::run(){
 
         controller.orbitAroundCube(window, frameTime, viewerObject);
         controller.rotateCube(window, frameTime, gameObjects);
-        controller.solveCube(window, frameTime, gameObjects);
+        controller.solveCube();
 
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
