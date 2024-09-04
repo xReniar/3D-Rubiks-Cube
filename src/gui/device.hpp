@@ -57,6 +57,7 @@ public:
     void createImageWithInfo(const VkImageCreateInfo &imageInfo,VkMemoryPropertyFlags properties,VkImage &image,VkDeviceMemory &imageMemory);
     VkPhysicalDeviceProperties properties;
 
+    VkSampleCountFlagBits getMaxUsableSampleCount();
 private:
     void createInstance();
     void setupDebugMessenger();
