@@ -102,151 +102,44 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
         }
     }
 
-    if(animation.U_turn){
-        oldRotationAngle = currentRotationAngle;
-        currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
+    if(animation.U_turn){ rotateAroundAxis('y',"U",1,dt,gameObjects); }
+    if(animation.D_turn){ rotateAroundAxis('y',"D",-1,dt,gameObjects); }
+    if(animation.F_turn){ rotateAroundAxis('z',"F",1,dt,gameObjects); }
+    if(animation.B_turn){ rotateAroundAxis('z',"B",-1,dt,gameObjects); }
+    if(animation.R_turn){ rotateAroundAxis('x',"R",-1,dt,gameObjects); }
+    if(animation.L_turn){ rotateAroundAxis('x',"L",1,dt,gameObjects); }
+}
 
-        if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-            for (int objId : cube.getFaceId("U")) {
-                auto& obj = gameObjects[objId];
-                obj.rotate('y', (targetRotationAngle - currentRotationAngle), true);
-                obj.transform.coordSystem.rotate('y', targetRotationAngle);
-            }
+void Controller::rotateAroundAxis(char axis, std::string side, int sign, float dt, std::vector<CubeObj> &gameObjects){
+    oldRotationAngle = currentRotationAngle;
+    currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
-            currentRotationAngle = 0.0f;
-            if(numOfTurns == 2) cube.turn("U2");
-            else if(inverse == -1) cube.turn("U'");
-            else cube.turn("U");
-
-            animation.U_turn = false;
-        } else {
-            for (int objId : cube.getFaceId("U")) {
-                gameObjects[objId].rotate('y', (currentRotationAngle - oldRotationAngle), false);
-            }
+    if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
+        for(int objId : cube.getFaceId(side)) {
+            auto& obj = gameObjects[objId];
+            obj.rotate(axis, (sign * (targetRotationAngle - currentRotationAngle)), true);
+            obj.transform.coordSystem.rotate(axis, sign * targetRotationAngle);
         }
-    }
 
-    if(animation.D_turn){
-        oldRotationAngle = currentRotationAngle;
-        currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
+        currentRotationAngle = 0.0f;
+        if(numOfTurns == 2) cube.turn(side + "2");
+        else if(inverse == -1) cube.turn(side + "'");
+        else cube.turn(side);
 
-        if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-            for (int objId : cube.getFaceId("D")) {
-                auto& obj = gameObjects[objId];
-                obj.rotate('y', (-(targetRotationAngle - currentRotationAngle)), true);
-                obj.transform.coordSystem.rotate('y', -targetRotationAngle);
-            }
-
-            currentRotationAngle = 0.0f;
-            if(numOfTurns == 2) cube.turn("D2");
-            else if(inverse == -1) cube.turn("D'");
-            else cube.turn("D");
-
-            animation.D_turn = false;
-        } else {
-            for (int objId : cube.getFaceId("D")) {
-                gameObjects[objId].rotate('y', (-(currentRotationAngle - oldRotationAngle)), false);
-            }
-        }
-    }
-
-    if(animation.F_turn){
-        oldRotationAngle = currentRotationAngle;
-        currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
-
-        if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-            for(int objId : cube.getFaceId("F")) {
-                auto& obj = gameObjects[objId];
-                obj.rotate('z', ((targetRotationAngle - currentRotationAngle)), true);
-                obj.transform.coordSystem.rotate('z', targetRotationAngle);
-            }
-
-            currentRotationAngle = 0.0f;
-            if(numOfTurns == 2) cube.turn("F2");
-            else if(inverse == -1) cube.turn("F'");
-            else cube.turn("F");
-
-            animation.F_turn = false;
-        } else {
-            for (int objId : cube.getFaceId("F")) {
-                gameObjects[objId].rotate('z', ((currentRotationAngle - oldRotationAngle)), false);
-            }
-        }
-    }
-
-    if(animation.B_turn){
-        oldRotationAngle = currentRotationAngle;
-        currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
-
-        if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-            for(int objId : cube.getFaceId("B")) {
-                auto& obj = gameObjects[objId];
-                obj.rotate('z', (-(targetRotationAngle - currentRotationAngle)), true);
-                obj.transform.coordSystem.rotate('z', -targetRotationAngle);
-            }
-
-            currentRotationAngle = 0.0f;
-            if(numOfTurns == 2) cube.turn("B2");
-            else if(inverse == -1) cube.turn("B'");
-            else cube.turn("B");
-
-            animation.B_turn = false;
-        } else {
-            for (int objId : cube.getFaceId("B")) {
-                gameObjects[objId].rotate('z', (-(currentRotationAngle - oldRotationAngle)), false);
-            }
-        }
-    }
-
-    if(animation.R_turn){
-        oldRotationAngle = currentRotationAngle;
-        currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
-
-        if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-            for(int objId : cube.getFaceId("R")) {
-                auto& obj = gameObjects[objId];
-                obj.rotate('x', (-(targetRotationAngle - currentRotationAngle)), true);
-                obj.transform.coordSystem.rotate('x', -targetRotationAngle);
-            }
-            currentRotationAngle = 0.0f;
-            if(numOfTurns == 2) cube.turn("R2");
-            else if(inverse == -1) cube.turn("R'");
-            else cube.turn("R");
-
-            animation.R_turn = false;
-        } else {
-            for (int objId : cube.getFaceId("R")) {
-                gameObjects[objId].rotate('x', (-(currentRotationAngle - oldRotationAngle)), false);
-            }
-        }
-    }
-
-    if(animation.L_turn){
-        oldRotationAngle = currentRotationAngle;
-        currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
-
-        if (glm::epsilonEqual(currentRotationAngle, targetRotationAngle, 0.01f)) {
-            for(int objId : cube.getFaceId("L")) {
-                auto& obj = gameObjects[objId];
-                obj.rotate('x', ((targetRotationAngle - currentRotationAngle)), true);
-                obj.transform.coordSystem.rotate('x', targetRotationAngle);
-            }
-
-            currentRotationAngle = 0.0f;
-            if(numOfTurns == 2) cube.turn("L2");
-            else if(inverse == -1) cube.turn("L'");
-            else cube.turn("L");
-
-            animation.L_turn = false;
-        } else {
-            for (int objId : cube.getFaceId("L")) {
-                gameObjects[objId].rotate('x', ((currentRotationAngle - oldRotationAngle)), false);
-            }
+        if(side == "U") animation.U_turn = false;
+        if(side == "D") animation.D_turn = false;
+        if(side == "F") animation.F_turn = false;
+        if(side == "R") animation.R_turn = false;
+        if(side == "B") animation.B_turn = false;
+        if(side == "L") animation.L_turn = false;
+    } else {
+        for (int objId : cube.getFaceId(side)) {
+            gameObjects[objId].rotate(axis, (sign * (currentRotationAngle - oldRotationAngle)), false);
         }
     }
 }
 
-void Controller::solveCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
+void Controller::solveCube(){
     if(solver.solutionReady){
         if(!animation.isRotating()){
             if(solver.solution.size() == 0){
