@@ -15,7 +15,11 @@ Ubuntu comes with python preinstalled but to make sure that everything is instal
 ```bash
 g++ --version
 python3 --version
-``` 
+```
+If everything is installed, install the header files and static libraries for python dev, this is necessary because the solver is implemented with python:
+```
+sudo apt-get install python3-dev
+```
 ### Install Vulkan
 To install `Vulkan` and development tools just execute in the terminal:
 ```bash
