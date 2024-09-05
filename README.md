@@ -56,4 +56,5 @@ To compile and execute just run `run.sh`:
 bash run.sh
 ```
 If everything works this should be the output:
+
 https://github.com/user-attachments/assets/e3b77d16-a1e4-4d06-a2bd-28c04624950b
