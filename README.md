@@ -1,5 +1,4 @@
 # 3D Rubik's Cube 
-[![Video]()](https://raw.githubusercontent.com/xReniar/3D-Rubiks-Cube/master/public/newCubeSample.mp4)
 
 3D Rubik's cube implementation using C/C++ with Vulkan. This project was made with the following software version:
 - Linux Ubuntu 22.04
