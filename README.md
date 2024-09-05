@@ -1,21 +1,9 @@
 # 3D Rubik's Cube 
-
-<div style="display: flex; align-items: center;">
-    <div>
-        <p>3D Rubik's cube implementation using C/C++ with Vulkan. This project was made with the following software version:</p>
-        <ul>
-            <li>Linux Ubuntu 22.04</li>
-            <li>Vulkan Instance Version: <code>1.3.204</code></li>
-            <li>C/C++ compiler Version: <code>11.4.0</code></li>
-            <li>Python version: <code>3.10.12</code></li>
-        </ul>
-    </div>
-    <video width="320" height="240" controls autoplay loop style="margin-right: 20px;">
-        <source src="public/cubeSample.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div>
-
+3D Rubik's cube implementation using C/C++ with Vulkan. This project was made with the following software version:
+- Linux Ubuntu 22.04
+- Vulkan Instance Version: `1.3.204`
+- C/C++ compiler Version: `11.4.0`
+- Python version: `3.10.12`
 ## How to use
 - Is it possible to watch the cube with different angles just use `WASD` to move and arrow keys to move the view. Use `Q` to go down and `E` to go up.
 - The possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
