@@ -9,6 +9,10 @@
 - Is it possible to watch the cube with different angles just use `WASD` to move and arrow keys to move the view. Use `Q` to go down and `E` to go up.
 - The possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
 - The projects uses the `Kociemba algorithm`, to solve the cube just press `space`. When calculating the solution the cube turns are disabled
+
+If everything works this should be the output:
+
+https://github.com/user-attachments/assets/e3b77d16-a1e4-4d06-a2bd-28c04624950b
 ## Requirements
 The following instructions are for `Ubuntu`, for other operating systems read [here](https://vulkan-tutorial.com/Development_environment).
 ### Check if g++ and python3 are installed
@@ -55,6 +59,3 @@ To compile and execute just run `run.sh`:
 ```bash
 bash run.sh
 ```
-If everything works this should be the output:
-
-https://github.com/user-attachments/assets/e3b77d16-a1e4-4d06-a2bd-28c04624950b
