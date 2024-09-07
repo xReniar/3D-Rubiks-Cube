@@ -8,7 +8,7 @@
 ## How to use
 - Is it possible to watch the cube with different angles just use `WASD` to move and arrow keys to move the view. Use `Q` to go down and `E` to go up.
 - The possible moves are `UDFRBL`, the keys associated with these turns are respectively from `1` to `6`. To enable/disable double turns press `9` and to enable/disable anticlockwise turns just press `0`.
-- The projects uses the `Kociemba algorithm`, to solve the cube just press `space`. When calculating the solution the cube turns are disabled
+- The projects uses the `Kociemba algorithm`, to solve the cube just press `space`. The first time solving the cube will be slow because the solver has to generate the prunetables for calculating the solution, after that the time for calculating the solution should be around 2-3 seconds. When calculating the solution the cube turns are disabled
 
 If everything works this should be the output:
 
