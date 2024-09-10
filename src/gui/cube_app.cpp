@@ -142,33 +142,34 @@ void CubeApp::loadGameObjects(){
                 if(!(i == 0 && j == 0 && k == 0))
                     translation.push_back(glm::vec3(((float) i)/scaler,((float) j)/scaler,((float) k)/scaler));
 
+    std::string basePath = "models/blender";
     std::vector<std::string> models = {
-        "models/original/corner_yellowOrangeBlue.obj",    // 0
-        "models/original/edge_yellowOrange.obj",          // 1
-        "models/original/corner_yellowGreenOrange.obj",   // 2
-        "models/original/edge_orangeBlue.obj",            // 3
-        "models/original/center_orange.obj",              // 4
-        "models/original/edge_greenOrange.obj",           // 5
-        "models/original/corner_whiteOrangeBlue.obj",     // 6
-        "models/original/edge_whiteOrange.obj",           // 7
-        "models/original/corner_whiteGreenOrange.obj",    // 8
-        "models/original/edge_yellowBlue.obj",            // 9
-        "models/original/center_yellow.obj",              // 10
-        "models/original/edge_yellowGreen.obj",           // 11
-        "models/original/center_blue.obj",                // 12
-        "models/original/center_green.obj",               // 13
-        "models/original/edge_whiteBlue.obj",             // 14
-        "models/original/center_white.obj",               // 15
-        "models/original/edge_whiteGreen.obj",            // 16
-        "models/original/corner_yellowBlueRed.obj",       // 17
-        "models/original/edge_yellowRed.obj",             // 18
-        "models/original/corner_yellowRedGreen.obj",      // 19
-        "models/original/edge_blueRed.obj",               // 20
-        "models/original/center_red.obj",                 // 21
-        "models/original/edge_redGreen.obj",              // 22
-        "models/original/corner_whiteBlueRed.obj",        // 23
-        "models/original/edge_whiteRed.obj",              // 24
-        "models/original/corner_whiteRedGreen.obj"        // 25
+        basePath + "/corner_yellowOrangeBlue.obj",    // 0
+        basePath + "/edge_yellowOrange.obj",          // 1
+        basePath + "/corner_yellowGreenOrange.obj",   // 2
+        basePath + "/edge_orangeBlue.obj",            // 3
+        basePath + "/center_orange.obj",              // 4
+        basePath + "/edge_greenOrange.obj",           // 5
+        basePath + "/corner_whiteOrangeBlue.obj",     // 6
+        basePath + "/edge_whiteOrange.obj",           // 7
+        basePath + "/corner_whiteGreenOrange.obj",    // 8
+        basePath + "/edge_yellowBlue.obj",            // 9
+        basePath + "/center_yellow.obj",              // 10
+        basePath + "/edge_yellowGreen.obj",           // 11
+        basePath + "/center_blue.obj",                // 12
+        basePath + "/center_green.obj",               // 13
+        basePath + "/edge_whiteBlue.obj",             // 14
+        basePath + "/center_white.obj",               // 15
+        basePath + "/edge_whiteGreen.obj",            // 16
+        basePath + "/corner_yellowBlueRed.obj",       // 17
+        basePath + "/edge_yellowRed.obj",             // 18
+        basePath + "/corner_yellowRedGreen.obj",      // 19
+        basePath + "/edge_blueRed.obj",               // 20
+        basePath + "/center_red.obj",                 // 21
+        basePath + "/edge_redGreen.obj",              // 22
+        basePath + "/corner_whiteBlueRed.obj",        // 23
+        basePath + "/edge_whiteRed.obj",              // 24
+        basePath + "/corner_whiteRedGreen.obj"        // 25
     };
 
     for(int i = 0;i < models.size(); i++){
