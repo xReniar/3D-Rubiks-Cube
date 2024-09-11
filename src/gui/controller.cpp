@@ -99,6 +99,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
 
             if(animation.isRotating()){
                 targetRotationAngle = glm::radians(90.0f * numOfTurns * inverse);
+                /*
                 for(auto& obj : gameObjects){
                     std::cout << obj.getId() << " # " 
                         << obj.transform.quatRotation.w << ", "
@@ -109,6 +110,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                         << obj.transform.translation.y << ", "
                         << obj.transform.translation.z << std::endl;
                 }
+                */
             }
         }
     }
@@ -178,6 +180,18 @@ void Controller::solveCube(){
                 if(move == 'L') animation.L_turn = true;
                 
                 targetRotationAngle = glm::radians(90.0f * numOfTurns * inverse);
+                /*
+                for(auto& obj : gameObjects){
+                    std::cout << obj.getId() << " # " 
+                        << obj.transform.quatRotation.w << ", "
+                        << obj.transform.quatRotation.x << ", "
+                        << obj.transform.quatRotation.y << ", "
+                        << obj.transform.quatRotation.z << " - "
+                        << obj.transform.translation.x << ", "
+                        << obj.transform.translation.y << ", "
+                        << obj.transform.translation.z << std::endl;
+                }
+                */
             }
         }
     }
