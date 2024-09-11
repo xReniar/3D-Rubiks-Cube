@@ -40,14 +40,6 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
 }
 
 void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects){
-    auto& obj = gameObjects[12];
-    std::cout << obj.transform.quatRotation.w << ", "
-              << obj.transform.quatRotation.x << ", "
-              << obj.transform.quatRotation.y << ", "
-              << obj.transform.quatRotation.z << "; "
-              << obj.transform.translation.x << ", "
-              << obj.transform.translation.y << ", "
-              << obj.transform.translation.z << std::endl;
     if(!solveKeyPressed){
         if(!animation.isRotating()){
             if(glfwGetKey(window, keys.solve) == GLFW_PRESS && !solveKeyPressed && !cube.isSolved()){
@@ -105,8 +97,19 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
             if(glfwGetKey(window, keys.l_turn) == GLFW_PRESS && !animation.isRotating())
                 animation.L_turn = true;
 
-            if(animation.isRotating())
+            if(animation.isRotating()){
                 targetRotationAngle = glm::radians(90.0f * numOfTurns * inverse);
+                for(auto& obj : gameObjects){
+                    std::cout << obj.getId() << " # " 
+                        << obj.transform.quatRotation.w << ", "
+                        << obj.transform.quatRotation.x << ", "
+                        << obj.transform.quatRotation.y << ", "
+                        << obj.transform.quatRotation.z << " - "
+                        << obj.transform.translation.x << ", "
+                        << obj.transform.translation.y << ", "
+                        << obj.transform.translation.z << std::endl;
+                }
+            }
         }
     }
 
