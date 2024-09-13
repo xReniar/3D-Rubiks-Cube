@@ -1,8 +1,10 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include"../cube/Cube.hpp"
 #include<python3.10/Python.h>
+#include<iostream>
+#include<vector>
+#include<string>
 #include<sstream>
 
 class Solver {
