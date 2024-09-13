@@ -10,10 +10,12 @@ struct Cubie {
 };
 
 class Side {
+private:
+    int size;
 public:
-    Cubie slot[9];
-    Side(Color color, std::vector<int> pieceId);
-    Side(Color colors[], std::vector<int> pieceId);
+    Cubie* cubie;
+    Side(int size, Color color, std::vector<int> pieceId);
+    ~Side();
     void turn(Direction direction);
 };
 
