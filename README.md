@@ -21,10 +21,6 @@ Ubuntu comes with python preinstalled but to make sure that everything is instal
 g++ --version
 python3 --version
 ```
-If everything is installed, install the header files and static libraries for python dev, this is necessary because the solver is implemented with python:
-```
-sudo apt-get install python3-dev
-```
 ### Install Vulkan
 To install `Vulkan` and development tools just execute in the terminal:
 ```bash
@@ -50,9 +46,14 @@ tar -xzvf install.tgz
 sudo cp -r install/bin/glslc /usr/local/bin
 ```
 ### Packages for cube solver
-The cube is solved using `Kociemba` algorithm, for ubuntu you might need to install libffi system library, for more information check [here](https://github.com/muodov/kociemba)
+The cube is solved using `Kociemba` algorithm, for ubuntu you might need to install libffi system library, for more information check [here](https://github.com/muodov/kociemba).
+Also the solver is written with python so `python-dev` is necessary to make c/c++ and python communicate:
 ```bash
+# libffi system library
 sudo apt-get install libffi-dev
+
+# python dev
+sudo apt-get install python3-dev
 ```
 ## Compile & Execute
 To compile and execute just run `run.sh`:
