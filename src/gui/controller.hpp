@@ -3,7 +3,7 @@
 
 #include"cube_obj.hpp"
 #include"cube_gui.hpp"
-#include"../cube/Cube.hpp"
+#include"../cube/Cube3.hpp"
 #include"../solver/Solver.hpp"
 
 
