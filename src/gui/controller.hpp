@@ -58,7 +58,7 @@ public:
     bool solveKeyPressed = false;
 
     Animation animation{};
-    Cube cube{};
+    Cube3 cube{};
     Solver solver{};
 
     float oldRotationAngle = 0.0f;
