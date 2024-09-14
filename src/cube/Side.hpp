@@ -12,6 +12,7 @@ struct Cubie {
 class Side {
 private:
     int size;
+    std::vector<int> index;
 public:
     Cubie* cubie;
     Side(int size, Color color, std::vector<int> pieceId);
