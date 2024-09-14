@@ -15,6 +15,11 @@ enum _Side_ {
     LEFT_SIDE
 };
 
+enum LayerType {
+    INNER,
+    OUTER
+};
+
 enum Color { 
     YELLOW,
     WHITE,
