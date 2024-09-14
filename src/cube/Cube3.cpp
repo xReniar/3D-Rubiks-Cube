@@ -1,6 +1,6 @@
 #include"Cube3.hpp"
 
-Cube::Cube(){
+Cube3::Cube3(){
     top_side = new Side(3 ,YELLOW, {2, 11, 19, 1, 10, 18, 0, 9, 17});
     bottom_side = new Side(3, WHITE, {6, 14, 23, 7, 15, 24, 8, 16, 25});
     front_side = new Side(3, BLUE, {0, 9, 17, 3, 12, 20, 6, 14, 23});
@@ -9,7 +9,7 @@ Cube::Cube(){
     left_side = new Side(3, ORANGE, {2, 1, 0, 5, 4, 3, 8, 7, 6});        
 }
 
-void Cube::u_turn(Direction direction){
+void Cube3::u_turn(Direction direction){
     /* make a copy */
     Cubie front[3],right[3],back[3],left[3];
     for(int i = 0;i < 3;i++){
@@ -37,7 +37,7 @@ void Cube::u_turn(Direction direction){
     }
 }
 
-void Cube::d_turn(Direction direction){
+void Cube3::d_turn(Direction direction){
     /* make a copy */
     Cubie front[3],right[3],back[3],left[3];
     for(int i = 6;i < 9;i++){
@@ -65,7 +65,7 @@ void Cube::d_turn(Direction direction){
     }
 }
 
-void Cube::f_turn(Direction direction){
+void Cube3::f_turn(Direction direction){
     /* make a copy */
     Cubie top[3],right[3],bottom[3],left[3];
     for(int i = 0;i < 3;i++){
@@ -93,7 +93,7 @@ void Cube::f_turn(Direction direction){
     }
 }
 
-void Cube::r_turn(Direction direction){
+void Cube3::r_turn(Direction direction){
     Cubie top[3],back[3],bottom[3],front[3];
     for(int i = 2;i < 9;i=i+3){
         int x = (i - 2)/3;
@@ -122,7 +122,7 @@ void Cube::r_turn(Direction direction){
     }
 }
 
-void Cube::b_turn(Direction direction){
+void Cube3::b_turn(Direction direction){
     Cubie top[3],right[3],bottom[3],left[3];
     for(int i = 0;i < 3;i++){
         top[i] = top_side->cubie[i];
@@ -148,7 +148,7 @@ void Cube::b_turn(Direction direction){
     }
 }
 
-void Cube::l_turn(Direction direction){
+void Cube3::l_turn(Direction direction){
     Cubie top[3],back[3],bottom[3],front[3];
     for(int i = 0;i < 7;i=i+3){
         int x = i/3;
@@ -177,7 +177,7 @@ void Cube::l_turn(Direction direction){
     }
 }
 
-void Cube::rotate(_Side_ side,Direction direction){
+void Cube3::rotate(_Side_ side,Direction direction){
     if(side == TOP_SIDE){
         top_side->turn(direction);
         u_turn(direction);
@@ -204,7 +204,7 @@ void Cube::rotate(_Side_ side,Direction direction){
     }
 }
 
-void Cube::turn(const std::string& str){
+void Cube3::turn(const std::string& str){
     Direction direction = CLOCKWISE;
     int turns = 1;
     for(int i = 0;i < str.length();i++){
@@ -237,7 +237,7 @@ void Cube::turn(const std::string& str){
     }
 }
 
-char f(Cubie cubie){
+char Cube3::f(Cubie cubie){
     switch(cubie.color){
         case YELLOW: return 'U';
         case WHITE: return 'D';
@@ -249,26 +249,26 @@ char f(Cubie cubie){
     return 'x';
 }
 
-std::string Cube::state(){
-    std::vector<char> cubeState;
+std::string Cube3::state(){
+    std::vector<char> cube3State;
     for(int i = 0;i < 9;i++)
-        cubeState.push_back(f(top_side->cubie[i]));
+        cube3State.push_back(f(top_side->cubie[i]));
     for(int i = 0;i < 9;i++)
-        cubeState.push_back(f(right_side->cubie[i]));
+        cube3State.push_back(f(right_side->cubie[i]));
     for(int i = 0;i < 9;i++)
-        cubeState.push_back(f(front_side->cubie[i]));
+        cube3State.push_back(f(front_side->cubie[i]));
     for(int i = 0;i < 9;i++)
-        cubeState.push_back(f(bottom_side->cubie[i]));
+        cube3State.push_back(f(bottom_side->cubie[i]));
     for(int i = 0;i < 9;i++)
-        cubeState.push_back(f(left_side->cubie[i]));
+        cube3State.push_back(f(left_side->cubie[i]));
     for(int i = 0;i < 9;i++)
-        cubeState.push_back(f(back_side->cubie[i]));
+        cube3State.push_back(f(back_side->cubie[i]));
 
-    std::string str(cubeState.begin(), cubeState.end());
+    std::string str(cube3State.begin(), cube3State.end());
     return str;
 }
 
-std::vector<int> Cube::getFaceId(std::string side){
+std::vector<int> Cube3::getFaceId(std::string side){
     std::vector<int> faceId;
     Side* requestedSide;
     if(side == "U") requestedSide = this->top_side;
@@ -284,6 +284,6 @@ std::vector<int> Cube::getFaceId(std::string side){
     return faceId;
 }
 
-bool Cube::isSolved(){
+bool Cube3::isSolved(){
     return this->state() == "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB";
 }

@@ -6,7 +6,7 @@
 #include<vector>
 #include<iostream>
 
-class Cube {
+class Cube3 {
 private:
     Side* top_side;
     Side* bottom_side;
@@ -22,8 +22,10 @@ private:
     void b_turn(Direction direction);
     void l_turn(Direction direction);
     void rotate(_Side_ side,Direction direction);
+
+    char f(Cubie cubie);
 public:
-    Cube();
+    Cube3();
     void turn(const std::string& str);
     std::string state();
     bool isSolved();
