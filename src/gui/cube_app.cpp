@@ -64,11 +64,7 @@ void CubeApp::run(){
     vkDeviceWaitIdle(device.device());
 }
 
-void CubeApp::loadGameObjects(){
-    int scaler = 4;
-    // defining translation
-    /*
-    std::vector<glm::vec3> translation{};
+void load4x4(int scaler, std::string basePath, std::vector<std::string>& models, std::vector<glm::vec3>& translation){
     for(int i = -1;i <= 2;i++)
         for(int j = -1;j <= 2;j++)
             for(int k = -1;k <= 2;k++)
@@ -76,74 +72,74 @@ void CubeApp::loadGameObjects(){
                 if(!((k == 0 || k == 1) && ((i==0 && j == 0) || (i == 0 && j == 1) || (i==1 && j == 0) || (i == 1) && (j == 1))))
                     translation.push_back(glm::vec3(((float) i)/scaler,((float) j)/scaler,((float) k)/scaler));
 
-    std::vector<std::string> models = {
-        "models/blender/corner_yellowOrangeBlue.obj",    // 0
-        "models/blender/edge_yellowOrange.obj",          // 1
-        "models/blender/edge_yellowOrange.obj",          // 1
-        "models/blender/corner_yellowGreenOrange.obj",   // 2
-        "models/blender/edge_orangeBlue.obj",            // 3
-        "models/blender/center_orange.obj",              // 4
-        "models/blender/center_orange.obj",              // 4
-        "models/blender/edge_greenOrange.obj",           // 5
-        "models/blender/edge_orangeBlue.obj",            // 3
-        "models/blender/center_orange.obj",              // 4
-        "models/blender/center_orange.obj",              // 4
-        "models/blender/edge_greenOrange.obj",           // 5
-        "models/blender/corner_whiteOrangeBlue.obj",     // 6
-        "models/blender/edge_whiteOrange.obj",           // 7
-        "models/blender/edge_whiteOrange.obj",           // 7
-        "models/blender/corner_whiteGreenOrange.obj",    // 8
-        "models/blender/edge_yellowBlue.obj",            // 9
-        "models/blender/center_yellow.obj",              // 10
-        "models/blender/center_yellow.obj",              // 10
-        "models/blender/edge_yellowGreen.obj",           // 11
-        "models/blender/center_blue.obj",                // 12
-        "models/blender/center_green.obj",               // 13
-        "models/blender/center_blue.obj",                // 12
-        "models/blender/center_green.obj",               // 13
-        "models/blender/edge_whiteBlue.obj",             // 14
-        "models/blender/center_white.obj",               // 15
-        "models/blender/center_white.obj",               // 15
-        "models/blender/edge_whiteGreen.obj",            // 16
-        "models/blender/edge_yellowBlue.obj",            // 9
-        "models/blender/center_yellow.obj",              // 10
-        "models/blender/center_yellow.obj",              // 10
-        "models/blender/edge_yellowGreen.obj",           // 11
-        "models/blender/center_blue.obj",                // 12
-        "models/blender/center_green.obj",               // 13
-        "models/blender/center_blue.obj",                // 12
-        "models/blender/center_green.obj",               // 13
-        "models/blender/edge_whiteBlue.obj",             // 14
-        "models/blender/center_white.obj",               // 15
-        "models/blender/center_white.obj",               // 15
-        "models/blender/edge_whiteGreen.obj",            // 16 //
-        "models/blender/corner_yellowBlueRed.obj",       // 17
-        "models/blender/edge_yellowRed.obj",             // 18
-        "models/blender/edge_yellowRed.obj",             // 18
-        "models/blender/corner_yellowRedGreen.obj",      // 19
-        "models/blender/edge_blueRed.obj",               // 20
-        "models/blender/center_red.obj",                 // 21
-        "models/blender/center_red.obj",                 // 21
-        "models/blender/edge_redGreen.obj",              // 22
-        "models/blender/edge_blueRed.obj",               // 20
-        "models/blender/center_red.obj",                 // 21
-        "models/blender/center_red.obj",                 // 21
-        "models/blender/edge_redGreen.obj",              // 22
-        "models/blender/corner_whiteBlueRed.obj",        // 23
-        "models/blender/edge_whiteRed.obj",              // 24
-        "models/blender/edge_whiteRed.obj",              // 24
-        "models/blender/corner_whiteRedGreen.obj"        // 25
+    models = {
+        basePath + "/corner_yellowOrangeBlue.obj",    // 0
+        basePath + "/edge_yellowOrange.obj",          // 1
+        basePath + "/edge_yellowOrange.obj",          // 1
+        basePath + "/corner_yellowGreenOrange.obj",   // 2
+        basePath + "/edge_orangeBlue.obj",            // 3
+        basePath + "/center_orange.obj",              // 4
+        basePath + "/center_orange.obj",              // 4
+        basePath + "/edge_greenOrange.obj",           // 5
+        basePath + "/edge_orangeBlue.obj",            // 3
+        basePath + "/center_orange.obj",              // 4
+        basePath + "/center_orange.obj",              // 4
+        basePath + "/edge_greenOrange.obj",           // 5
+        basePath + "/corner_whiteOrangeBlue.obj",     // 6
+        basePath + "/edge_whiteOrange.obj",           // 7
+        basePath + "/edge_whiteOrange.obj",           // 7
+        basePath + "/corner_whiteGreenOrange.obj",    // 8
+        basePath + "/edge_yellowBlue.obj",            // 9
+        basePath + "/center_yellow.obj",              // 10
+        basePath + "/center_yellow.obj",              // 10
+        basePath + "/edge_yellowGreen.obj",           // 11
+        basePath + "/center_blue.obj",                // 12
+        basePath + "/center_green.obj",               // 13
+        basePath + "/center_blue.obj",                // 12
+        basePath + "/center_green.obj",               // 13
+        basePath + "/edge_whiteBlue.obj",             // 14
+        basePath + "/center_white.obj",               // 15
+        basePath + "/center_white.obj",               // 15
+        basePath + "/edge_whiteGreen.obj",            // 16
+        basePath + "/edge_yellowBlue.obj",            // 9
+        basePath + "/center_yellow.obj",              // 10
+        basePath + "/center_yellow.obj",              // 10
+        basePath + "/edge_yellowGreen.obj",           // 11
+        basePath + "/center_blue.obj",                // 12
+        basePath + "/center_green.obj",               // 13
+        basePath + "/center_blue.obj",                // 12
+        basePath + "/center_green.obj",               // 13
+        basePath + "/edge_whiteBlue.obj",             // 14
+        basePath + "/center_white.obj",               // 15
+        basePath + "/center_white.obj",               // 15
+        basePath + "/edge_whiteGreen.obj",            // 16 //
+        basePath + "/corner_yellowBlueRed.obj",       // 17
+        basePath + "/edge_yellowRed.obj",             // 18
+        basePath + "/edge_yellowRed.obj",             // 18
+        basePath + "/corner_yellowRedGreen.obj",      // 19
+        basePath + "/edge_blueRed.obj",               // 20
+        basePath + "/center_red.obj",                 // 21
+        basePath + "/center_red.obj",                 // 21
+        basePath + "/edge_redGreen.obj",              // 22
+        basePath + "/edge_blueRed.obj",               // 20
+        basePath + "/center_red.obj",                 // 21
+        basePath + "/center_red.obj",                 // 21
+        basePath + "/edge_redGreen.obj",              // 22
+        basePath + "/corner_whiteBlueRed.obj",        // 23
+        basePath + "/edge_whiteRed.obj",              // 24
+        basePath + "/edge_whiteRed.obj",              // 24
+        basePath + "/corner_whiteRedGreen.obj"        // 25
     };
-    */
-    std::vector<glm::vec3> translation{};
+}
+
+void load3x3(int scaler, std::string basePath, std::vector<std::string>& models, std::vector<glm::vec3>& translation){
     for(int i = -1;i <= 1;i++)
         for(int j = -1;j <= 1;j++)
             for(int k = -1;k <= 1;k++)
                 if(!(i == 0 && j == 0 && k == 0))
                     translation.push_back(glm::vec3(((float) i)/scaler,((float) j)/scaler,((float) k)/scaler));
 
-    std::string basePath = "models/floppy-cube";
-    std::vector<std::string> models = {
+    models = {
         basePath + "/corner_yellowOrangeBlue.obj",    // 0
         basePath + "/edge_yellowOrange.obj",          // 1
         basePath + "/corner_yellowGreenOrange.obj",   // 2
@@ -170,9 +166,15 @@ void CubeApp::loadGameObjects(){
         basePath + "/corner_whiteBlueRed.obj",        // 23
         basePath + "/edge_whiteRed.obj",              // 24
         basePath + "/corner_whiteRedGreen.obj"        // 25
-
     };
+}
 
+void CubeApp::loadGameObjects(){
+    int scaler = 4;
+    std::vector<glm::vec3> translation;
+    std::vector<std::string> models;
+
+    load4x4(scaler, "models/floppy-cube" ,models, translation);
     for(int i = 0;i < models.size(); i++){
         std::shared_ptr<Model> model = Model::createModelFromFile(device, models[i]);
         auto cube = CubeObj::createGameObject();
