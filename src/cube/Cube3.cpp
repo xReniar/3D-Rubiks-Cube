@@ -1,12 +1,12 @@
 #include"Cube3.hpp"
 
 Cube::Cube(){
-    top_side = new Side(9 ,YELLOW, {2, 11, 19, 1, 10, 18, 0, 9, 17});
-    bottom_side = new Side(9, WHITE, {6, 14, 23, 7, 15, 24, 8, 16, 25});
-    front_side = new Side(9, BLUE, {0, 9, 17, 3, 12, 20, 6, 14, 23});
-    right_side = new Side(9, RED, {17, 18, 19, 20, 21, 22, 23, 24, 25});
-    back_side = new Side(9, GREEN, {19, 11, 2, 22, 13, 5, 25, 16, 8});
-    left_side = new Side(9, ORANGE, {2, 1, 0, 5, 4, 3, 8, 7, 6});        
+    top_side = new Side(3 ,YELLOW, {2, 11, 19, 1, 10, 18, 0, 9, 17});
+    bottom_side = new Side(3, WHITE, {6, 14, 23, 7, 15, 24, 8, 16, 25});
+    front_side = new Side(3, BLUE, {0, 9, 17, 3, 12, 20, 6, 14, 23});
+    right_side = new Side(3, RED, {17, 18, 19, 20, 21, 22, 23, 24, 25});
+    back_side = new Side(3, GREEN, {19, 11, 2, 22, 13, 5, 25, 16, 8});
+    left_side = new Side(3, ORANGE, {2, 1, 0, 5, 4, 3, 8, 7, 6});        
 }
 
 void Cube::u_turn(Direction direction){
