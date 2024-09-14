@@ -142,7 +142,7 @@ void CubeApp::loadGameObjects(){
                 if(!(i == 0 && j == 0 && k == 0))
                     translation.push_back(glm::vec3(((float) i)/scaler,((float) j)/scaler,((float) k)/scaler));
 
-    std::string basePath = "models/blender";
+    std::string basePath = "models/floppy-cube";
     std::vector<std::string> models = {
         basePath + "/corner_yellowOrangeBlue.obj",    // 0
         basePath + "/edge_yellowOrange.obj",          // 1
@@ -170,6 +170,7 @@ void CubeApp::loadGameObjects(){
         basePath + "/corner_whiteBlueRed.obj",        // 23
         basePath + "/edge_whiteRed.obj",              // 24
         basePath + "/corner_whiteRedGreen.obj"        // 25
+
     };
 
     for(int i = 0;i < models.size(); i++){
