@@ -1,10 +1,21 @@
 #include"Side.hpp"
+#include<iostream>
 
 Side::Side(int size, Color color, std::vector<int> pieceId) : size(size){
-    cubie = new Cubie[this->size];
-    for(int i = 0;i < this->size;i++){
+    cubie = new Cubie[this->size * this->size];
+    for(int i = 0;i < this->size * this->size;i++){
         cubie[i].color = color;
         cubie[i].id = pieceId[i];
+    }
+
+    // calculating index for face turn
+    int currIndex = 0;
+    for(int i = this->size - 1;i > -1;i--){
+        currIndex = i;
+        for(int j = 0; j < this->size;j++){
+            index.push_back(currIndex);
+            currIndex += this->size;
+        }
     }
 }
 
@@ -14,32 +25,21 @@ Side::~Side(){
 
 void Side::turn(Direction Direction){
     /* make a copy */
-    Cubie _copy[size];
-    for(int i = 0;i < size;i++){
+    int numOfPieces = size * size;
+    Cubie _copy[numOfPieces];
+    for(int i = 0;i < numOfPieces;i++){
         _copy[i] = cubie[i];
     }
 
     /* turn clockwise or anticlockwise */
     if(Direction == CLOCKWISE){
-        cubie[0] = _copy[6];
-        cubie[1] = _copy[3];
-        cubie[2] = _copy[0];
-        cubie[3] = _copy[7];
-        cubie[4] = _copy[4];
-        cubie[5] = _copy[1];
-        cubie[6] = _copy[8];
-        cubie[7] = _copy[5];
-        cubie[8] = _copy[2];
+        for(int i = 0;i < numOfPieces;i++){
+            cubie[i] = _copy[index[numOfPieces - 1 - i]];
+        }
     }
     if(Direction == ANTICLOCKWISE){
-        cubie[0] = _copy[2];
-        cubie[1] = _copy[5];
-        cubie[2] = _copy[8];
-        cubie[3] = _copy[1];
-        cubie[4] = _copy[4];
-        cubie[5] = _copy[7];
-        cubie[6] = _copy[0];
-        cubie[7] = _copy[3];
-        cubie[8] = _copy[6];
+        for(int i = 0;i < numOfPieces;i++){
+            cubie[i] = _copy[index[i]];
+        }
     }
 }
