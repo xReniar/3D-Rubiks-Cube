@@ -174,7 +174,7 @@ void CubeApp::loadGameObjects(){
     std::vector<glm::vec3> translation;
     std::vector<std::string> models;
 
-    load4x4(scaler, "models/floppy-cube" ,models, translation);
+    load3x3(scaler, "models/blender" ,models, translation);
     for(int i = 0;i < models.size(); i++){
         std::shared_ptr<Model> model = Model::createModelFromFile(device, models[i]);
         auto cube = CubeObj::createGameObject();
