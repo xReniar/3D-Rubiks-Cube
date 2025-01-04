@@ -1,4 +1,4 @@
-# 3D Rubik's Cube 
+# 3D Rubik's Cube
 
 3D Rubik's cube implementation using C/C++ with Vulkan. This project was made with the following software version:
 - Linux Ubuntu 22.04
@@ -46,17 +46,17 @@ tar -xzvf install.tgz
 sudo cp -r install/bin/glslc /usr/local/bin
 ```
 ### Packages for cube solver
-The cube is solved using `Kociemba` algorithm, for ubuntu you might need to install libffi system library, for more information check [here](https://github.com/muodov/kociemba).
-Also the solver is written with python so `python-dev` is necessary to make c/c++ and python communicate:
-```bash
-# libffi system library
-sudo apt-get install libffi-dev
+The cube is solved using `Kociemba` algorithm, for more information check [here](https://github.com/muodov/kociemba).
+Also the solver was originally written in python and recently we switched to C to simplify the code base.
 
-# python dev
-sudo apt-get install python3-dev
-```
+> [!NOTE]
+> [Vcpkg](https://vcpkg.io/) manages the built packages to reduce host dependency and or changes. For more information on the installation, we suggest you to visit [Vcpkg's getting started link](https://learn.microsoft.com/en-gb/vcpkg/get_started/overview).
+
 ## Compile & Execute
-To compile and execute just run `run.sh`:
+To compile and execute run the following commands in the terminal:
 ```bash
-bash run.sh
+cmake --preset debug
+cmake --build --preset debug
+cd build
+RubiksCube
 ```

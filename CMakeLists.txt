@@ -25,7 +25,7 @@ include_directories(${KOCIEMBA_SRC}/include)
 
 
 # Set the project name and version
-project(VulkanProject VERSION 1.0)
+project(RubiksCube VERSION 1.0)
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Vulkan REQUIRED)
