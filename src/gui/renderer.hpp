@@ -23,7 +23,7 @@ public:
     bool isFrameInProgress() const { return isFrameStarted; }
     VkCommandBuffer getCurrentCommandBuffer() const {
         assert(isFrameStarted && "Cannot get command buffer when frame not in progress");
-        return commandBuffers[currentFrameIndex]; 
+        return commandBuffers[currentFrameIndex];
     }
 
     int getFrameIndex() const {
@@ -41,7 +41,7 @@ private:
     std::unique_ptr<SwapChain> swapChain;
     std::vector<VkCommandBuffer> commandBuffers;
     uint32_t currentImageIndex = 0;
-    int currentFrameIndex;
+    int currentFrameIndex = 0;
     bool isFrameStarted = false;
 
     void createCommandBuffers();

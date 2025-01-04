@@ -1,30 +1,19 @@
-#include"Solver.hpp"
+#include "Solver.hpp"
+#include <iostream>
 
-Solver::Solver(){
-    Py_Initialize();
-    PySys_SetPath(L".:/usr/lib/python3.10");
-    PyRun_SimpleString("import sys; sys.path.append('./src/solver/');");
-    //PyRun_SimpleString("import os, sys; sys.path.append(os.path.abspath('./src/solver')); print(sys.path)");
+extern "C"
+{
+    char* solve_cube(int argc, char **argv);
 }
 
-Solver::~Solver(){
-    freeMemory();
-} 
-
-void Solver::kociemba(const char* cubeState){
+void Solver::kociemba(const char *cubeState)
+{
     std::cout << "[SOLVER] - calculating solution" << std::endl;
-    // loading solver module
-    name = PyUnicode_FromString((char *)"kociemba");
-    load_module = PyImport_Import(name);
+    const char* args[] = {"program_name", cubeState};
+    int argc = sizeof(args) / sizeof(args[0]);
+    char** argv = const_cast<char**>(args);
+    char* result = solve_cube(argc, argv);
 
-    // getting function that returns solution
-    func = PyObject_GetAttrString(load_module, (char*)"main");
-
-    // creating arguments and passing to main function
-    args = PyTuple_Pack(1, PyUnicode_FromString(cubeState));
-    callfunc = PyObject_CallObject(func, args);
-
-    std::string result = PyUnicode_AsUTF8(callfunc);
     std::cout << "[SOLVER] - solution found: " << result << std::endl;
 
     std::stringstream stringStream(result);
@@ -34,13 +23,4 @@ void Solver::kociemba(const char* cubeState){
         solution.push_back(word);
     solutionReady = true;
 
-    freeMemory();
-}
-
-void Solver::freeMemory(){
-    Py_DECREF(name);
-    Py_DECREF(load_module);
-    Py_DECREF(func);
-    Py_DECREF(args);
-    Py_DECREF(callfunc);
 }
