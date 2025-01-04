@@ -1,5 +1,5 @@
 .vscode
-shaders/*.spv
 __pycache__
 *.pkl
-VulkanProject
+build/
+vcpkg_installed/

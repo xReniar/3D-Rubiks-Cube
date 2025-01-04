@@ -32,7 +32,7 @@ public:
 
         int solve = GLFW_KEY_SPACE;
     };
-    
+
     struct Animation {
         bool U_turn = false;
         bool D_turn = false;
@@ -43,7 +43,7 @@ public:
 
         bool isRotating(){ return U_turn || D_turn || F_turn || R_turn || B_turn || L_turn; }
     };
-    
+
 
     KeyMappings keys{};
     float moveSpeed{3.f};
