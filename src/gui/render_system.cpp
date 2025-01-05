@@ -23,6 +23,11 @@ RenderSystem::~RenderSystem(){
     vkDestroyPipelineLayout(device.device(), pipelineLayout, nullptr);
 }
 
+// Function to query the maximum frame rate
+unsigned RenderSystem::getMaxFrameRate() {
+    return 75; // Default to 75 FPS for VK_PRESENT_MODE_FIFO_KHR
+}
+
 void RenderSystem::createPipelineLayout(){
     VkPushConstantRange pushConstantRange{};
     pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
@@ -44,7 +49,7 @@ void RenderSystem::createPipeline(VkRenderPass renderPass){
     assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
 
     PipelineConfigInfo pipelineConfig{};
-    Pipeline::defaultPipelineConfigInfo(pipelineConfig);
+    PipelineConfigInfo::defaultPipelineConfigInfo(pipelineConfig);
     pipelineConfig.renderPass = renderPass;
     pipelineConfig.pipelineLayout = pipelineLayout;
     pipeline = std::make_unique<Pipeline>(

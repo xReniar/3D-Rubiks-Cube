@@ -14,6 +14,7 @@
 #include<stdexcept>
 #include<array>
 #include<chrono>
+#include <thread>
 
 
 CubeApp::CubeApp(){
@@ -35,6 +36,10 @@ void CubeApp::run(){
     GLFWwindow* window = cubeGUI.getGLFWwindow();
 
     auto currentTime = std::chrono::high_resolution_clock::now();
+    auto nextFrame = currentTime;
+
+    auto maxFrameRate = renderSystem.getMaxFrameRate();
+    long long frameDeltaTime = 1000000.0f/maxFrameRate;
 
     while(!cubeGUI.shouldClose()){
         glfwPollEvents();
@@ -59,6 +64,9 @@ void CubeApp::run(){
             renderer.endSwapChainRenderPass(commandBuffer);
             renderer.endFrame();
         }
+          // Calculate the time to sleep to maintain a consistent frame rate
+        nextFrame += std::chrono::microseconds(frameDeltaTime);
+        std::this_thread::sleep_until(nextFrame);
     }
 
     vkDeviceWaitIdle(device.device());

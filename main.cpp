@@ -1,6 +1,6 @@
 #include"src/Rubiks.hpp"
 
-int main(){
+auto main() -> int{
     CubeApp app{};
 
     try {

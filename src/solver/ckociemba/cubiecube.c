@@ -31,30 +31,30 @@ cubiecube_t * get_moveCube()
     static const signed char  eoB[12] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1 };
 
     if (!moveCube_initialized) {
-        memcpy(moveCube[0].cp, cpU, sizeof(cpU));
-        memcpy(moveCube[0].co, coU, sizeof(coU));
-        memcpy(moveCube[0].ep, epU, sizeof(epU));
-        memcpy(moveCube[0].eo, eoU, sizeof(eoU));
-        memcpy(moveCube[1].cp, cpR, sizeof(cpR));
-        memcpy(moveCube[1].co, coR, sizeof(coR));
-        memcpy(moveCube[1].ep, epR, sizeof(epR));
-        memcpy(moveCube[1].eo, eoR, sizeof(eoR));
-        memcpy(moveCube[2].cp, cpF, sizeof(cpF));
-        memcpy(moveCube[2].co, coF, sizeof(coF));
-        memcpy(moveCube[2].ep, epF, sizeof(epF));
-        memcpy(moveCube[2].eo, eoF, sizeof(eoF));
-        memcpy(moveCube[3].cp, cpD, sizeof(cpD));
-        memcpy(moveCube[3].co, coD, sizeof(coD));
-        memcpy(moveCube[3].ep, epD, sizeof(epD));
-        memcpy(moveCube[3].eo, eoD, sizeof(eoD));
-        memcpy(moveCube[4].cp, cpL, sizeof(cpL));
-        memcpy(moveCube[4].co, coL, sizeof(coL));
-        memcpy(moveCube[4].ep, epL, sizeof(epL));
-        memcpy(moveCube[4].eo, eoL, sizeof(eoL));
-        memcpy(moveCube[5].cp, cpB, sizeof(cpB));
-        memcpy(moveCube[5].co, coB, sizeof(coB));
-        memcpy(moveCube[5].ep, epB, sizeof(epB));
-        memcpy(moveCube[5].eo, eoB, sizeof(eoB));
+        memcpy_s(moveCube[0].cp, sizeof(moveCube[0].cp), cpU, sizeof(cpU));
+        memcpy_s(moveCube[0].co, sizeof(moveCube[0].co), coU, sizeof(coU));
+        memcpy_s(moveCube[0].ep, sizeof(moveCube[0].ep), epU, sizeof(epU));
+        memcpy_s(moveCube[0].eo, sizeof(moveCube[0].eo), eoU, sizeof(eoU));
+        memcpy_s(moveCube[1].cp, sizeof(moveCube[0].cp), cpR, sizeof(cpR));
+        memcpy_s(moveCube[1].co, sizeof(moveCube[0].co), coR, sizeof(coR));
+        memcpy_s(moveCube[1].ep, sizeof(moveCube[0].ep), epR, sizeof(epR));
+        memcpy_s(moveCube[1].eo, sizeof(moveCube[0].eo), eoR, sizeof(eoR));
+        memcpy_s(moveCube[2].cp, sizeof(moveCube[0].cp), cpF, sizeof(cpF));
+        memcpy_s(moveCube[2].co, sizeof(moveCube[0].co), coF, sizeof(coF));
+        memcpy_s(moveCube[2].ep, sizeof(moveCube[0].ep), epF, sizeof(epF));
+        memcpy_s(moveCube[2].eo, sizeof(moveCube[0].eo), eoF, sizeof(eoF));
+        memcpy_s(moveCube[3].cp, sizeof(moveCube[0].cp), cpD, sizeof(cpD));
+        memcpy_s(moveCube[3].co, sizeof(moveCube[0].co), coD, sizeof(coD));
+        memcpy_s(moveCube[3].ep, sizeof(moveCube[0].ep), epD, sizeof(epD));
+        memcpy_s(moveCube[3].eo, sizeof(moveCube[0].eo), eoD, sizeof(eoD));
+        memcpy_s(moveCube[4].cp, sizeof(moveCube[0].cp), cpL, sizeof(cpL));
+        memcpy_s(moveCube[4].co, sizeof(moveCube[0].co), coL, sizeof(coL));
+        memcpy_s(moveCube[4].ep, sizeof(moveCube[0].ep), epL, sizeof(epL));
+        memcpy_s(moveCube[4].eo, sizeof(moveCube[0].eo), eoL, sizeof(eoL));
+        memcpy_s(moveCube[5].cp, sizeof(moveCube[0].cp), cpB, sizeof(cpB));
+        memcpy_s(moveCube[5].co, sizeof(moveCube[0].co), coB, sizeof(coB));
+        memcpy_s(moveCube[5].ep, sizeof(moveCube[0].ep), epB, sizeof(epB));
+        memcpy_s(moveCube[5].eo, sizeof(moveCube[0].eo), eoB, sizeof(eoB));
     }
 
     return moveCube;
@@ -69,10 +69,10 @@ cubiecube_t* get_cubiecube()
     static const edge_t     ep[12]  = { UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR };
     static const signed char       eo[12]  = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    memcpy(result->cp, cp, sizeof(cp));
-    memcpy(result->co, co, sizeof(co));
-    memcpy(result->ep, ep, sizeof(ep));
-    memcpy(result->eo, eo, sizeof(eo));
+    memcpy_s(result->cp, sizeof(result->cp), cp, sizeof(cp));
+    memcpy_s(result->co, sizeof(result->co), co, sizeof(co));
+    memcpy_s(result->ep, sizeof(result->ep), ep, sizeof(ep));
+    memcpy_s(result->eo, sizeof(result->eo), eo, sizeof(eo));
 
     return result;
 }

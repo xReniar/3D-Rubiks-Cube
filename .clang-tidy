@@ -1,3 +1,7 @@
-Checks: '*'
+Checks: '-llvmlibc*'
 HeaderFilterRegex: '^(src/.*|include/.*)$'
-Exclude: 'build/.*'
+ExtraArgs: [ # do not forget trailing -- to clang command
+  '-isystem', 'build/vcpkg_installed/x64-windows/include',
+  '-DGLM_ENABLE_EXPERIMENTAL'
+]
+WarningsAsErrors: '*'

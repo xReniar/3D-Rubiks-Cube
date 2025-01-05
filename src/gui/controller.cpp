@@ -14,7 +14,7 @@ void Controller::orbitAroundCube(GLFWwindow* window, float dt, CubeObj& viewerOb
     if (glfwGetKey(window, keys.lookDown) == GLFW_PRESS) rotate.x -= 1.f;
 
     if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon()) {
-        viewerObject.transform.rotation += lookSpeed * dt * glm::normalize(rotate); 
+        viewerObject.transform.rotation += lookSpeed * dt * glm::normalize(rotate);
     }
 
     // limit pitch values between about +/- 85ish degrees
@@ -101,7 +101,7 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
                 targetRotationAngle = glm::radians(90.0f * numOfTurns * inverse);
                 /*
                 for(auto& obj : gameObjects){
-                    std::cout << obj.getId() << " # " 
+                    std::cout << obj.getId() << " # "
                         << obj.transform.quatRotation.w << ", "
                         << obj.transform.quatRotation.x << ", "
                         << obj.transform.quatRotation.y << ", "
@@ -115,15 +115,15 @@ void Controller::rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &
         }
     }
 
-    if(animation.U_turn){ rotateAroundAxis('y',"U",1,dt,gameObjects); }
-    if(animation.D_turn){ rotateAroundAxis('y',"D",-1,dt,gameObjects); }
-    if(animation.F_turn){ rotateAroundAxis('z',"F",1,dt,gameObjects); }
-    if(animation.B_turn){ rotateAroundAxis('z',"B",-1,dt,gameObjects); }
-    if(animation.R_turn){ rotateAroundAxis('x',"R",-1,dt,gameObjects); }
-    if(animation.L_turn){ rotateAroundAxis('x',"L",1,dt,gameObjects); }
+    if(animation.U_turn){ rotateAroundAxis('y','U',1,dt,gameObjects); }
+    if(animation.D_turn){ rotateAroundAxis('y','D',-1,dt,gameObjects); }
+    if(animation.F_turn){ rotateAroundAxis('z','F',1,dt,gameObjects); }
+    if(animation.B_turn){ rotateAroundAxis('z','B',-1,dt,gameObjects); }
+    if(animation.R_turn){ rotateAroundAxis('x','R',-1,dt,gameObjects); }
+    if(animation.L_turn){ rotateAroundAxis('x','L',1,dt,gameObjects); }
 }
 
-void Controller::rotateAroundAxis(char axis, std::string side, int sign, float dt, std::vector<CubeObj> &gameObjects){
+void Controller::rotateAroundAxis(char axis, char side, int sign, float dt, std::vector<CubeObj> &gameObjects){
     oldRotationAngle = currentRotationAngle;
     currentRotationAngle = glm::mix(currentRotationAngle, targetRotationAngle, rotationSpeed * dt);
 
@@ -135,16 +135,17 @@ void Controller::rotateAroundAxis(char axis, std::string side, int sign, float d
         }
 
         currentRotationAngle = 0.0f;
-        if(numOfTurns == 2) cube.turn(side + "2");
-        else if(inverse == -1) cube.turn(side + "'");
-        else cube.turn(side);
+        auto sideStr = std::string(1, side);
+        if(numOfTurns == 2) cube.turn(sideStr + "2");
+        else if(inverse == -1) cube.turn(sideStr + "'");
+        else cube.turn(sideStr);
 
-        if(side == "U") animation.U_turn = false;
-        if(side == "D") animation.D_turn = false;
-        if(side == "F") animation.F_turn = false;
-        if(side == "R") animation.R_turn = false;
-        if(side == "B") animation.B_turn = false;
-        if(side == "L") animation.L_turn = false;
+        if(side == 'U') animation.U_turn = false;
+        if(side == 'D') animation.D_turn = false;
+        if(side == 'F') animation.F_turn = false;
+        if(side == 'R') animation.R_turn = false;
+        if(side == 'B') animation.B_turn = false;
+        if(side == 'L') animation.L_turn = false;
     } else {
         for (int objId : cube.getFaceId(side)) {
             gameObjects[objId].rotate(axis, (sign * (currentRotationAngle - oldRotationAngle)), false);
@@ -178,11 +179,11 @@ void Controller::solveCube(){
                 if(move == 'R') animation.R_turn = true;
                 if(move == 'B') animation.B_turn = true;
                 if(move == 'L') animation.L_turn = true;
-                
+
                 targetRotationAngle = glm::radians(90.0f * numOfTurns * inverse);
                 /*
                 for(auto& obj : gameObjects){
-                    std::cout << obj.getId() << " # " 
+                    std::cout << obj.getId() << " # "
                         << obj.transform.quatRotation.w << ", "
                         << obj.transform.quatRotation.x << ", "
                         << obj.transform.quatRotation.y << ", "

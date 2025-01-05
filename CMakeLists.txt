@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 # Specify the C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 if(WIN32)
@@ -17,6 +17,9 @@ if (LINUX)
   set(SPIRV-Tools-opt_DIR "${VCPKG_SHARE}/spirv-tools-opt/")
   set(VK_ADD_LAYER_PATH "${VCPKG_SHARE}/vulkan/explicit_layer.d/")
 endif()
+
+# For clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(INCLUDE_INSTALL_DIR include)
 set(KOCIEMBA_SRC ${CMAKE_SOURCE_DIR}/src/solver/ckociemba)

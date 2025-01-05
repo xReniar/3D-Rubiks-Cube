@@ -105,7 +105,7 @@ char* solution(char* facelets, int maxDepth, long timeOut, int useSeparator, con
 
     fc = get_facecube_fromstring(facelets);
     cc = toCubieCube(fc);
-    if ((s = verify(cc)) != 0) {
+    if (verify(cc) != 0) {
         free(search);
         return NULL;
     }
@@ -125,7 +125,6 @@ char* solution(char* facelets, int maxDepth, long timeOut, int useSeparator, con
     search->UBtoDF[0] = c->UBtoDF;
 
     search->minDistPhase1[1] = 1;// else failure for depth=1, n=0
-    mv = 0;
     n = 0;
     busy = 0;
     depthPhase1 = 1;

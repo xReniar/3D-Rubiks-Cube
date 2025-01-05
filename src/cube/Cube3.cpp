@@ -1,12 +1,17 @@
 #include"Cube3.hpp"
+#include <string>
+#include <vector>
+#include <ranges>
+#include <algorithm>
 
 Cube3::Cube3(){
-    top_side = new Side(3 ,YELLOW, {2, 11, 19, 1, 10, 18, 0, 9, 17});
-    bottom_side = new Side(3, WHITE, {6, 14, 23, 7, 15, 24, 8, 16, 25});
-    front_side = new Side(3, BLUE, {0, 9, 17, 3, 12, 20, 6, 14, 23});
-    right_side = new Side(3, RED, {17, 18, 19, 20, 21, 22, 23, 24, 25});
-    back_side = new Side(3, GREEN, {19, 11, 2, 22, 13, 5, 25, 16, 8});
-    left_side = new Side(3, ORANGE, {2, 1, 0, 5, 4, 3, 8, 7, 6});        
+    top_side = new Side(TOP_SIDE, 3 ,YELLOW, {2, 11, 19, 1, 10, 18, 0, 9, 17}, [this](Direction dir) { this->u_turn(dir); });
+    bottom_side = new Side(BOTTOM_SIDE, 3, WHITE, {6, 14, 23, 7, 15, 24, 8, 16, 25}, [this](Direction dir) { this->d_turn(dir); });
+    front_side = new Side(FRONT_SIDE, 3, BLUE, {0, 9, 17, 3, 12, 20, 6, 14, 23}, [this](Direction dir) { this->f_turn(dir); });
+    right_side = new Side(RIGHT_SIDE, 3, RED, {17, 18, 19, 20, 21, 22, 23, 24, 25}, [this](Direction dir) { this->r_turn(dir); });
+    back_side = new Side(BACK_SIDE, 3, GREEN, {19, 11, 2, 22, 13, 5, 25, 16, 8}, [this](Direction dir) { this->b_turn(dir); });
+    left_side = new Side(LEFT_SIDE, 3, ORANGE, {2, 1, 0, 5, 4, 3, 8, 7, 6}, [this](Direction dir) { this->l_turn(dir); });
+    sides = {top_side, right_side, front_side, bottom_side, left_side, back_side};
 }
 
 void Cube3::u_turn(Direction direction){
@@ -133,7 +138,7 @@ void Cube3::b_turn(Direction direction){
     if(direction == CLOCKWISE){
         for(int i = 0;i < 3;i++){
             top_side->cubie[i] = right[i];
-            right_side->cubie[2+(i*3)] = bottom[i]; 
+            right_side->cubie[2+(i*3)] = bottom[i];
             bottom_side->cubie[8-i] = left[i];
             left_side->cubie[6-(i*3)] = top[i];
         }
@@ -141,7 +146,7 @@ void Cube3::b_turn(Direction direction){
     if(direction == ANTICLOCKWISE){
         for(int i = 0;i < 3;i++){
             top_side->cubie[i] = left[i];
-            right_side->cubie[2+(i*3)] = top[i]; 
+            right_side->cubie[2+(i*3)] = top[i];
             bottom_side->cubie[8-i] = right[i];
             left_side->cubie[6-(i*3)] = bottom[i];
         }
@@ -177,33 +182,6 @@ void Cube3::l_turn(Direction direction){
     }
 }
 
-void Cube3::rotate(_Side_ side,Direction direction){
-    if(side == TOP_SIDE){
-        top_side->turn(direction);
-        u_turn(direction);
-    }
-    if(side == BOTTOM_SIDE){
-        bottom_side->turn(direction);
-        d_turn(direction);
-    }
-    if(side == FRONT_SIDE){
-        front_side->turn(direction);
-        f_turn(direction);
-    }
-    if(side == RIGHT_SIDE){
-        right_side->turn(direction);
-        r_turn(direction);
-    }
-    if(side == BACK_SIDE){
-        back_side->turn(direction);
-        b_turn(direction);
-    }
-    if(side == LEFT_SIDE){
-        left_side->turn(direction);
-        l_turn(direction);
-    }
-}
-
 void Cube3::turn(const std::string& str){
     Direction direction = CLOCKWISE;
     int turns = 1;
@@ -212,21 +190,11 @@ void Cube3::turn(const std::string& str){
         if(i != str.length() && str[i + 1] == '\'') direction = ANTICLOCKWISE;
         if(i != str.length() && (str[i + 1] >= '0' && str[i + 1] <= '9')) turns = (str[i + 1] - '0');
 
-        // execute move
-        for(int j = 0;j < turns;j++){
-            if(str[i] == 'U')
-                rotate(TOP_SIDE,direction);
-            if(str[i] == 'D')
-                rotate(BOTTOM_SIDE,direction);
-            if(str[i] == 'F')
-                rotate(FRONT_SIDE,direction);
-            if(str[i] == 'R')
-                rotate(RIGHT_SIDE,direction);
-            if(str[i] == 'B')
-                rotate(BACK_SIDE,direction);
-            if(str[i] == 'L')
-                rotate(LEFT_SIDE,direction);
+        // Execute the move
+        for (int j = 0; j < turns; j++) {
+            getSide(str[i])->turn(direction);
         }
+
 
         // reset direction and turns values
         if(direction == ANTICLOCKWISE || turns > 1){
@@ -237,50 +205,50 @@ void Cube3::turn(const std::string& str){
     }
 }
 
-char Cube3::f(Cubie cubie){
-    switch(cubie.color){
-        case YELLOW: return 'U';
-        case WHITE: return 'D';
-        case BLUE: return 'F';
-        case RED: return 'R';
-        case GREEN: return 'B';
-        case ORANGE: return 'L';
-    }
-    return 'x';
-}
-
-std::string Cube3::state(){
+std::string Cube3::state() {
+    // Create a vector to store the state of the cube
     std::vector<char> cube3State;
-    for(int i = 0;i < 9;i++)
-        cube3State.push_back(f(top_side->cubie[i]));
-    for(int i = 0;i < 9;i++)
-        cube3State.push_back(f(right_side->cubie[i]));
-    for(int i = 0;i < 9;i++)
-        cube3State.push_back(f(front_side->cubie[i]));
-    for(int i = 0;i < 9;i++)
-        cube3State.push_back(f(bottom_side->cubie[i]));
-    for(int i = 0;i < 9;i++)
-        cube3State.push_back(f(left_side->cubie[i]));
-    for(int i = 0;i < 9;i++)
-        cube3State.push_back(f(back_side->cubie[i]));
+    // Reserve space in the vector to avoid multiple reallocations
+    cube3State.reserve(this->sides.size() * 9);
 
-    std::string str(cube3State.begin(), cube3State.end());
-    return str;
+    // Iterate over each side of the cube
+    for (const auto& side : this->sides) {
+        // Create a subrange for the first 9 cubies of the current side
+        auto cubieRange = std::span(side->cubie, 9);
+        // Transform the cubieRange using the function f and append the results to cube3State
+        std::ranges::transform(cubieRange, std::back_inserter(cube3State), [](Cubie& cubie) {
+            return cubie.getLetter();
+        });
+    }
+
+    // Convert the vector of characters to a string and return it
+    return std::string(cube3State.begin(), cube3State.end());
 }
 
-std::vector<int> Cube3::getFaceId(std::string side){
-    std::vector<int> faceId;
-    Side* requestedSide;
-    if(side == "U") requestedSide = this->top_side;
-    if(side == "D") requestedSide = this->bottom_side;
-    if(side == "F") requestedSide = this->front_side;
-    if(side == "R") requestedSide = this->right_side;
-    if(side == "B") requestedSide = this->back_side;
-    if(side == "L") requestedSide = this->left_side;
+Side* Cube3::getSide(char sideChar)
+{
+    for (auto &side : this->sides)
+    {
+        if (side->sidename == static_cast<_Side_>(sideChar))
+            return side;
+    }
+    return nullptr;
+}
 
-    for(int i = 0;i < 9;i++)
-        faceId.push_back(requestedSide->cubie[i].id);
-        
+std::vector<int> Cube3::getFaceId(char sideChar) {
+    // Get the requested side based on the provided character
+    Side* requestedSide = this->getSide(sideChar);
+    std::vector<int> faceId;
+    // Reserve space in the vector to avoid multiple reallocations
+    faceId.reserve(9);
+
+    if (requestedSide != nullptr) {
+        // Use std::ranges::transform to fill faceId with the IDs of the cubies
+        std::ranges::transform(std::span(requestedSide->cubie, 9), std::back_inserter(faceId), [](const Cubie& cubie) {
+            return cubie.id;
+        });
+    }
+
     return faceId;
 }
 

@@ -21,7 +21,7 @@ void CoordSystem::rotate(char plane, float angle){
     }
 
 std::tuple<char, int> CoordSystem::getAxis(char axis) {
-    glm::vec3 vec;
+    glm::vec3 vec{};
     std::tuple<char, int> res;
     if (axis == 'x') vec = i;
     if (axis == 'y') vec = j;
@@ -44,8 +44,8 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
     transform.translation = glm::vec3(rotationMatrix * glm::vec4(transform.translation, 1.0f));
 
     // orientation step
-    char correct_plane;
-    int sign;
+    char correct_plane = NULL;
+    int sign = 0;
 
     std::vector<char> xyz{'x','y','z'};
     for(char _plane_ : xyz){
@@ -56,7 +56,7 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
             sign = _sign_res_;
         }
     }
-    
+
     glm::quat rotMatrix{};
     float sin = std::sin(sign * angle * 0.5f);
     float cos = std::cos(sign * angle * 0.5f);
@@ -89,7 +89,7 @@ void CubeObj::rotate(char plane, float angle, bool toRound){
             if(std::abs(rotationComponents[i]) > 0.9f) rotationComponents[i] = signValue * 1.0f;
             // value near 0.5f or -0.5f
             if(glm::epsilonEqual(std::abs(rotationComponents[i]), 0.5f, 0.1f)) rotationComponents[i] = signValue * 0.5f;
-            // value around sin(45.0f) 
+            // value around sin(45.0f)
             if(glm::epsilonEqual(std::abs(rotationComponents[i]), 0.7f, 0.1f)) rotationComponents[i] = signValue * glm::sin(glm::radians(45.0f));
         }
         transform.quatRotation.w = rotationComponents[0];

@@ -1,7 +1,9 @@
 #include"Side.hpp"
 #include<iostream>
 
-Side::Side(int size, Color color, std::vector<int> pieceId) : size(size){
+Side::Side(_Side_ sidename, int size, Color color, std::vector<int> pieceId, std::function<void(Direction)> turnFunction) : size(size){
+    this->turnFunction = turnFunction;
+    this->sidename = sidename;
     cubie = new Cubie[this->size * this->size];
     for(int i = 0;i < this->size * this->size;i++){
         cubie[i].color = color;
@@ -26,7 +28,7 @@ Side::~Side(){
 void Side::turn(Direction Direction){
     /* make a copy */
     int numOfPieces = size * size;
-    Cubie _copy[numOfPieces];
+    std::vector<Cubie> _copy(numOfPieces);
     for(int i = 0;i < numOfPieces;i++){
         _copy[i] = cubie[i];
     }
@@ -42,4 +44,5 @@ void Side::turn(Direction Direction){
             cubie[i] = _copy[index[i]];
         }
     }
+    this->turnFunction(Direction);
 }

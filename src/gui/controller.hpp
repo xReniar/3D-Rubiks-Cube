@@ -69,7 +69,7 @@ public:
     void rotateCube(GLFWwindow* window, float dt, std::vector<CubeObj> &gameObjects);
     void solveCube();
 
-    void rotateAroundAxis(char axis, std::string side, int sign, float dt, std::vector<CubeObj> &gameObjects);
+    void rotateAroundAxis(char axis, char side, int sign, float dt, std::vector<CubeObj> &gameObjects);
 };
 
 #endif

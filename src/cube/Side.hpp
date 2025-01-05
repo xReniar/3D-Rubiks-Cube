@@ -1,21 +1,33 @@
 #ifndef SIDE_H
 #define SIDE_H
 
-#include"../constants.hpp"
-#include<vector>
+#include "../constants.hpp"
+#include <vector>
+#include <functional>
 
-struct Cubie {
+class Cubie
+{
+public:
     int id;
     Color color;
+
+
+    char getLetter()
+    {
+        return static_cast<char>(this->color);
+    }
 };
 
-class Side {
+class Side
+{
 private:
     int size;
     std::vector<int> index;
+    std::function<void(Direction)> turnFunction;
 public:
-    Cubie* cubie;
-    Side(int size, Color color, std::vector<int> pieceId);
+    _Side_ sidename;
+    Cubie *cubie;
+    Side(_Side_ sidename, int size, Color color, std::vector<int> pieceId,std::function<void(Direction)> turnFunction);
     ~Side();
     void turn(Direction direction);
 };

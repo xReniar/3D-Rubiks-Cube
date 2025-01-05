@@ -18,6 +18,7 @@ public:
     RenderSystem &operator=(const RenderSystem &) = delete;
 
     void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<CubeObj> &gameObjects, const Camera& camera);
+    unsigned getMaxFrameRate();
 private:
     Device &device;
     std::unique_ptr<Pipeline> pipeline;

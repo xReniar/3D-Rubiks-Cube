@@ -21,7 +21,7 @@ facecube_t* get_facecube()
 {
     facecube_t* res = (facecube_t *) calloc(1, sizeof(facecube_t));
     static const color_t f[54] = {U, U, U, U, U, U, U, U, U, R, R, R, R, R, R, R, R, R, F, F, F, F, F, F, F, F, F, D, D, D, D, D, D, D, D, D, L, L, L, L, L, L, L, L, L, B, B, B, B, B, B, B, B, B};
-    memcpy(res->f, f, sizeof(f));
+    memcpy_s(res->f, sizeof(res->f), f, sizeof(f));
     return res;
 }
 
