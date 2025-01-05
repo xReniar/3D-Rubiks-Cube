@@ -14,6 +14,7 @@ private:
     Side* right_side;
     Side* back_side;
     Side* left_side;
+    std::vector<Side*> sides;
 
     void u_turn(Direction direction);
     void d_turn(Direction direction);
@@ -21,15 +22,14 @@ private:
     void r_turn(Direction direction);
     void b_turn(Direction direction);
     void l_turn(Direction direction);
-    void rotate(_Side_ side,Direction direction);
 
-    char f(Cubie cubie);
+    Side* getSide(char sideChar);
 public:
     Cube3();
     void turn(const std::string& str);
     std::string state();
     bool isSolved();
-    std::vector<int> getFaceId(std::string side);
+    std::vector<int> getFaceId(char sideChar);
 };
 
 #endif

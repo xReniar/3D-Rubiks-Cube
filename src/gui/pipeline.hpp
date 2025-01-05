@@ -6,24 +6,7 @@
 
 #include<string>
 #include<vector>
-
-struct PipelineConfigInfo {
-    PipelineConfigInfo(const PipelineConfigInfo&) = delete;
-    PipelineConfigInfo& operator=(const PipelineConfigInfo&) = delete;
-
-    VkPipelineViewportStateCreateInfo viewportInfo;
-    VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
-    VkPipelineRasterizationStateCreateInfo rasterizationInfo;
-    VkPipelineMultisampleStateCreateInfo multisampleInfo;
-    VkPipelineColorBlendAttachmentState colorBlendAttachment;
-    VkPipelineColorBlendStateCreateInfo colorBlendInfo;
-    VkPipelineDepthStencilStateCreateInfo depthStencilInfo;
-    std::vector<VkDynamicState> dynamicStateEnables;
-    VkPipelineDynamicStateCreateInfo dynamicStateInfo;
-    VkPipelineLayout pipelineLayout = nullptr;
-    VkRenderPass renderPass = nullptr;
-    uint32_t subpass = 0;
-};
+#include "pipeline_config_info.hpp"
 
 class Pipeline {
 public:
@@ -39,7 +22,7 @@ public:
     Pipeline& operator = (const Pipeline&) = delete;
 
     void bind(VkCommandBuffer commandBuffer);
-    static void defaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
+    // static void defaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
 
 private:
     Device& device;

@@ -7,12 +7,12 @@ enum Direction {
 };
 
 enum _Side_ {
-    TOP_SIDE,
-    BOTTOM_SIDE,
-    FRONT_SIDE,
-    RIGHT_SIDE,
-    BACK_SIDE,
-    LEFT_SIDE
+    TOP_SIDE='U',
+    BOTTOM_SIDE='D',
+    FRONT_SIDE='F',
+    RIGHT_SIDE='R',
+    BACK_SIDE='B',
+    LEFT_SIDE='L'
 };
 
 enum LayerType {
@@ -20,14 +20,13 @@ enum LayerType {
     OUTER
 };
 
-enum Color { 
-    YELLOW,
-    WHITE,
-    BLUE,
-    RED,
-    GREEN,
-    ORANGE,
-    BLACK
+enum Color {
+    YELLOW='U',
+    WHITE='D',
+    BLUE='F',
+    RED='R',
+    GREEN='B',
+    ORANGE='L'
 };
 
 #endif

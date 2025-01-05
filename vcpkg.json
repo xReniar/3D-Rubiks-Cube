@@ -1,0 +1,13 @@
+{
+  "name": "3d-rubiks-cube",
+  "version": "1.0.0",
+  "dependencies": [
+    "vulkan",
+    "vulkan-validationlayers",
+    "spirv-tools",
+    "shaderc",
+    "glfw3",
+    "glm"
+  ],
+  "builtin-baseline": "4b6c50d962cc20aaa3ef457f8ba683b586263cfb"
+}

@@ -4,7 +4,7 @@
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include<tiny_obj_loader.h>
-#define GLM_ENABLE_EXPERIMENTAL
+// #define GLM_ENABLE_EXPERIMENTAL
 #include<glm/gtx/hash.hpp>
 
 #include<cassert>
@@ -33,12 +33,12 @@ std::vector<VkVertexInputBindingDescription> Model::Vertex::getBindingDescriptio
 
 std::vector<VkVertexInputAttributeDescription> Model::Vertex::getAttributeDescriptions(){
     std::vector<VkVertexInputAttributeDescription> attributeDescriptions{};
-    
+
     attributeDescriptions.push_back({0, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, position)});
     attributeDescriptions.push_back({1, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, color)});
     attributeDescriptions.push_back({2, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, normal)});
     attributeDescriptions.push_back({3, 0, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex, uv)});
-    
+
     return attributeDescriptions;
 }
 
@@ -177,7 +177,7 @@ void Model::Builder::loadModel(const std::string& filepath){
                     attrib.colors[3 * index.vertex_index + 1],
                     attrib.colors[3 * index.vertex_index + 2]
                 };
-                
+
             }
             // setting vertex normal
             if(index.normal_index >= 0){

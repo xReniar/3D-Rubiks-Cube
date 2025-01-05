@@ -5,7 +5,7 @@
 #include<array>
 
 
-Renderer::Renderer(CubeGUI &cubeGui,Device &device): cubeGUI{cubeGUI}, device{device} {
+Renderer::Renderer(CubeGUI &_cubeGUI,Device &_device): cubeGUI{_cubeGUI}, device{_device} {
     recreateSwapChain();
     createCommandBuffers();
 }
